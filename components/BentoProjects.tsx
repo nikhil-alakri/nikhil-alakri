@@ -60,7 +60,7 @@ export default function BentoProjects() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-accent mb-1.5 sm:mb-2">Portfolio</p>
-            <h2 className="text-2xl sm:text-4xl font-bold text-headline tracking-tight">Major Projects</h2>
+            <h2 className="font-primary text-2xl sm:text-4xl font-bold text-headline tracking-tight">Major Projects</h2>
           </div>
           <p className="text-bodytext text-sm max-w-md mt-2 md:mt-0">
             Dedicated case studies and production platforms with custom subpath routing.
@@ -85,7 +85,7 @@ export default function BentoProjects() {
                     </span>
                   </div>
 
-                  <h3 className="text-lg sm:text-xl font-bold text-headline mb-2 group-hover:text-accent transition-colors">
+                  <h3 className="font-primary text-lg sm:text-xl font-bold text-headline mb-2 group-hover:text-accent transition-colors">
                     {project.title}
                   </h3>
 

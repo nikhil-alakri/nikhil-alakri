@@ -2,19 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { ArrowDown, Copy, Check, ExternalLink, Terminal, Sparkles } from "lucide-react";
-
-const displayFonts = [
-  { name: "DynaPuff", className: "font-dynapuff" },
-  { name: "Shrikhand", className: "font-shrikhand" },
-  { name: "Gluten", className: "font-gluten" },
-  { name: "Modak", className: "font-modak" },
-];
+import { ArrowDown, Copy, Check, ExternalLink, Terminal } from "lucide-react";
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
-  const [activeFont, setActiveFont] = useState(displayFonts[0]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -40,43 +32,18 @@ export default function Hero() {
     <section ref={containerRef} className="relative pt-12 sm:pt-20 pb-16 sm:pb-24 overflow-hidden">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         
-        {/* Availability Badge & Font Preview Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">
-          <div className="hero-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium bg-surface/90 border border-accent/30 text-accent backdrop-blur-md self-start">
+        {/* Availability Badge */}
+        <div className="mb-6 sm:mb-8">
+          <div className="hero-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium bg-surface/90 border border-accent/30 text-accent backdrop-blur-md">
             <span className="w-1.5 h-1.5 rounded-full bg-status animate-status-pulse shrink-0" />
             <span>Available for Roles & Collaborations</span>
           </div>
-
-          {/* Interactive Font Preview Tester (Responsive horizontal pill) */}
-          <div className="hero-font-picker inline-flex items-center gap-1 p-1 rounded-xl bg-surface/85 border border-surface-border text-xs self-start sm:self-auto overflow-x-auto max-w-full">
-            <span className="flex items-center gap-1 px-2 text-[11px] font-mono text-mutedtext shrink-0">
-              <Sparkles className="w-3 h-3 text-accent" />
-              Font:
-            </span>
-            <div className="flex items-center gap-1">
-              {displayFonts.map((font) => (
-                <button
-                  key={font.name}
-                  onClick={() => setActiveFont(font)}
-                  className={`px-2.5 py-1.5 rounded-lg text-xs whitespace-nowrap transition-all ${
-                    activeFont.name === font.name
-                      ? "bg-accent text-background font-bold shadow-sm"
-                      : "text-bodytext hover:text-headline hover:bg-surface-elevated"
-                  }`}
-                  style={{ fontFamily: `'${font.name}', cursive, sans-serif` }}
-                >
-                  {font.name}
-                </button>
-              ))}
-            </div>
-          </div>
         </div>
 
-        {/* Dynamic Name in Selected Display Font (SSR painted immediately, zero LCP delay) */}
+        {/* Dynamic Name in Primary DynaPuff Font (SSR painted immediately, zero LCP delay) */}
         <h1
-          className={`hero-title text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-normal text-headline mb-4 transition-all duration-300 break-words ${activeFont.className}`}
+          className="hero-title font-primary text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-normal text-headline mb-4 transition-all duration-300 break-words"
           style={{
-            letterSpacing: activeFont.name === "Modak" ? "0.02em" : "normal",
             opacity: 1,
             visibility: "visible",
           }}

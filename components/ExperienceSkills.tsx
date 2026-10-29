@@ -41,7 +41,7 @@ export default function ExperienceSkills() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <div className="mb-8 sm:mb-12">
           <p className="text-xs font-semibold uppercase tracking-wider text-accent mb-1.5 sm:mb-2">Capabilities</p>
-          <h2 className="text-2xl sm:text-4xl font-bold text-headline tracking-tight">Technical Stack & Domains</h2>
+          <h2 className="font-primary text-2xl sm:text-4xl font-bold text-headline tracking-tight">Technical Stack & Domains</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -56,7 +56,7 @@ export default function ExperienceSkills() {
                   <div className="p-2 rounded-lg bg-surface-elevated border border-surface-border text-accent">
                     <Icon className="w-5 h-5" />
                   </div>
-                  <h3 className="font-semibold text-headline text-base sm:text-lg">{cat.title}</h3>
+                  <h3 className="font-primary font-bold text-headline text-base sm:text-lg">{cat.title}</h3>
                 </div>
 
                 <div className="flex flex-wrap gap-1.5 sm:gap-2">

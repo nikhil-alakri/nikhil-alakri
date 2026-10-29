@@ -33,16 +33,27 @@ const config: Config = {
         status: "var(--color-status)",
       },
       fontFamily: {
-        display: [
-          "var(--font-display)",
+        primary: [
+          "var(--font-primary)",
           "'DynaPuff'",
-          "'Shrikhand'",
-          "'Gluten'",
-          "'Modak'",
           "cursive",
+          "sans-serif",
+        ],
+        secondary: [
+          "var(--font-secondary)",
+          "'Plus Jakarta Sans'",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "sans-serif",
+        ],
+        display: [
+          "var(--font-primary)",
+          "'DynaPuff'",
+          "cursive",
+          "sans-serif",
         ],
         sans: [
-          "var(--font-sans)",
+          "var(--font-secondary)",
           "'Plus Jakarta Sans'",
           "-apple-system",
           "BlinkMacSystemFont",
@@ -50,8 +61,6 @@ const config: Config = {
         ],
         mono: [
           "var(--font-mono)",
-          "'JetBrains Mono'",
-          "'Fira Code'",
           "monospace",
         ],
       },

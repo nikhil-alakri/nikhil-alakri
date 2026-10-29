@@ -9,7 +9,7 @@ export default function Navbar() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group py-1">
           <span className="w-2.5 h-2.5 rounded-full bg-status animate-status-pulse shrink-0" />
-          <span className="font-semibold text-headline tracking-tight group-hover:text-accent transition-colors text-sm sm:text-base">
+          <span className="font-primary font-bold text-headline tracking-wide group-hover:text-accent transition-colors text-base sm:text-lg">
             Nikhil Alakri
           </span>
         </Link>

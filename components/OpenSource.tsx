@@ -64,7 +64,7 @@ export default function OpenSource() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 sm:mb-12">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-accent mb-1.5 sm:mb-2">Community</p>
-            <h2 className="text-2xl sm:text-4xl font-bold text-headline tracking-tight">Open Source Work</h2>
+            <h2 className="font-primary text-2xl sm:text-4xl font-bold text-headline tracking-tight">Open Source Work</h2>
           </div>
           <a
             href="https://github.com/nikhil-alakri"

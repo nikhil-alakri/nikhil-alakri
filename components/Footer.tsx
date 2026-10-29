@@ -12,7 +12,7 @@ export default function Footer() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 sm:gap-8 mb-10 sm:mb-12">
           <div>
-            <h3 className="text-xl sm:text-2xl font-bold text-headline mb-2">Let&apos;s build something exceptional.</h3>
+            <h3 className="font-primary text-xl sm:text-2xl font-bold text-headline mb-2">Let&apos;s build something exceptional.</h3>
             <p className="text-bodytext text-sm max-w-md">
               Whether you have an inquiry, open-source project collaboration, or engineering role, feel free to reach out.
             </p>
