@@ -17,15 +17,45 @@ export default function Hero() {
   const [activeFont, setActiveFont] = useState(displayFonts[0]);
 
   useEffect(() => {
+    // StrictMode-safe animation using fromTo with clearProps
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      tl.from(".hero-badge", { y: -20, opacity: 0, duration: 0.7 })
-        .from(".hero-font-picker", { y: -10, opacity: 0, duration: 0.6 }, "-=0.3")
-        .from(".hero-title", { y: 30, opacity: 0, duration: 0.8 }, "-=0.4")
-        .from(".hero-role", { y: 20, opacity: 0, duration: 0.6 }, "-=0.5")
-        .from(".hero-bio", { y: 20, opacity: 0, duration: 0.7 }, "-=0.4")
-        .from(".hero-actions", { y: 20, opacity: 0, duration: 0.6 }, "-=0.4");
+      tl.fromTo(
+        ".hero-badge",
+        { y: -16, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, clearProps: "all" }
+      )
+        .fromTo(
+          ".hero-font-picker",
+          { y: -10, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5, clearProps: "all" },
+          "-=0.2"
+        )
+        .fromTo(
+          ".hero-title",
+          { y: 24, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.7, clearProps: "all" },
+          "-=0.3"
+        )
+        .fromTo(
+          ".hero-role",
+          { y: 16, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5, clearProps: "all" },
+          "-=0.3"
+        )
+        .fromTo(
+          ".hero-bio",
+          { y: 16, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5, clearProps: "all" },
+          "-=0.3"
+        )
+        .fromTo(
+          ".hero-actions",
+          { y: 16, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5, clearProps: "all" },
+          "-=0.3"
+        );
     }, containerRef);
 
     return () => ctx.revert();
@@ -73,7 +103,7 @@ export default function Hero() {
 
         {/* Dynamic Name in Selected Display Font */}
         <h1
-          className={`hero-title text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight tracking-normal text-headline mb-4 transition-all duration-300 ${activeFont.className}`}
+          className={`hero-title text-5xl sm:text-7xl lg:text-8xl font-bold leading-tight tracking-normal text-headline mb-4 transition-all duration-300 ${activeFont.className}`}
           style={{ letterSpacing: activeFont.name === "Modak" ? "0.02em" : "normal" }}
         >
           Nikhil Alakri

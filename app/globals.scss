@@ -69,6 +69,15 @@ body {
   font-family: var(--font-display);
 }
 
+.hero-title {
+  display: block;
+  color: var(--color-text-primary);
+}
+
+.project-card, .repo-card {
+  opacity: 1;
+}
+
 .font-dynapuff {
   font-family: 'DynaPuff', cursive;
 }

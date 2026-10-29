@@ -50,8 +50,8 @@ export default function OpenSource() {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ".repo-card",
-        { y: 20, opacity: 0.8 },
-        { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power2.out" }
+        { y: 20, opacity: 0.6 },
+        { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: "power2.out", clearProps: "all" }
       );
     }, sectionRef);
 
