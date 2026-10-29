@@ -33,6 +33,14 @@ const config: Config = {
         status: "var(--color-status)",
       },
       fontFamily: {
+        display: [
+          "var(--font-display)",
+          "'DynaPuff'",
+          "'Shrikhand'",
+          "'Gluten'",
+          "'Modak'",
+          "cursive",
+        ],
         sans: [
           "var(--font-sans)",
           "'Plus Jakarta Sans'",
