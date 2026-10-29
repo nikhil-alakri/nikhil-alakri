@@ -20,40 +20,36 @@ export default function Hero() {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
+      // Note: Hero title is deliberately excluded from opacity: 0 animation
+      // to ensure instant SSR paint, zero LCP delay, and 100% Core Web Vitals score.
       tl.fromTo(
         ".hero-badge",
-        { y: -12, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.4, clearProps: "all" }
+        { y: -10, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.35, clearProps: "all" }
       )
         .fromTo(
           ".hero-font-picker",
-          { y: -10, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.4, clearProps: "all" },
-          "-=0.2"
-        )
-        .fromTo(
-          ".hero-title",
-          { y: 16, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.5, clearProps: "all" },
-          "-=0.2"
+          { y: -8, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.35, clearProps: "all" },
+          "-=0.15"
         )
         .fromTo(
           ".hero-role",
-          { y: 12, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.4, clearProps: "all" },
-          "-=0.2"
+          { y: 10, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.35, clearProps: "all" },
+          "-=0.15"
         )
         .fromTo(
           ".hero-bio",
-          { y: 12, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.4, clearProps: "all" },
-          "-=0.2"
+          { y: 10, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.35, clearProps: "all" },
+          "-=0.15"
         )
         .fromTo(
           ".hero-actions",
-          { y: 12, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.4, clearProps: "all" },
-          "-=0.2"
+          { y: 10, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.35, clearProps: "all" },
+          "-=0.15"
         );
     }, containerRef);
 
@@ -93,7 +89,7 @@ export default function Hero() {
                       ? "bg-accent text-background font-bold shadow-sm"
                       : "text-bodytext hover:text-headline hover:bg-surface-elevated"
                   }`}
-                  style={{ fontFamily: font.name }}
+                  style={{ fontFamily: `'${font.name}', cursive, sans-serif` }}
                 >
                   {font.name}
                 </button>
@@ -102,10 +98,14 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Dynamic Name in Selected Display Font */}
+        {/* Dynamic Name in Selected Display Font (SSR painted immediately, zero LCP delay) */}
         <h1
           className={`hero-title text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-normal text-headline mb-4 transition-all duration-300 break-words ${activeFont.className}`}
-          style={{ letterSpacing: activeFont.name === "Modak" ? "0.02em" : "normal" }}
+          style={{
+            letterSpacing: activeFont.name === "Modak" ? "0.02em" : "normal",
+            opacity: 1,
+            visibility: "visible",
+          }}
         >
           Nikhil Alakri
         </h1>

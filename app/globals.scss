@@ -6,8 +6,7 @@
 @tailwind components;
 @tailwind utilities;
 
-// Google Fonts: Display fonts + Body/Mono with display=swap for zero render blocking
-@import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@500;700&family=Gluten:wght@500;700&family=Modak&family=Shrikhand&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+// Note: Fonts are loaded with preconnect in app/layout.tsx for zero-delay LCP & CWV optimization
 
 :root {
   --color-bg: #{$color-bg};
@@ -47,7 +46,7 @@ body {
 }
 
 // ==============================================================================
-// 🌌 HIGH-PERFORMANCE AURORA & MESH BACKGROUND (Zero Lag, 100% GPU Accelerated)
+// 🌌 HIGH-PERFORMANCE CINEMATIC CANVAS (100% Hardware Accelerated, Zero Filter Lag)
 // ==============================================================================
 .bg-canvas {
   position: fixed;
@@ -55,65 +54,63 @@ body {
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
+  background-color: #113946;
 
-  // Layer 1: Ambient Top Aurora Gradient Beam
+  // Layer 1: Ambient Top Aurora Gradient Cones (Warm Ivory & Seafoam Glow)
   &::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100vw;
-    height: 80vh;
-    max-width: 1400px;
-    background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(188, 163, 127, 0.22) 0%, rgba(94, 234, 212, 0.08) 45%, transparent 80%);
-    opacity: 0.8;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 70% 45% at 50% 0%, rgba(188, 163, 127, 0.28) 0%, rgba(94, 234, 212, 0.1) 40%, transparent 75%),
+      radial-gradient(circle 500px at 85% 35%, rgba(94, 234, 212, 0.08) 0%, transparent 70%),
+      radial-gradient(circle 450px at 15% 65%, rgba(188, 163, 127, 0.09) 0%, transparent 70%);
+    opacity: 0.95;
   }
 
-  // Layer 2: Precision Micro Blueprint Grid
+  // Layer 2: Precision Micro Dot Matrix Mesh
   &::after {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: 
-      linear-gradient(to right, rgba(188, 163, 127, 0.06) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(188, 163, 127, 0.06) 1px, transparent 1px);
-    background-size: 36px 36px;
-    mask-image: radial-gradient(ellipse 95% 70% at 50% 25%, black 20%, transparent 85%);
-    -webkit-mask-image: radial-gradient(ellipse 95% 70% at 50% 25%, black 20%, transparent 85%);
+    background-image: radial-gradient(circle, rgba(188, 163, 127, 0.14) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, black 25%, transparent 85%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, black 25%, transparent 85%);
   }
 }
 
-// Display Font Helper Classes
+// Display Font Helper Classes with robust fallbacks for zero FOIT (Flash of Invisible Text)
 .font-display {
   font-family: var(--font-display);
 }
 
 .font-dynapuff {
-  font-family: 'DynaPuff', cursive;
+  font-family: 'DynaPuff', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', cursive, sans-serif;
 }
 
 .font-shrikhand {
-  font-family: 'Shrikhand', cursive;
+  font-family: 'Shrikhand', Georgia, serif;
 }
 
 .font-gluten {
-  font-family: 'Gluten', cursive;
+  font-family: 'Gluten', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', cursive, sans-serif;
 }
 
 .font-modak {
-  font-family: 'Modak', cursive;
+  font-family: 'Modak', Impact, system-ui, cursive, sans-serif;
 }
 
 code, kbd, samp, pre {
   font-family: var(--font-mono);
 }
 
-// Guaranteed base visibility for text & cards
+// Guaranteed base visibility for text & cards (Never hidden, 100% LCP guaranteed)
 .hero-title {
-  display: block;
-  color: var(--color-text-primary);
-  opacity: 1;
+  display: block !important;
+  color: var(--color-text-primary) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .project-card, .repo-card {
@@ -157,7 +154,6 @@ html.lenis, html.lenis body {
 
 // Mobile-first responsive optimizations
 @media (max-width: 640px) {
-  // Mobile tap targets
   button, a {
     touch-action: manipulation;
   }

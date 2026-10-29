@@ -39,13 +39,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark scroll-smooth">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@500;700&family=Gluten:wght@500;700&family=Modak&family=Shrikhand&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="bg-background text-bodytext font-sans antialiased selection:bg-accent/30 selection:text-headline">
-        {/* Living Ambient Aurora Background */}
-        <div className="bg-canvas" aria-hidden="true">
-          {/* Hardware-accelerated glowing orbs */}
-          <div className="aurora-glow-1 absolute -top-32 -left-20 w-[320px] sm:w-[600px] h-[320px] sm:h-[600px] rounded-full bg-accent/20 blur-[90px] sm:blur-[140px]" />
-          <div className="aurora-glow-2 absolute top-1/3 -right-24 w-[280px] sm:w-[500px] h-[280px] sm:h-[500px] rounded-full bg-emerald-500/12 blur-[80px] sm:blur-[130px]" />
-        </div>
+        {/* Living Ambient Aurora Background (Zero blur compositing cost) */}
+        <div className="bg-canvas" aria-hidden="true" />
 
         <SmoothScroll>
           <div className="relative z-10 flex flex-col min-h-screen">
