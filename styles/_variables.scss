@@ -1,0 +1,38 @@
+// Design Tokens: Color Palette, Fonts & Dimensions
+
+// Fonts
+$font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+$font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+// Dark Obsidian Theme Palette
+$bg-base: #06080f;
+$bg-surface: #0d121f;
+$bg-surface-elevated: #141c2e;
+$bg-surface-hover: #19243b;
+
+// Accents
+$cyan-primary: #38bdf8;
+$cyan-hover: #0ea5e9;
+$cyan-glow: rgba(56, 189, 248, 0.2);
+
+$indigo-accent: #818cf8;
+$indigo-glow: rgba(129, 140, 248, 0.15);
+
+$emerald-status: #34d399;
+$emerald-glow: rgba(52, 211, 153, 0.2);
+
+// Borders & Lines
+$border-subtle: rgba(255, 255, 255, 0.08);
+$border-medium: rgba(255, 255, 255, 0.14);
+$border-active: rgba(56, 189, 248, 0.45);
+
+// Typography colors
+$text-white: #ffffff;
+$text-bright: #f1f5f9;
+$text-body: #94a3b8;
+$text-muted: #64748b;
+
+// Transitions & Curves
+$ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+$duration-fast: 0.2s;
+$duration-normal: 0.35s;

@@ -1,0 +1,89 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+@use '../styles/animations' as *;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Import Google Fonts (Plus Jakarta Sans & JetBrains Mono)
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --font-sans: #{$font-sans};
+  --font-mono: #{$font-mono};
+  --bg-base: #{$bg-base};
+  --bg-surface: #{$bg-surface};
+  --bg-surface-elevated: #{$bg-surface-elevated};
+  --color-primary: #{$cyan-primary};
+  --color-accent: #{$indigo-accent};
+}
+
+html {
+  background-color: $bg-base;
+  color: $text-bright;
+  font-family: $font-sans;
+}
+
+body {
+  font-family: $font-sans;
+  background-color: $bg-base;
+  color: $text-bright;
+  overflow-x: hidden;
+}
+
+code, kbd, samp, pre {
+  font-family: $font-mono;
+}
+
+// Lenis smooth scroll classes
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+
+  [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+// Custom modern scrollbar
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: $bg-base;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.22);
+  }
+}
+
+// Specialized SCSS component utility classes
+.glass-panel {
+  @include glass-card;
+}
+
+.gradient-title {
+  @include gradient-text;
+}
+
+.tech-pill {
+  @include code-pill;
+}

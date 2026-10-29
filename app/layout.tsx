@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "./globals.scss";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
 
@@ -41,3 +41,4 @@ export default function RootLayout({
     </html>
   );
 }
+
