@@ -106,11 +106,14 @@ code, kbd, samp, pre {
 }
 
 // Guaranteed base visibility for text & cards (Never hidden, 100% LCP guaranteed)
+.hero-title, .hero-role, .hero-bio {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
 .hero-title {
   display: block !important;
   color: var(--color-text-primary) !important;
-  opacity: 1 !important;
-  visibility: visible !important;
 }
 
 .project-card, .repo-card {
