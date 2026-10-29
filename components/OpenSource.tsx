@@ -50,8 +50,8 @@ export default function OpenSource() {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ".repo-card",
-        { y: 20, opacity: 0.6 },
-        { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: "power2.out", clearProps: "all" }
+        { y: 16, opacity: 0.8 },
+        { y: 0, opacity: 1, duration: 0.4, stagger: 0.08, ease: "power2.out", clearProps: "all" }
       );
     }, sectionRef);
 
@@ -59,53 +59,53 @@ export default function OpenSource() {
   }, []);
 
   return (
-    <section id="opensource" ref={sectionRef} className="py-20 border-t border-surface-border">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12">
+    <section id="opensource" ref={sectionRef} className="py-14 sm:py-20 border-t border-surface-border">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 sm:mb-12">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-accent mb-2">Community</p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-headline tracking-tight">Open Source Work</h2>
+            <p className="text-xs font-semibold uppercase tracking-wider text-accent mb-1.5 sm:mb-2">Community</p>
+            <h2 className="text-2xl sm:text-4xl font-bold text-headline tracking-tight">Open Source Work</h2>
           </div>
           <a
             href="https://github.com/nikhil-alakri"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-headline mt-4 sm:mt-0 transition-colors"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-accent hover:text-headline mt-3 sm:mt-0 transition-colors py-1"
           >
-            <Github className="w-4 h-4" />
-            Explore all repositories on GitHub
-            <ArrowUpRight className="w-4 h-4" />
+            <Github className="w-4 h-4 shrink-0" />
+            <span>Explore all repositories on GitHub</span>
+            <ArrowUpRight className="w-4 h-4 shrink-0" />
           </a>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
           {repos.map((repo) => (
             <a
               key={repo.name}
               href={repo.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="repo-card group p-6 rounded-2xl bg-surface border border-surface-border hover:border-accent hover:bg-surface-elevated transition-all flex flex-col justify-between"
+              className="repo-card group p-5 sm:p-6 rounded-2xl bg-surface border border-surface-border hover:border-accent hover:bg-surface-elevated transition-all flex flex-col justify-between"
             >
               <div>
-                <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center justify-between mb-2.5 sm:mb-3">
                   <div className="flex items-center gap-2">
-                    <Code2 className="w-4 h-4 text-mutedtext group-hover:text-accent transition-colors" />
+                    <Code2 className="w-4 h-4 text-mutedtext group-hover:text-accent transition-colors shrink-0" />
                     <span className="font-semibold text-headline group-hover:text-accent font-mono text-sm transition-colors">
                       {repo.name}
                     </span>
                   </div>
-                  <ArrowUpRight className="w-4 h-4 text-mutedtext group-hover:text-headline transition-colors" />
+                  <ArrowUpRight className="w-4 h-4 text-mutedtext group-hover:text-headline transition-colors shrink-0" />
                 </div>
 
-                <p className="text-sm text-bodytext leading-relaxed mb-6">
+                <p className="text-sm text-bodytext leading-relaxed mb-5 sm:mb-6">
                   {repo.description}
                 </p>
               </div>
 
-              <div className="flex items-center gap-5 text-xs text-mutedtext pt-3 border-t border-surface-border/60">
+              <div className="flex items-center gap-4 sm:gap-5 text-xs text-mutedtext pt-3 border-t border-surface-border/60">
                 <span className="flex items-center gap-1.5 font-mono">
-                  <span className={`w-2.5 h-2.5 rounded-full ${repo.langColor}`} />
+                  <span className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full ${repo.langColor}`} />
                   {repo.language}
                 </span>
                 <span className="flex items-center gap-1">

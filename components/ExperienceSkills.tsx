@@ -37,29 +37,29 @@ const skillCategories = [
 
 export default function ExperienceSkills() {
   return (
-    <section id="skills" className="py-20 border-t border-surface-border">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="mb-12">
-          <p className="text-xs font-semibold uppercase tracking-wider text-accent mb-2">Capabilities</p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-headline tracking-tight">Technical Stack & Domains</h2>
+    <section id="skills" className="py-14 sm:py-20 border-t border-surface-border">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        <div className="mb-8 sm:mb-12">
+          <p className="text-xs font-semibold uppercase tracking-wider text-accent mb-1.5 sm:mb-2">Capabilities</p>
+          <h2 className="text-2xl sm:text-4xl font-bold text-headline tracking-tight">Technical Stack & Domains</h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {skillCategories.map((cat) => {
             const Icon = cat.icon;
             return (
               <div
                 key={cat.title}
-                className="p-6 rounded-2xl bg-surface border border-surface-border hover:border-accent hover:bg-surface-elevated transition-all"
+                className="p-5 sm:p-6 rounded-2xl bg-surface border border-surface-border hover:border-accent hover:bg-surface-elevated transition-all"
               >
-                <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center gap-3 mb-3.5 sm:mb-4">
                   <div className="p-2 rounded-lg bg-surface-elevated border border-surface-border text-accent">
                     <Icon className="w-5 h-5" />
                   </div>
-                  <h3 className="font-semibold text-headline">{cat.title}</h3>
+                  <h3 className="font-semibold text-headline text-base sm:text-lg">{cat.title}</h3>
                 </div>
 
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {cat.skills.map((skill) => (
                     <span
                       key={skill}

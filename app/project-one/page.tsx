@@ -10,7 +10,7 @@ export const metadata = {
 export default function ProjectOnePage() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-bodytext">
-      <main className="max-w-4xl mx-auto px-6 pt-16 pb-24 flex-grow">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-20 sm:pb-24 flex-grow">
         <Link
           href="/#projects"
           className="inline-flex items-center gap-2 text-sm text-mutedtext hover:text-headline transition-colors mb-8"

@@ -1,7 +1,14 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.scss";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#113946",
+};
 
 export const metadata: Metadata = {
   title: "Nikhil Alakri | Software Engineer & Open Source Builder",
@@ -33,12 +40,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark scroll-smooth">
       <body className="bg-background text-bodytext font-sans antialiased selection:bg-accent/30 selection:text-headline">
-        {/* Living Ambient Background Scene */}
-        <div className="bg-scene" aria-hidden="true">
-          {/* Floating glowing orbs */}
-          <div className="ambient-orb-1 absolute -top-24 -left-24 w-[500px] h-[500px] rounded-full bg-accent/15 blur-[120px]" />
-          <div className="ambient-orb-2 absolute top-1/4 -right-28 w-[600px] h-[600px] rounded-full bg-emerald-500/10 blur-[140px]" />
-          <div className="ambient-orb-1 absolute top-2/3 left-1/3 w-[550px] h-[550px] rounded-full bg-accent/10 blur-[130px]" />
+        {/* Living Ambient Aurora Background */}
+        <div className="bg-canvas" aria-hidden="true">
+          {/* Hardware-accelerated glowing orbs */}
+          <div className="aurora-glow-1 absolute -top-32 -left-20 w-[320px] sm:w-[600px] h-[320px] sm:h-[600px] rounded-full bg-accent/20 blur-[90px] sm:blur-[140px]" />
+          <div className="aurora-glow-2 absolute top-1/3 -right-24 w-[280px] sm:w-[500px] h-[280px] sm:h-[500px] rounded-full bg-emerald-500/12 blur-[80px] sm:blur-[130px]" />
         </div>
 
         <SmoothScroll>

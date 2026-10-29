@@ -6,8 +6,8 @@
 @tailwind components;
 @tailwind utilities;
 
-// Google Fonts: Display fonts + Body/Mono
-@import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;600;700&family=Gluten:wght@400;700&family=Modak&family=Shrikhand&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+// Google Fonts: Display fonts + Body/Mono with display=swap for zero render blocking
+@import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@500;700&family=Gluten:wght@500;700&family=Modak&family=Shrikhand&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
   --color-bg: #{$color-bg};
@@ -31,6 +31,8 @@ html {
   background-color: var(--color-bg);
   color: var(--color-text-primary);
   font-family: var(--font-sans);
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -40,42 +42,51 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 // ==============================================================================
-// 🌌 LAYERED DYNAMIC BACKGROUND (High performance, no heavy SVG turbulence)
+// 🌌 HIGH-PERFORMANCE AURORA & MESH BACKGROUND (Zero Lag, 100% GPU Accelerated)
 // ==============================================================================
-.bg-scene {
+.bg-canvas {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
 
-  // Lightweight geometric blueprint dot grid with radial fade
+  // Layer 1: Ambient Top Aurora Gradient Beam
   &::before {
     content: '';
     position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: 80vh;
+    max-width: 1400px;
+    background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(188, 163, 127, 0.22) 0%, rgba(94, 234, 212, 0.08) 45%, transparent 80%);
+    opacity: 0.8;
+  }
+
+  // Layer 2: Precision Micro Blueprint Grid
+  &::after {
+    content: '';
+    position: absolute;
     inset: 0;
-    background-image: radial-gradient(rgba(188, 163, 127, 0.14) 1px, transparent 1px);
-    background-size: 32px 32px;
-    mask-image: radial-gradient(ellipse 90% 60% at 50% 20%, black 30%, transparent 80%);
-    -webkit-mask-image: radial-gradient(ellipse 90% 60% at 50% 20%, black 30%, transparent 80%);
+    background-image: 
+      linear-gradient(to right, rgba(188, 163, 127, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(188, 163, 127, 0.06) 1px, transparent 1px);
+    background-size: 36px 36px;
+    mask-image: radial-gradient(ellipse 95% 70% at 50% 25%, black 20%, transparent 85%);
+    -webkit-mask-image: radial-gradient(ellipse 95% 70% at 50% 25%, black 20%, transparent 85%);
   }
 }
 
 // Display Font Helper Classes
 .font-display {
   font-family: var(--font-display);
-}
-
-.hero-title {
-  display: block;
-  color: var(--color-text-primary);
-}
-
-.project-card, .repo-card {
-  opacity: 1;
 }
 
 .font-dynapuff {
@@ -98,7 +109,18 @@ code, kbd, samp, pre {
   font-family: var(--font-mono);
 }
 
-// Lenis smooth scroll classes
+// Guaranteed base visibility for text & cards
+.hero-title {
+  display: block;
+  color: var(--color-text-primary);
+  opacity: 1;
+}
+
+.project-card, .repo-card {
+  opacity: 1;
+}
+
+// Lenis smooth scroll classes (Desktop)
 html.lenis, html.lenis body {
   height: auto;
 }
@@ -115,9 +137,9 @@ html.lenis, html.lenis body {
   overflow: hidden;
 }
 
-// Custom editorial scrollbar
+// Custom modern scrollbar
 ::-webkit-scrollbar {
-  width: 7px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -133,15 +155,10 @@ html.lenis, html.lenis body {
   }
 }
 
-// Global utility card classes
-.glass-panel {
-  @include glass-card;
-}
-
-.gradient-title {
-  @include gradient-text;
-}
-
-.tech-pill {
-  @include code-pill;
+// Mobile-first responsive optimizations
+@media (max-width: 640px) {
+  // Mobile tap targets
+  button, a {
+    touch-action: manipulation;
+  }
 }

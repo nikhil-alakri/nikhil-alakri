@@ -7,17 +7,28 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    // On touch devices (smartphones/tablets), native 120Hz momentum scrolling
+    // provides the best performance, battery efficiency, and zero touch latency.
+    const isTouchDevice =
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0 ||
+      window.innerWidth < 768;
+
+    if (isTouchDevice) {
+      // Native smooth scroll for mobile
+      return;
+    }
+
     let lenis: Lenis | null = null;
     let rafId: number;
 
     try {
       lenis = new Lenis({
-        duration: 0.9,
+        duration: 1.0,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         orientation: "vertical",
         gestureOrientation: "vertical",
         smoothWheel: true,
-        touchMultiplier: 1.2,
       });
 
       function raf(time: number) {
@@ -27,7 +38,7 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
 
       rafId = requestAnimationFrame(raf);
     } catch (e) {
-      console.warn("Lenis smooth scroll fallback to native:", e);
+      console.warn("Smooth scroll fallback:", e);
     }
 
     return () => {

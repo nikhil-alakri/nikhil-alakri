@@ -6,14 +6,15 @@ import { Github, Linkedin, ArrowUpRight } from "lucide-react";
 export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-background/85 border-b border-surface-border">
-      <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <span className="w-2.5 h-2.5 rounded-full bg-status animate-pulse" />
-          <span className="font-semibold text-headline tracking-tight group-hover:text-accent transition-colors">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-2 group py-1">
+          <span className="w-2.5 h-2.5 rounded-full bg-status animate-status-pulse shrink-0" />
+          <span className="font-semibold text-headline tracking-tight group-hover:text-accent transition-colors text-sm sm:text-base">
             Nikhil Alakri
           </span>
         </Link>
 
+        {/* Desktop Navigation Links */}
         <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-bodytext">
           <a href="#projects" className="hover:text-headline transition-colors">Projects</a>
           <a href="#opensource" className="hover:text-headline transition-colors">Open Source</a>
@@ -21,13 +22,14 @@ export default function Navbar() {
           <a href="#contact" className="hover:text-headline transition-colors">Contact</a>
         </nav>
 
-        <div className="flex items-center gap-3">
+        {/* Action icons & Mobile connect */}
+        <div className="flex items-center gap-2 sm:gap-3">
           <a
             href="https://github.com/nikhil-alakri"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub Profile"
-            className="p-2 rounded-lg bg-surface border border-surface-border text-bodytext hover:text-headline hover:border-accent transition-colors"
+            className="p-2 sm:p-2.5 rounded-xl bg-surface border border-surface-border text-bodytext hover:text-headline hover:border-accent transition-colors min-w-[38px] min-h-[38px] flex items-center justify-center"
           >
             <Github className="w-4 h-4" />
           </a>
@@ -36,13 +38,13 @@ export default function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn Profile"
-            className="p-2 rounded-lg bg-surface border border-surface-border text-bodytext hover:text-headline hover:border-accent transition-colors"
+            className="p-2 sm:p-2.5 rounded-xl bg-surface border border-surface-border text-bodytext hover:text-headline hover:border-accent transition-colors min-w-[38px] min-h-[38px] flex items-center justify-center"
           >
             <Linkedin className="w-4 h-4" />
           </a>
           <a
             href="#contact"
-            className="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-1.5 rounded-lg bg-primary text-background hover:bg-accent transition-all"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 sm:px-3.5 py-2 rounded-xl bg-primary text-background hover:bg-accent transition-all min-h-[38px]"
           >
             Connect
             <ArrowUpRight className="w-3.5 h-3.5" />
