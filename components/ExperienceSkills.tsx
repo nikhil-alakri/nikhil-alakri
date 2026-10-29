@@ -26,7 +26,7 @@ const skillCategories = [
   {
     title: "Frontend & Creative UI",
     icon: Globe,
-    skills: ["Next.js", "React", "Tailwind CSS", "GSAP", "Lenis Scroll", "Responsive Design"],
+    skills: ["Next.js", "React", "SCSS", "Tailwind CSS", "GSAP", "Lenis Scroll"],
   },
   {
     title: "Developer Tooling",
@@ -40,8 +40,8 @@ export default function ExperienceSkills() {
     <section id="skills" className="py-20 border-t border-surface-border">
       <div className="max-w-5xl mx-auto px-6">
         <div className="mb-12">
-          <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-2">Capabilities</p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">Technical Stack & Domains</h2>
+          <p className="text-xs font-semibold uppercase tracking-wider text-accent mb-2">Capabilities</p>
+          <h2 className="text-3xl sm:text-4xl font-bold text-headline tracking-tight">Technical Stack & Domains</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -50,20 +50,20 @@ export default function ExperienceSkills() {
             return (
               <div
                 key={cat.title}
-                className="p-6 rounded-2xl bg-surface border border-surface-border card-hover-border"
+                className="p-6 rounded-2xl bg-surface border border-surface-border hover:border-accent hover:bg-surface-elevated transition-all"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 rounded-lg bg-surface-hover border border-surface-border text-primary">
+                  <div className="p-2 rounded-lg bg-surface-elevated border border-surface-border text-accent">
                     <Icon className="w-5 h-5" />
                   </div>
-                  <h3 className="font-semibold text-white">{cat.title}</h3>
+                  <h3 className="font-semibold text-headline">{cat.title}</h3>
                 </div>
 
                 <div className="flex flex-wrap gap-2">
                   {cat.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="text-xs px-2.5 py-1 rounded-md bg-surface-hover text-slate-300 border border-surface-border/80"
+                      className="text-xs px-2.5 py-1 rounded-md bg-background/70 text-bodytext border border-surface-border font-mono"
                     >
                       {skill}
                     </span>
@@ -77,4 +77,3 @@ export default function ExperienceSkills() {
     </section>
   );
 }
-

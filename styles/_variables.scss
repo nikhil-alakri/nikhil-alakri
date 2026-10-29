@@ -1,38 +1,32 @@
-// Design Tokens: Color Palette, Fonts & Dimensions
+// ==============================================================================
+// 🎨 SINGLE SOURCE OF TRUTH: THEME & COLOR PALETTE
+// ------------------------------------------------------------------------------
+// To change your entire portfolio's color theme in the future, simply update
+// the 4 hex values below. Everything (SCSS & Tailwind) will update automatically!
+// ==============================================================================
 
-// Fonts
-$font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-$font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+// 1. Base Canvas / Background
+$color-bg:             #113946;  // Deep Oceanic Teal (Main canvas)
+$color-bg-surface:     #0d2b35;  // Slightly deeper tone for cards & navbars
+$color-bg-elevated:    #164655;  // Highlighted / hover surface state
 
-// Dark Obsidian Theme Palette
-$bg-base: #06080f;
-$bg-surface: #0d121f;
-$bg-surface-elevated: #141c2e;
-$bg-surface-hover: #19243b;
+// 2. Accents & Highlighting
+$color-accent:         #BCA37F;  // Warm Brass / Sand (Borders, tags, indicators)
+$color-accent-subtle:  rgba(188, 163, 127, 0.2); // Subtle glow & border opacity
 
-// Accents
-$cyan-primary: #38bdf8;
-$cyan-hover: #0ea5e9;
-$cyan-glow: rgba(56, 189, 248, 0.2);
+// 3. Typography & Body Text
+$color-text-primary:   #FFF2D8;  // Linen / Warm Ivory (Headings, primary CTA buttons)
+$color-text-secondary: #EAD7BB;  // Warm Parchment (Descriptions, body paragraphs)
+$color-text-muted:     #9bb3bc;  // Soft slate-teal (Meta labels, timestamps)
 
-$indigo-accent: #818cf8;
-$indigo-glow: rgba(129, 140, 248, 0.15);
+// 4. Status
+$color-status:         #5eead4;  // Teal-cyan for active availability dot
 
-$emerald-status: #34d399;
-$emerald-glow: rgba(52, 211, 153, 0.2);
+// ------------------------------------------------------------------------------
+// Fonts & Transitions
+// ------------------------------------------------------------------------------
+$font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
-// Borders & Lines
-$border-subtle: rgba(255, 255, 255, 0.08);
-$border-medium: rgba(255, 255, 255, 0.14);
-$border-active: rgba(56, 189, 248, 0.45);
-
-// Typography colors
-$text-white: #ffffff;
-$text-bright: #f1f5f9;
-$text-body: #94a3b8;
-$text-muted: #64748b;
-
-// Transitions & Curves
 $ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
-$duration-fast: 0.2s;
-$duration-normal: 0.35s;
+$duration-normal: 0.3s;

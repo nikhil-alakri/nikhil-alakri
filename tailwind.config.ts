@@ -11,21 +11,26 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#06080f",
+        background: "var(--color-bg)",
         surface: {
-          DEFAULT: "#0d121f",
-          elevated: "#141c2e",
-          hover: "#19243b",
-          border: "rgba(255, 255, 255, 0.08)",
+          DEFAULT: "var(--color-surface)",
+          elevated: "var(--color-surface-elevated)",
+          hover: "var(--color-surface-elevated)",
+          border: "var(--color-border)",
+          "border-hover": "var(--color-border-hover)",
         },
         primary: {
-          DEFAULT: "#38bdf8",
-          hover: "#0ea5e9",
+          DEFAULT: "var(--color-text-primary)",
+          hover: "var(--color-accent)",
         },
         accent: {
-          DEFAULT: "#818cf8",
-          hover: "#6366f1",
+          DEFAULT: "var(--color-accent)",
+          hover: "var(--color-text-primary)",
         },
+        headline: "var(--color-text-primary)",
+        bodytext: "var(--color-text-secondary)",
+        mutedtext: "var(--color-text-muted)",
+        status: "var(--color-status)",
       },
       fontFamily: {
         sans: [
@@ -33,8 +38,6 @@ const config: Config = {
           "'Plus Jakarta Sans'",
           "-apple-system",
           "BlinkMacSystemFont",
-          "'Segoe UI'",
-          "Roboto",
           "sans-serif",
         ],
         mono: [

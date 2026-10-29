@@ -10,7 +10,7 @@ const repos = [
     name: "cloud-telemetry-agent",
     description: "Lightweight daemon for streaming eBPF network metrics and kernel tracing events directly to collector nodes.",
     language: "Go",
-    langColor: "bg-cyan-400",
+    langColor: "bg-teal-400",
     stars: 38,
     forks: 6,
     link: "https://github.com/nikhil-alakri",
@@ -19,7 +19,7 @@ const repos = [
     name: "resilient-task-queue",
     description: "Distributed task orchestrator with guaranteed at-least-once delivery, backoff retry queues, and dead-letter topics.",
     language: "TypeScript",
-    langColor: "bg-blue-400",
+    langColor: "bg-accent",
     stars: 52,
     forks: 11,
     link: "https://github.com/nikhil-alakri",
@@ -37,7 +37,7 @@ const repos = [
     name: "ui-animation-primitives",
     description: "Collection of reusable, accessible micro-interaction hooks and GSAP scroll trigger recipes for modern web apps.",
     language: "TypeScript",
-    langColor: "bg-blue-400",
+    langColor: "bg-accent",
     stars: 45,
     forks: 9,
     link: "https://github.com/nikhil-alakri",
@@ -73,13 +73,13 @@ export default function OpenSource() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-accent mb-2">Community</p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">Open Source Work</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-headline tracking-tight">Open Source Work</h2>
           </div>
           <a
             href="https://github.com/nikhil-alakri"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-white mt-4 sm:mt-0 transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-headline mt-4 sm:mt-0 transition-colors"
           >
             <Github className="w-4 h-4" />
             Explore all repositories on GitHub
@@ -94,26 +94,26 @@ export default function OpenSource() {
               href={repo.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="repo-card group p-6 rounded-2xl bg-surface border border-surface-border card-hover-border flex flex-col justify-between"
+              className="repo-card group p-6 rounded-2xl bg-surface border border-surface-border hover:border-accent hover:bg-surface-elevated transition-all flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <Code2 className="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" />
-                    <span className="font-semibold text-white group-hover:text-primary transition-colors">
+                    <Code2 className="w-4 h-4 text-mutedtext group-hover:text-accent transition-colors" />
+                    <span className="font-semibold text-headline group-hover:text-accent font-mono text-sm transition-colors">
                       {repo.name}
                     </span>
                   </div>
-                  <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors" />
+                  <ArrowUpRight className="w-4 h-4 text-mutedtext group-hover:text-headline transition-colors" />
                 </div>
 
-                <p className="text-sm text-slate-400 leading-relaxed mb-6">
+                <p className="text-sm text-bodytext leading-relaxed mb-6">
                   {repo.description}
                 </p>
               </div>
 
-              <div className="flex items-center gap-5 text-xs text-slate-400 pt-3 border-t border-surface-border/60">
-                <span className="flex items-center gap-1.5">
+              <div className="flex items-center gap-5 text-xs text-mutedtext pt-3 border-t border-surface-border/60">
+                <span className="flex items-center gap-1.5 font-mono">
                   <span className={`w-2.5 h-2.5 rounded-full ${repo.langColor}`} />
                   {repo.language}
                 </span>
@@ -133,4 +133,3 @@ export default function OpenSource() {
     </section>
   );
 }
-

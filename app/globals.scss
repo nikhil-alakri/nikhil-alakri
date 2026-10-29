@@ -10,33 +10,41 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 :root {
+  // Expose SCSS variables as global CSS custom properties for Tailwind & components
+  --color-bg: #{$color-bg};
+  --color-surface: #{$color-bg-surface};
+  --color-surface-elevated: #{$color-bg-elevated};
+  --color-border: #{rgba(188, 163, 127, 0.16)};
+  --color-border-hover: #{rgba(188, 163, 127, 0.45)};
+  
+  --color-accent: #{$color-accent};
+  --color-text-primary: #{$color-text-primary};
+  --color-text-secondary: #{$color-text-secondary};
+  --color-text-muted: #{$color-text-muted};
+  --color-status: #{$color-status};
+
   --font-sans: #{$font-sans};
   --font-mono: #{$font-mono};
-  --bg-base: #{$bg-base};
-  --bg-surface: #{$bg-surface};
-  --bg-surface-elevated: #{$bg-surface-elevated};
-  --color-primary: #{$cyan-primary};
-  --color-accent: #{$indigo-accent};
 }
 
 html {
-  background-color: $bg-base;
-  color: $text-bright;
-  font-family: $font-sans;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
 }
 
 body {
-  font-family: $font-sans;
-  background-color: $bg-base;
-  color: $text-bright;
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
   overflow-x: hidden;
 }
 
 code, kbd, samp, pre {
-  font-family: $font-mono;
+  font-family: var(--font-mono);
 }
 
-// Lenis smooth scroll classes
+// Lenis smooth scroll
 html.lenis, html.lenis body {
   height: auto;
 }
@@ -57,25 +65,25 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
-// Custom modern scrollbar
+// Custom editorial scrollbar
 ::-webkit-scrollbar {
   width: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: $bg-base;
+  background: var(--color-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(188, 163, 127, 0.25);
   border-radius: 9999px;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.22);
+    background: rgba(188, 163, 127, 0.45);
   }
 }
 
-// Specialized SCSS component utility classes
+// Global utility card classes
 .glass-panel {
   @include glass-card;
 }

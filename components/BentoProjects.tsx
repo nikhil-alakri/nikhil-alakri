@@ -16,7 +16,6 @@ const projects = [
     isExternal: false,
     icon: Activity,
     tags: ["Go", "OpenTelemetry", "eBPF", "Kafka", "ClickHouse"],
-    accent: "from-sky-500/20 to-indigo-500/10",
   },
   {
     title: "Project One",
@@ -27,7 +26,6 @@ const projects = [
     isExternal: false,
     icon: Cpu,
     tags: ["TypeScript", "Distributed Caching", "Docker", "PostgreSQL", "Redis"],
-    accent: "from-purple-500/20 to-pink-500/10",
   },
   {
     title: "ITPO Web Platform",
@@ -39,7 +37,6 @@ const projects = [
     externalUrl: "https://itpo.vercel.app/",
     icon: Layers,
     tags: ["Fullstack", "Next.js", "Edge Deployment", "Vercel"],
-    accent: "from-emerald-500/20 to-teal-500/10",
   },
 ];
 
@@ -71,10 +68,10 @@ export default function BentoProjects() {
       <div className="max-w-5xl mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-2">Portfolio</p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">Major Projects</h2>
+            <p className="text-xs font-semibold uppercase tracking-wider text-accent mb-2">Portfolio</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-headline tracking-tight">Major Projects</h2>
           </div>
-          <p className="text-slate-400 text-sm max-w-md mt-2 md:mt-0">
+          <p className="text-bodytext text-sm max-w-md mt-2 md:mt-0">
             Dedicated case studies and production platforms with custom subpath routing.
           </p>
         </div>
@@ -85,28 +82,23 @@ export default function BentoProjects() {
             return (
               <div
                 key={project.title}
-                className="project-card group relative flex flex-col justify-between p-6 rounded-2xl bg-surface border border-surface-border card-hover-border overflow-hidden"
+                className="project-card group relative flex flex-col justify-between p-6 rounded-2xl bg-surface border border-surface-border hover:border-accent hover:bg-surface-elevated transition-all duration-300"
               >
-                {/* Subtle top corner gradient */}
-                <div
-                  className={`absolute -top-16 -right-16 w-36 h-36 bg-gradient-to-br ${project.accent} blur-2xl group-hover:scale-150 transition-transform duration-500`}
-                />
-
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="p-2.5 rounded-xl bg-surface-hover border border-surface-border text-primary">
+                    <div className="p-2.5 rounded-xl bg-surface-elevated border border-surface-border text-accent">
                       <Icon className="w-5 h-5" />
                     </div>
-                    <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                    <span className="text-[11px] font-semibold uppercase tracking-wider text-mutedtext">
                       {project.category}
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-primary transition-colors">
+                  <h3 className="text-xl font-bold text-headline mb-2 group-hover:text-accent transition-colors">
                     {project.title}
                   </h3>
 
-                  <p className="text-sm text-slate-400 leading-relaxed mb-6">
+                  <p className="text-sm text-bodytext leading-relaxed mb-6">
                     {project.description}
                   </p>
                 </div>
@@ -116,7 +108,7 @@ export default function BentoProjects() {
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-xs px-2.5 py-1 rounded-md bg-surface-hover/80 border border-surface-border text-slate-300"
+                        className="text-xs px-2.5 py-1 rounded-md bg-background/60 border border-surface-border text-bodytext font-mono"
                       >
                         {tag}
                       </span>
@@ -126,7 +118,7 @@ export default function BentoProjects() {
                   {project.isExternal ? (
                     <a
                       href={project.path}
-                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-white transition-colors"
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:text-headline transition-colors"
                     >
                       Visit Project ({project.path})
                       <ArrowUpRight className="w-4 h-4" />
@@ -134,7 +126,7 @@ export default function BentoProjects() {
                   ) : (
                     <Link
                       href={project.path}
-                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-white transition-colors"
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:text-headline transition-colors"
                     >
                       Read Case Study ({project.path})
                       <ArrowUpRight className="w-4 h-4" />
@@ -149,4 +141,3 @@ export default function BentoProjects() {
     </section>
   );
 }
-
