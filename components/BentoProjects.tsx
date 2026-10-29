@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight, Activity, Cpu, Layers } from "lucide-react";
 
 const projects = [
@@ -44,20 +43,12 @@ export default function BentoProjects() {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
     const ctx = gsap.context(() => {
-      gsap.from(".project-card", {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-        },
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "power2.out",
-      });
+      gsap.fromTo(
+        ".project-card",
+        { y: 24, opacity: 0.8 },
+        { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power2.out" }
+      );
     }, sectionRef);
 
     return () => ctx.revert();

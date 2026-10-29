@@ -73,7 +73,7 @@ export default function Hero() {
 
         {/* Dynamic Name in Selected Display Font */}
         <h1
-          className={`hero-title text-5xl sm:text-7xl lg:text-8xl tracking-normal text-headline mb-4 transition-all duration-300 ${activeFont.className}`}
+          className={`hero-title text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight tracking-normal text-headline mb-4 transition-all duration-300 ${activeFont.className}`}
           style={{ letterSpacing: activeFont.name === "Modak" ? "0.02em" : "normal" }}
         >
           Nikhil Alakri

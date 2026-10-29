@@ -2,37 +2,39 @@
 
 import { useEffect, ReactNode } from "react";
 import Lenis from "lenis";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+    if (typeof window === "undefined") return;
 
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      smoothWheel: true,
-      touchMultiplier: 1.5,
-    });
+    let lenis: Lenis | null = null;
+    let rafId: number;
 
-    lenis.on("scroll", ScrollTrigger.update);
+    try {
+      lenis = new Lenis({
+        duration: 0.9,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: "vertical",
+        gestureOrientation: "vertical",
+        smoothWheel: true,
+        touchMultiplier: 1.2,
+      });
 
-    const tickerCb = (time: number) => {
-      lenis.raf(time * 1000);
-    };
+      function raf(time: number) {
+        lenis?.raf(time);
+        rafId = requestAnimationFrame(raf);
+      }
 
-    gsap.ticker.add(tickerCb);
-    gsap.ticker.lagSmoothing(0);
+      rafId = requestAnimationFrame(raf);
+    } catch (e) {
+      console.warn("Lenis smooth scroll fallback to native:", e);
+    }
 
     return () => {
-      gsap.ticker.remove(tickerCb);
-      lenis.destroy();
+      if (rafId) cancelAnimationFrame(rafId);
+      lenis?.destroy();
     };
   }, []);
 
   return <>{children}</>;
 }
-

@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Github, Star, GitFork, Code2, ArrowUpRight } from "lucide-react";
 
 const repos = [
@@ -48,20 +47,12 @@ export default function OpenSource() {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
     const ctx = gsap.context(() => {
-      gsap.from(".repo-card", {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-        },
-        y: 30,
-        opacity: 0,
-        duration: 0.7,
-        stagger: 0.12,
-        ease: "power2.out",
-      });
+      gsap.fromTo(
+        ".repo-card",
+        { y: 20, opacity: 0.8 },
+        { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power2.out" }
+      );
     }, sectionRef);
 
     return () => ctx.revert();

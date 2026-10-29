@@ -6,7 +6,7 @@
 @tailwind components;
 @tailwind utilities;
 
-// Google Fonts: Display fonts (DynaPuff, Shrikhand, Gluten, Modak) + Body/Mono
+// Google Fonts: Display fonts + Body/Mono
 @import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;600;700&family=Gluten:wght@400;700&family=Modak&family=Shrikhand&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
@@ -43,7 +43,7 @@ body {
 }
 
 // ==============================================================================
-// 🌌 LAYERED DYNAMIC BACKGROUND (Grid + Radial Aura + Mesh Depth)
+// 🌌 LAYERED DYNAMIC BACKGROUND (High performance, no heavy SVG turbulence)
 // ==============================================================================
 .bg-scene {
   position: fixed;
@@ -52,26 +52,15 @@ body {
   z-index: 0;
   overflow: hidden;
 
-  // Layer 1: Geometric blueprint grid with radial fade
+  // Lightweight geometric blueprint dot grid with radial fade
   &::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: 
-      linear-gradient(to right, rgba(188, 163, 127, 0.07) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(188, 163, 127, 0.07) 1px, transparent 1px);
-    background-size: 48px 48px;
-    mask-image: radial-gradient(ellipse 90% 60% at 50% 10%, black 40%, transparent 80%);
-    -webkit-mask-image: radial-gradient(ellipse 90% 60% at 50% 10%, black 40%, transparent 80%);
-  }
-
-  // Layer 2: Subtle organic noise texture
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    opacity: 0.035;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    background-image: radial-gradient(rgba(188, 163, 127, 0.14) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse 90% 60% at 50% 20%, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 60% at 50% 20%, black 30%, transparent 80%);
   }
 }
 
@@ -100,7 +89,7 @@ code, kbd, samp, pre {
   font-family: var(--font-mono);
 }
 
-// Lenis smooth scroll
+// Lenis smooth scroll classes
 html.lenis, html.lenis body {
   height: auto;
 }
@@ -115,10 +104,6 @@ html.lenis, html.lenis body {
 
 .lenis.lenis-stopped {
   overflow: hidden;
-}
-
-.lenis.lenis-scrolling iframe {
-  pointer-events: none;
 }
 
 // Custom editorial scrollbar
