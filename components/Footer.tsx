@@ -59,7 +59,7 @@ export default function Footer() {
               LinkedIn
             </a>
             <span className="text-mutedtext/40">&bull;</span>
-            <span className="text-bodytext font-mono">nikhilalakri.tech</span>
+            <span className="text-bodytext">Nikhil Alakri</span>
           </div>
         </div>
       </div>

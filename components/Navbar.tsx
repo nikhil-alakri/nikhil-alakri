@@ -10,7 +10,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-2.5 group">
           <span className="w-2.5 h-2.5 rounded-full bg-status animate-pulse" />
           <span className="font-semibold text-headline tracking-tight group-hover:text-accent transition-colors">
-            nikhilalakri<span className="text-accent">.tech</span>
+            Nikhil Alakri
           </span>
         </Link>
 

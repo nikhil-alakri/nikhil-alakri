@@ -44,7 +44,7 @@ export default function ProjectOnePage() {
             View Repository
             <ExternalLink className="w-3.5 h-3.5 text-accent" />
           </a>
-          <span className="text-xs text-mutedtext font-mono">Path: <code className="text-accent">nikhilalakri.tech/project-one</code></span>
+          <span className="text-xs text-mutedtext font-mono">Path: <code className="text-accent">/project-one</code></span>
         </div>
 
         <div className="space-y-12">

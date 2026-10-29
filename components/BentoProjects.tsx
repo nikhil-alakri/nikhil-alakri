@@ -31,7 +31,7 @@ const projects = [
     title: "ITPO Web Platform",
     category: "Deployed Production App",
     description:
-      "Fullstack production application deployed on edge infrastructure. Integrated with dedicated subpath routing via nikhilalakri.tech/itpo.",
+      "Fullstack production application deployed on edge infrastructure. Integrated with dedicated subpath routing via /itpo.",
     path: "/itpo",
     isExternal: true,
     externalUrl: "https://itpo.vercel.app/",
