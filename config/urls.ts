@@ -9,43 +9,43 @@ export const SITE_URLS = {
   // 1. Core Domain
   baseUrl: "https://nikhilalakri.tech",
 
-  // 2. Contact & Email
+  // 2. Contact & Email (Set to safe domain placeholder)
   contact: {
-    email: "nikhilalakri@gmail.com",
-    mailto: "mailto:nikhilalakri@gmail.com",
+    email: "contact@nikhilalakri.tech",
+    mailto: "mailto:contact@nikhilalakri.tech",
   },
 
-  // 3. Social Profiles
+  // 3. Social Profiles (Set to generic placeholders)
   socials: {
-    github: "https://github.com/nikhil-alakri",
-    linkedin: "https://www.linkedin.com/in/nikhil-alakri/",
+    github: "https://github.com",
+    linkedin: "https://linkedin.com",
   },
 
-  // 4. Projects & Repositories
+  // 4. Projects & Repositories (Set to safe placeholders while work is in progress)
   projects: {
     odinEye: {
       title: "odin-eye",
       route: "/odin-eye",
-      github: "https://github.com/nikhil-alakri/odin-eye",
+      github: "https://github.com",
     },
     uiStore: {
       title: "UI-store",
-      github: "https://github.com/nikhil-alakri/UI-store",
+      github: "https://github.com",
     },
     ipo: {
       title: "ipo (ITPO)",
       route: "/itpo",
-      github: "https://github.com/nikhil-alakri/ipo",
-      liveApp: "https://itpo.vercel.app/",
+      github: "https://github.com",
+      liveApp: "" as string, // Leave empty to keep private while in progress
     },
     flightSearch: {
       title: "flight-search",
-      github: "https://github.com/nikhil-alakri/flight-search",
+      github: "https://github.com",
     },
     projectOne: {
       title: "Project One",
       route: "/project-one",
-      github: "https://github.com/nikhil-alakri",
+      github: "https://github.com",
     },
   },
 
@@ -60,4 +60,3 @@ export const SITE_URLS = {
 } as const;
 
 export default SITE_URLS;
-
