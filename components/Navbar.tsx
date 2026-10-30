@@ -7,8 +7,17 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-background/85 border-b border-surface-border">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 group py-1">
-          <span className="w-2.5 h-2.5 rounded-full bg-status animate-status-pulse shrink-0" />
+        <Link href="/" className="flex items-center gap-2.5 group py-1">
+          <div className="relative shrink-0">
+            <img
+              src="/favicon.png"
+              alt="Nikhil Alakri"
+              width={26}
+              height={26}
+              className="w-6 h-6 rounded-lg object-contain border border-surface-border group-hover:border-accent transition-colors"
+            />
+            <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-status border border-background animate-status-pulse" />
+          </div>
           <span className="font-primary font-bold text-headline tracking-wide group-hover:text-accent transition-colors text-base sm:text-lg">
             Nikhil Alakri
           </span>

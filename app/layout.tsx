@@ -11,24 +11,133 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Nikhil Alakri | Software Engineer & Open Source Builder",
-  description:
-    "Personal portfolio of Nikhil Alakri. Specializing in distributed systems, high-performance cloud infrastructure, and developer tooling.",
   metadataBase: new URL("https://nikhilalakri.tech"),
+  title: {
+    default: "Nikhil Alakri | Full-Stack & AI Engineer",
+    template: "%s | Nikhil Alakri",
+  },
+  description:
+    "Official portfolio of Nikhil Alakri. Full-Stack & AI Engineer based in Maharashtra, India. Specializing in multimodal AI, local ChromaDB RAG, TypeScript, Python, and high-performance cloud architectures.",
+  keywords: [
+    "Nikhil Alakri",
+    "nikhil alakri",
+    "nikhilalakri",
+    "nikhilalakri.tech",
+    "Nikhil Alakri portfolio",
+    "Full-Stack & AI Engineer",
+    "AI Engineer India",
+    "Software Engineer Maharashtra",
+    "Multimodal AI",
+    "RAG Pipelines",
+    "ChromaDB RAG",
+    "odin-eye",
+    "UI-store",
+    "TypeScript",
+    "Python",
+    "Next.js 15",
+    "PostgreSQL",
+    "Supabase",
+  ],
+  authors: [{ name: "Nikhil Alakri", url: "https://nikhilalakri.tech" }],
+  creator: "Nikhil Alakri",
+  publisher: "Nikhil Alakri",
+  alternates: {
+    canonical: "https://nikhilalakri.tech",
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
+  manifest: "/manifest.json",
   openGraph: {
-    title: "Nikhil Alakri | Software Engineer",
+    title: "Nikhil Alakri | Full-Stack & AI Engineer",
     description:
-      "Specializing in distributed systems, high-performance cloud infrastructure, and developer tooling.",
+      "Building in public & shipping end-to-end applications — from high-craft frontend interfaces to vector-backed AI engines.",
     url: "https://nikhilalakri.tech",
-    siteName: "Nikhil Alakri Portfolio",
+    siteName: "Nikhil Alakri",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1024,
+        height: 1024,
+        alt: "Nikhil Alakri Logo - Full-Stack & AI Engineer",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nikhil Alakri | Software Engineer",
+    title: "Nikhil Alakri | Full-Stack & AI Engineer",
     description:
-      "Specializing in distributed systems, high-performance cloud infrastructure, and developer tooling.",
+      "Building in public & shipping end-to-end applications — from high-craft frontend interfaces to vector-backed AI engines.",
+    images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+};
+
+const jsonLdPerson = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Nikhil Alakri",
+  alternateName: ["nikhil alakri", "nikhilalakri"],
+  url: "https://nikhilalakri.tech",
+  image: "https://nikhilalakri.tech/icon-512.png",
+  jobTitle: "Full-Stack & AI Engineer",
+  worksFor: {
+    "@type": "Organization",
+    name: "Independent / Open Source Builder",
+  },
+  address: {
+    "@type": "PostalAddress",
+    addressRegion: "Maharashtra",
+    addressCountry: "India",
+  },
+  sameAs: [
+    "https://github.com/nikhil-alakri",
+    "https://www.linkedin.com/in/nikhil-alakri/",
+  ],
+  description:
+    "Full-Stack & AI Engineer specializing in multimodal AI & RAG pipelines, high-craft web applications, and scalable backend APIs.",
+  knowsAbout: [
+    "Artificial Intelligence",
+    "Multimodal AI",
+    "Retrieval-Augmented Generation (RAG)",
+    "ChromaDB",
+    "TypeScript",
+    "Python",
+    "Next.js",
+    "PostgreSQL",
+    "Full-Stack Web Development",
+  ],
+};
+
+const jsonLdWebsite = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Nikhil Alakri",
+  url: "https://nikhilalakri.tech",
+  description: "Official portfolio of Nikhil Alakri, Full-Stack & AI Engineer.",
+  author: {
+    "@type": "Person",
+    name: "Nikhil Alakri",
   },
 };
 
@@ -45,6 +154,15 @@ export default function RootLayout({
         <link
           href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
           rel="stylesheet"
+        />
+        {/* Schema.org Structured Data for Top Google Search Ranking & Knowledge Graph */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdPerson) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebsite) }}
         />
       </head>
       <body className="bg-background text-bodytext font-sans antialiased selection:bg-accent/30 selection:text-headline">
