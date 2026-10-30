@@ -1,9 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Github, Linkedin, ArrowUpRight } from "lucide-react";
 
 export default function Navbar() {
+  const pathname = usePathname();
+
+  // Hide navbar completely on clean embedded routes like /itpo
+  if (pathname === "/itpo" || pathname?.startsWith("/itpo/")) {
+    return null;
+  }
+
   return (
     <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-background/85 border-b border-surface-border">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
