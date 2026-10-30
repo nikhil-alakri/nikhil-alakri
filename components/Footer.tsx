@@ -30,14 +30,14 @@ export default function Footer() {
             <button
               onClick={scrollToTop}
               aria-label="Back to top"
-              className="p-3 rounded-xl bg-surface border border-surface-border text-mutedtext hover:text-headline hover:border-accent transition-colors flex items-center justify-center shrink-0 min-w-[44px] min-h-[44px]"
+              className="p-3 rounded-xl bg-surface border border-surface-border text-bodytext hover:text-headline hover:border-accent transition-colors flex items-center justify-center shrink-0 min-w-[44px] min-h-[44px]"
             >
               <ArrowUp className="w-4 h-4" />
             </button>
           </div>
         </div>
 
-        <div className="pt-6 sm:pt-8 border-t border-surface-border/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-mutedtext">
+        <div className="pt-6 sm:pt-8 border-t border-surface-border/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-bodytext">
           <p>&copy; {new Date().getFullYear()} Nikhil Alakri. All rights reserved.</p>
 
           <div className="flex items-center gap-5 sm:gap-6">
@@ -45,7 +45,7 @@ export default function Footer() {
               href={SITE_URLS.socials.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-headline flex items-center gap-1.5 transition-colors py-1"
+              className="text-bodytext hover:text-headline flex items-center gap-1.5 transition-colors py-1"
             >
               <Github className="w-3.5 h-3.5" />
               GitHub
@@ -54,13 +54,13 @@ export default function Footer() {
               href={SITE_URLS.socials.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-headline flex items-center gap-1.5 transition-colors py-1"
+              className="text-bodytext hover:text-headline flex items-center gap-1.5 transition-colors py-1"
             >
               <Linkedin className="w-3.5 h-3.5" />
               LinkedIn
             </a>
-            <span className="text-mutedtext/40">&bull;</span>
-            <span className="text-bodytext">Nikhil Alakri</span>
+            <span className="text-bodytext" aria-hidden="true">&bull;</span>
+            <span className="text-bodytext font-medium">Nikhil Alakri</span>
           </div>
         </div>
       </div>

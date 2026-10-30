@@ -14,7 +14,7 @@ export default function OdinEyePage() {
       <main className="max-w-4xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-20 sm:pb-24 flex-grow">
         <Link
           href={`/${SITE_URLS.nav.projects}`}
-          className="inline-flex items-center gap-2 text-sm text-mutedtext hover:text-headline transition-colors mb-8"
+          className="inline-flex items-center gap-2 text-sm text-bodytext hover:text-headline transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Portfolio
@@ -44,7 +44,7 @@ export default function OdinEyePage() {
             View Repository on GitHub
             <ExternalLink className="w-3.5 h-3.5 text-accent" />
           </a>
-          <span className="text-xs text-mutedtext font-mono">Path: <code className="text-accent">/odin-eye</code></span>
+          <span className="text-xs text-bodytext font-mono">Path: <code className="text-accent">/odin-eye</code></span>
         </div>
 
         <div className="space-y-12">

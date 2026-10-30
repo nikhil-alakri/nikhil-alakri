@@ -10,13 +10,13 @@ $color-bg-surface:     #0c2a34;  // Card surfaces & navigation
 $color-bg-elevated:    #164655;  // Hover surface state
 
 // 2. Accents & Highlighting
-$color-accent:         #BCA37F;  // Warm Brass / Sand (Borders, tags, highlights)
-$color-accent-subtle:  rgba(188, 163, 127, 0.2); // Subtle glow & border opacity
+$color-accent:         #cbb594;  // Calibrated Warm Brass / Sand (WCAG AA compliant > 5.2:1 contrast)
+$color-accent-subtle:  rgba(203, 181, 148, 0.2); // Subtle glow & border opacity
 
 // 3. Typography & Body Text
 $color-text-primary:   #FFF2D8;  // Linen / Warm Ivory (Headings & primary CTAs)
 $color-text-secondary: #EAD7BB;  // Warm Parchment (Descriptions & body text)
-$color-text-muted:     #9bb3bc;  // Soft muted labels & timestamps
+$color-text-muted:     #a8c1cb;  // Calibrated Soft Teal (WCAG AA compliant > 5.5:1 contrast)
 
 // 4. Status
 $color-status:         #5eead4;  // Availability indicator dot

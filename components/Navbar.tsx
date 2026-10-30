@@ -20,7 +20,8 @@ export default function Navbar() {
           <div className="relative shrink-0">
             <img
               src="/favicon.png"
-              alt="Nikhil Alakri"
+              alt=""
+              aria-hidden="true"
               width={26}
               height={26}
               className="w-6 h-6 rounded-lg object-contain border border-surface-border group-hover:border-accent transition-colors"

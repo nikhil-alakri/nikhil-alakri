@@ -39,7 +39,7 @@ export default function Hero() {
             <span className="w-1.5 h-1.5 rounded-full bg-status animate-status-pulse shrink-0" />
             <span>Available for Roles &amp; Collaborations</span>
           </div>
-          <span className="hidden sm:inline-flex items-center text-xs text-mutedtext font-medium px-3 py-1 rounded-full bg-surface/50 border border-surface-border">
+          <span className="hidden sm:inline-flex items-center text-xs text-bodytext font-medium px-3 py-1 rounded-full bg-surface/70 border border-surface-border">
             📍 Maharashtra, India · Building for the open web
           </span>
         </div>
@@ -111,9 +111,9 @@ export default function Hero() {
               <span className="w-3 h-3 rounded-full bg-[#ff5f56]/80 inline-block" />
               <span className="w-3 h-3 rounded-full bg-[#ffbd2e]/80 inline-block" />
               <span className="w-3 h-3 rounded-full bg-[#27c93f]/80 inline-block" />
-              <span className="ml-2 text-xs font-mono text-mutedtext">whoami.ts</span>
+              <span className="ml-2 text-xs font-mono text-bodytext">whoami.ts</span>
             </div>
-            <span className="text-[11px] font-mono text-accent">Engineer Object</span>
+            <span className="text-xs font-mono text-accent">Engineer Object</span>
           </div>
           <pre className="text-xs sm:text-sm font-mono text-bodytext overflow-x-auto leading-relaxed">
             <code>

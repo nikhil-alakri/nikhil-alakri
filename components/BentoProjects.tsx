@@ -94,7 +94,7 @@ export default function BentoProjects() {
                     <div className="p-2 sm:p-2.5 rounded-xl bg-surface-elevated border border-surface-border text-accent">
                       <Icon className="w-5 h-5" />
                     </div>
-                    <span className="text-[11px] font-semibold uppercase tracking-wider text-mutedtext">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-accent">
                       {project.category}
                     </span>
                   </div>
@@ -150,7 +150,8 @@ export default function BentoProjects() {
                         href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-1.5 rounded-lg text-mutedtext hover:text-headline hover:bg-surface-elevated transition-colors"
+                        className="p-1.5 rounded-lg text-bodytext hover:text-headline hover:bg-surface-elevated transition-colors"
+                        aria-label={`View ${project.title} GitHub Repository`}
                         title="View GitHub Repository"
                       >
                         <Github className="w-4 h-4" />

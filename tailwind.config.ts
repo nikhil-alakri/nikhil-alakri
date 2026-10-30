@@ -29,6 +29,7 @@ const config: Config = {
         },
         headline: "var(--color-text-primary)",
         bodytext: "var(--color-text-secondary)",
+        secondary: "var(--color-text-secondary)",
         mutedtext: "var(--color-text-muted)",
         status: "var(--color-status)",
       },

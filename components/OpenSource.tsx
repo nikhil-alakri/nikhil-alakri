@@ -87,12 +87,12 @@ export default function OpenSource() {
               <div>
                 <div className="flex items-center justify-between mb-2.5 sm:mb-3">
                   <div className="flex items-center gap-2">
-                    <Code2 className="w-4 h-4 text-mutedtext group-hover:text-accent transition-colors shrink-0" />
+                    <Code2 className="w-4 h-4 text-accent group-hover:text-primary transition-colors shrink-0" />
                     <span className="font-semibold text-headline group-hover:text-accent font-mono text-sm transition-colors">
                       {repo.name}
                     </span>
                   </div>
-                  <ArrowUpRight className="w-4 h-4 text-mutedtext group-hover:text-headline transition-colors shrink-0" />
+                  <ArrowUpRight className="w-4 h-4 text-bodytext group-hover:text-headline transition-colors shrink-0" />
                 </div>
 
                 <p className="text-sm text-bodytext leading-relaxed mb-5 sm:mb-6">
@@ -100,7 +100,7 @@ export default function OpenSource() {
                 </p>
               </div>
 
-              <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-mutedtext pt-3 border-t border-surface-border/60">
+              <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-bodytext pt-3 border-t border-surface-border/60">
                 <span className="flex items-center gap-1.5 font-mono">
                   <span className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full ${repo.langColor}`} />
                   {repo.language}

@@ -14,7 +14,7 @@ export default function ProjectOnePage() {
       <main className="max-w-4xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-20 sm:pb-24 flex-grow">
         <Link
           href={`/${SITE_URLS.nav.projects}`}
-          className="inline-flex items-center gap-2 text-sm text-mutedtext hover:text-headline transition-colors mb-8"
+          className="inline-flex items-center gap-2 text-sm text-bodytext hover:text-headline transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Portfolio
