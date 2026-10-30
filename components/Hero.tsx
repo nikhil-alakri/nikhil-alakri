@@ -42,7 +42,7 @@ export default function Hero() {
 
         {/* Dynamic Name in Primary DynaPuff Font (SSR painted immediately, zero LCP delay) */}
         <h1
-          className="hero-title font-primary text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-normal text-headline mb-4 transition-all duration-300 break-words"
+          className="hero-title font-primary text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-normal text-headline mb-4 break-words"
           style={{
             opacity: 1,
             visibility: "visible",
