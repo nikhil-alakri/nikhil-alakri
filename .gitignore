@@ -15,15 +15,13 @@
 
 # misc
 .DS_Store
+# credentials & environment variables
+.env
+.env.*
+!.env.example
 *.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# local env files
-.env*.local
+*.key
+*.cert
 
 # vercel
 .vercel

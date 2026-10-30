@@ -159,11 +159,15 @@ export default function RootLayout({
         {/* Schema.org Structured Data for Top Google Search Ranking & Knowledge Graph */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdPerson) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLdPerson).replace(/</g, "\\u003c"),
+          }}
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebsite) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLdWebsite).replace(/</g, "\\u003c"),
+          }}
         />
       </head>
       <body className="bg-background text-bodytext font-sans antialiased selection:bg-accent/30 selection:text-headline">
