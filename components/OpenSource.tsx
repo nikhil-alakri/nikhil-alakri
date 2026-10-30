@@ -6,40 +6,36 @@ import { Github, Star, GitFork, Code2, ArrowUpRight } from "lucide-react";
 
 const repos = [
   {
-    name: "cloud-telemetry-agent",
-    description: "Lightweight daemon for streaming eBPF network metrics and kernel tracing events directly to collector nodes.",
-    language: "Go",
+    name: "odin-eye",
+    description: "The all-seeing ethical AI crawler & full-stack reverse-engineering engine with multimodal vision and local ChromaDB RAG.",
+    language: "Python",
+    langColor: "bg-blue-400",
+    tags: ["Multimodal AI", "ChromaDB RAG"],
+    link: "https://github.com/nikhil-alakri/odin-eye",
+  },
+  {
+    name: "UI-store",
+    description: "Modular collection of reusable frontend components, interactive UI patterns, and clean design tokens.",
+    language: "TypeScript",
     langColor: "bg-teal-400",
-    stars: 38,
-    forks: 6,
-    link: "https://github.com/nikhil-alakri",
+    tags: ["Design Systems", "UI Components"],
+    link: "https://github.com/nikhil-alakri/UI-store",
   },
   {
-    name: "resilient-task-queue",
-    description: "Distributed task orchestrator with guaranteed at-least-once delivery, backoff retry queues, and dead-letter topics.",
+    name: "ipo",
+    description: "TypeScript-powered application for tracking, analyzing, and visualizing Initial Public Offerings (IPOs) and market listings.",
     language: "TypeScript",
     langColor: "bg-accent",
-    stars: 52,
-    forks: 11,
-    link: "https://github.com/nikhil-alakri",
+    tags: ["Financial Data", "Full-Stack"],
+    link: "https://github.com/nikhil-alakri/ipo",
   },
   {
-    name: "dev-cli-toolkit",
-    description: "Productivity CLI utility suite for automating local microservice orchestrations, env switching, and git sanity checks.",
-    language: "Rust",
+    name: "flight-search",
+    description: "Responsive flight discovery and itinerary comparison engine with dynamic multi-criteria filtering and fare aggregation.",
+    language: "Full-Stack",
     langColor: "bg-amber-400",
-    stars: 24,
-    forks: 4,
-    link: "https://github.com/nikhil-alakri",
-  },
-  {
-    name: "ui-animation-primitives",
-    description: "Collection of reusable, accessible micro-interaction hooks and GSAP scroll trigger recipes for modern web apps.",
-    language: "TypeScript",
-    langColor: "bg-accent",
-    stars: 45,
-    forks: 9,
-    link: "https://github.com/nikhil-alakri",
+    tags: ["Search Engine", "Web UI"],
+    link: "https://github.com/nikhil-alakri/flight-search",
   },
 ];
 
@@ -103,19 +99,18 @@ export default function OpenSource() {
                 </p>
               </div>
 
-              <div className="flex items-center gap-4 sm:gap-5 text-xs text-mutedtext pt-3 border-t border-surface-border/60">
+              <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-mutedtext pt-3 border-t border-surface-border/60">
                 <span className="flex items-center gap-1.5 font-mono">
                   <span className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full ${repo.langColor}`} />
                   {repo.language}
                 </span>
-                <span className="flex items-center gap-1">
-                  <Star className="w-3.5 h-3.5" />
-                  {repo.stars}
-                </span>
-                <span className="flex items-center gap-1">
-                  <GitFork className="w-3.5 h-3.5" />
-                  {repo.forks}
-                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {repo.tags.map((t) => (
+                    <span key={t} className="text-[10px] sm:text-[11px] px-2 py-0.5 rounded bg-surface-elevated text-accent border border-surface-border font-mono">
+                      {t}
+                    </span>
+                  ))}
+                </div>
               </div>
             </a>
           ))}

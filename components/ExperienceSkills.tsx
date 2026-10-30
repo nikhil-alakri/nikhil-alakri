@@ -1,37 +1,37 @@
 "use client";
 
-import { Cpu, Server, Globe, Database, ShieldCheck, Terminal } from "lucide-react";
+import { Sparkles, Server, Globe, Database, Cloud, Terminal } from "lucide-react";
 
 const skillCategories = [
   {
-    title: "Backend & Systems",
+    title: "AI & Vector Engineering",
+    icon: Sparkles,
+    skills: ["Multimodal AI", "ChromaDB RAG", "Vector DBs", "Embeddings", "Python", "Local RAG"],
+  },
+  {
+    title: "Full-Stack & Backend APIs",
     icon: Server,
-    skills: ["Go", "Node.js", "TypeScript", "Python", "gRPC", "REST APIs", "Microservices"],
+    skills: ["TypeScript", "Python", "JavaScript", "Node.js", "REST APIs", "System Architecture"],
   },
   {
-    title: "Distributed Systems & Telemetry",
-    icon: Cpu,
-    skills: ["eBPF", "OpenTelemetry", "Kafka", "ClickHouse", "Prometheus", "Grafana"],
-  },
-  {
-    title: "Databases & Storage",
+    title: "Databases & ORMs",
     icon: Database,
-    skills: ["PostgreSQL", "Redis", "MongoDB", "SQL Optimization", "Data Modeling"],
+    skills: ["PostgreSQL", "Supabase", "MongoDB", "Drizzle ORM", "SQL Schema Design"],
   },
   {
-    title: "Cloud & DevOps",
-    icon: ShieldCheck,
-    skills: ["Docker", "Kubernetes", "AWS", "Vercel", "CI/CD Pipelines", "Linux"],
+    title: "Cloud & Infrastructure",
+    icon: Cloud,
+    skills: ["Google Cloud", "Railway", "Docker", "Vercel Edge", "Git", "Makefile"],
   },
   {
-    title: "Frontend & Creative UI",
+    title: "Frontend & Design Systems",
     icon: Globe,
-    skills: ["Next.js", "React", "SCSS", "Tailwind CSS", "GSAP", "Lenis Scroll"],
+    skills: ["Next.js", "React", "Tailwind CSS", "SCSS", "UI-store", "Responsive Design"],
   },
   {
-    title: "Developer Tooling",
+    title: "Developer Tooling & Automation",
     icon: Terminal,
-    skills: ["Git", "CLI Architecture", "System Debugging", "Performance Profiling", "Shell Scripting"],
+    skills: ["Shell / Bash", "CLI Engineering", "Automated Pipelines", "Debugging", "Performance Profiling"],
   },
 ];
 
