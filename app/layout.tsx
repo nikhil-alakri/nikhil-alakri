@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.scss";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
+import { SITE_URLS } from "@/config/urls";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -11,7 +12,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://nikhilalakri.tech"),
+  metadataBase: new URL(SITE_URLS.baseUrl),
   title: {
     default: "Nikhil Alakri | Full-Stack & AI Engineer",
     template: "%s | Nikhil Alakri",
@@ -38,11 +39,11 @@ export const metadata: Metadata = {
     "PostgreSQL",
     "Supabase",
   ],
-  authors: [{ name: "Nikhil Alakri", url: "https://nikhilalakri.tech" }],
+  authors: [{ name: "Nikhil Alakri", url: SITE_URLS.baseUrl }],
   creator: "Nikhil Alakri",
   publisher: "Nikhil Alakri",
   alternates: {
-    canonical: "https://nikhilalakri.tech",
+    canonical: SITE_URLS.baseUrl,
   },
   icons: {
     icon: [
@@ -60,7 +61,7 @@ export const metadata: Metadata = {
     title: "Nikhil Alakri | Full-Stack & AI Engineer",
     description:
       "Building in public & shipping end-to-end applications — from high-craft frontend interfaces to vector-backed AI engines.",
-    url: "https://nikhilalakri.tech",
+    url: SITE_URLS.baseUrl,
     siteName: "Nikhil Alakri",
     locale: "en_US",
     type: "website",
@@ -98,8 +99,8 @@ const jsonLdPerson = {
   "@type": "Person",
   name: "Nikhil Alakri",
   alternateName: ["nikhil alakri", "nikhilalakri"],
-  url: "https://nikhilalakri.tech",
-  image: "https://nikhilalakri.tech/icon-512.png",
+  url: SITE_URLS.baseUrl,
+  image: `${SITE_URLS.baseUrl}/icon-512.png`,
   jobTitle: "Full-Stack & AI Engineer",
   worksFor: {
     "@type": "Organization",
@@ -111,8 +112,8 @@ const jsonLdPerson = {
     addressCountry: "India",
   },
   sameAs: [
-    "https://github.com/nikhil-alakri",
-    "https://www.linkedin.com/in/nikhil-alakri/",
+    SITE_URLS.socials.github,
+    SITE_URLS.socials.linkedin,
   ],
   description:
     "Full-Stack & AI Engineer specializing in multimodal AI & RAG pipelines, high-craft web applications, and scalable backend APIs.",
@@ -133,7 +134,7 @@ const jsonLdWebsite = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "Nikhil Alakri",
-  url: "https://nikhilalakri.tech",
+  url: SITE_URLS.baseUrl,
   description: "Official portfolio of Nikhil Alakri, Full-Stack & AI Engineer.",
   author: {
     "@type": "Person",

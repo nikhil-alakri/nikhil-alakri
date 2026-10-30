@@ -3,39 +3,40 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { Github, Star, GitFork, Code2, ArrowUpRight } from "lucide-react";
+import { SITE_URLS } from "@/config/urls";
 
 const repos = [
   {
-    name: "odin-eye",
+    name: SITE_URLS.projects.odinEye.title,
     description: "The all-seeing ethical AI crawler & full-stack reverse-engineering engine with multimodal vision and local ChromaDB RAG.",
     language: "Python",
     langColor: "bg-blue-400",
     tags: ["Multimodal AI", "ChromaDB RAG"],
-    link: "https://github.com/nikhil-alakri/odin-eye",
+    link: SITE_URLS.projects.odinEye.github,
   },
   {
-    name: "UI-store",
+    name: SITE_URLS.projects.uiStore.title,
     description: "Modular collection of reusable frontend components, interactive UI patterns, and clean design tokens.",
     language: "TypeScript",
     langColor: "bg-teal-400",
     tags: ["Design Systems", "UI Components"],
-    link: "https://github.com/nikhil-alakri/UI-store",
+    link: SITE_URLS.projects.uiStore.github,
   },
   {
-    name: "ipo",
+    name: SITE_URLS.projects.ipo.title,
     description: "TypeScript-powered application for tracking, analyzing, and visualizing Initial Public Offerings (IPOs) and market listings.",
     language: "TypeScript",
     langColor: "bg-accent",
     tags: ["Financial Data", "Full-Stack"],
-    link: "https://github.com/nikhil-alakri/ipo",
+    link: SITE_URLS.projects.ipo.github,
   },
   {
-    name: "flight-search",
+    name: SITE_URLS.projects.flightSearch.title,
     description: "Responsive flight discovery and itinerary comparison engine with dynamic multi-criteria filtering and fare aggregation.",
     language: "Full-Stack",
     langColor: "bg-amber-400",
     tags: ["Search Engine", "Web UI"],
-    link: "https://github.com/nikhil-alakri/flight-search",
+    link: SITE_URLS.projects.flightSearch.github,
   },
 ];
 
@@ -63,7 +64,7 @@ export default function OpenSource() {
             <h2 className="font-primary text-2xl sm:text-4xl font-bold text-headline tracking-tight">Open Source Work</h2>
           </div>
           <a
-            href="https://github.com/nikhil-alakri"
+            href={SITE_URLS.socials.github}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-accent hover:text-headline mt-3 sm:mt-0 transition-colors py-1"

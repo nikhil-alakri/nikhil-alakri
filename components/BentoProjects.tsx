@@ -4,49 +4,50 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { ArrowUpRight, Eye, Palette, TrendingUp, Plane, Github } from "lucide-react";
+import { SITE_URLS } from "@/config/urls";
 
 const projects = [
   {
-    title: "odin-eye",
+    title: SITE_URLS.projects.odinEye.title,
     category: "Multimodal AI & Reverse Engineering",
     description:
       "The all-seeing ethical AI crawler & full-stack reverse-engineering engine. Respects robots.txt while deconstructing modern web apps into relational database ERDs, REST API contracts, UI tokens, and executive boardroom PDF blueprints using multimodal vision and local ChromaDB RAG.",
-    path: "/odin-eye",
+    path: SITE_URLS.projects.odinEye.route,
     isExternal: false,
-    githubUrl: "https://github.com/nikhil-alakri/odin-eye",
+    githubUrl: SITE_URLS.projects.odinEye.github,
     icon: Eye,
     tags: ["Python", "Multimodal AI", "ChromaDB RAG", "System Architecture"],
   },
   {
-    title: "UI-store",
+    title: SITE_URLS.projects.uiStore.title,
     category: "Frontend Architecture & Design Systems",
     description:
       "A modular collection of reusable frontend components, interactive UI patterns, and clean design tokens engineered for rapid full-stack prototyping, high design fidelity, and seamless developer ergonomics.",
-    path: "https://github.com/nikhil-alakri/UI-store",
+    path: SITE_URLS.projects.uiStore.github,
     isExternal: true,
-    githubUrl: "https://github.com/nikhil-alakri/UI-store",
+    githubUrl: SITE_URLS.projects.uiStore.github,
     icon: Palette,
     tags: ["Frontend Architecture", "Design Systems", "CSS", "UI Components"],
   },
   {
-    title: "ipo (ITPO)",
+    title: SITE_URLS.projects.ipo.title,
     category: "Financial Analytics & Market Listings",
     description:
       "TypeScript-powered full-stack application designed for tracking, analyzing, and visualizing Initial Public Offerings (IPOs), market listings, and structured financial data workflows. Deployed to edge production.",
-    path: "/itpo",
+    path: SITE_URLS.projects.ipo.route,
     isExternal: false,
-    githubUrl: "https://github.com/nikhil-alakri/ipo",
+    githubUrl: SITE_URLS.projects.ipo.github,
     icon: TrendingUp,
     tags: ["TypeScript", "Financial Data", "Full-Stack", "Web App"],
   },
   {
-    title: "flight-search",
+    title: SITE_URLS.projects.flightSearch.title,
     category: "Search Engine & Aggregation",
     description:
       "Responsive flight discovery and itinerary comparison engine handling dynamic route queries, multi-criteria filtering, and real-time fare aggregation across destinations.",
-    path: "https://github.com/nikhil-alakri/flight-search",
+    path: SITE_URLS.projects.flightSearch.github,
     isExternal: true,
-    githubUrl: "https://github.com/nikhil-alakri/flight-search",
+    githubUrl: SITE_URLS.projects.flightSearch.github,
     icon: Plane,
     tags: ["Full-Stack", "Search Engine", "API Integration", "Web UI"],
   },

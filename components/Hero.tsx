@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ArrowDown, Copy, Check, ExternalLink, Terminal } from "lucide-react";
+import { SITE_URLS } from "@/config/urls";
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -23,7 +24,7 @@ export default function Hero() {
   }, []);
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText("nikhilalakri@gmail.com");
+    navigator.clipboard.writeText(SITE_URLS.contact.email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -67,7 +68,7 @@ export default function Hero() {
         {/* Action Buttons: Responsive stack on mobile, row on desktop */}
         <div className="hero-actions flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
           <a
-            href="#projects"
+            href={SITE_URLS.nav.projects}
             className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-primary text-background font-semibold hover:bg-accent transition-all shadow-md shadow-black/20 text-center"
           >
             Explore Projects
@@ -87,13 +88,13 @@ export default function Hero() {
             ) : (
               <>
                 <Copy className="w-4 h-4 text-accent" />
-                <span className="truncate">nikhilalakri@gmail.com</span>
+                <span className="truncate">{SITE_URLS.contact.email}</span>
               </>
             )}
           </button>
 
           <a
-            href="https://github.com/nikhil-alakri"
+            href={SITE_URLS.socials.github}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl bg-surface border border-surface-border text-bodytext hover:text-headline hover:border-accent transition-all text-center"

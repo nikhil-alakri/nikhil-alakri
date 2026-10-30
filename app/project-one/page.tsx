@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft, Cpu, Server, Database, ShieldAlert, Github, ExternalLink } from "lucide-react";
 import Footer from "@/components/Footer";
+import { SITE_URLS } from "@/config/urls";
 
 export const metadata = {
   title: "Project One Case Study | Nikhil Alakri",
@@ -12,7 +13,7 @@ export default function ProjectOnePage() {
     <div className="min-h-screen flex flex-col bg-background text-bodytext">
       <main className="max-w-4xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-20 sm:pb-24 flex-grow">
         <Link
-          href="/#projects"
+          href={`/${SITE_URLS.nav.projects}`}
           className="inline-flex items-center gap-2 text-sm text-mutedtext hover:text-headline transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -35,7 +36,7 @@ export default function ProjectOnePage() {
 
         <div className="flex flex-wrap items-center gap-4 pb-10 border-b border-surface-border mb-12">
           <a
-            href="https://github.com/nikhil-alakri"
+            href={SITE_URLS.projects.projectOne.github}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface border border-surface-border text-headline text-sm font-medium hover:border-accent transition-colors"

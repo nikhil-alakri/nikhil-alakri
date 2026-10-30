@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Github, Linkedin, ArrowUpRight } from "lucide-react";
+import { SITE_URLS } from "@/config/urls";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -15,7 +16,7 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-background/85 border-b border-surface-border">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2.5 group py-1">
+        <Link href={SITE_URLS.nav.home} className="flex items-center gap-2.5 group py-1">
           <div className="relative shrink-0">
             <img
               src="/favicon.png"
@@ -33,16 +34,16 @@ export default function Navbar() {
 
         {/* Desktop Navigation Links */}
         <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-bodytext">
-          <a href="#projects" className="hover:text-headline transition-colors">Projects</a>
-          <a href="#opensource" className="hover:text-headline transition-colors">Open Source</a>
-          <a href="#skills" className="hover:text-headline transition-colors">Stack</a>
-          <a href="#contact" className="hover:text-headline transition-colors">Contact</a>
+          <a href={SITE_URLS.nav.projects} className="hover:text-headline transition-colors">Projects</a>
+          <a href={SITE_URLS.nav.openSource} className="hover:text-headline transition-colors">Open Source</a>
+          <a href={SITE_URLS.nav.skills} className="hover:text-headline transition-colors">Stack</a>
+          <a href={SITE_URLS.nav.contact} className="hover:text-headline transition-colors">Contact</a>
         </nav>
 
         {/* Action icons & Mobile connect */}
         <div className="flex items-center gap-2 sm:gap-3">
           <a
-            href="https://github.com/nikhil-alakri"
+            href={SITE_URLS.socials.github}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub Profile"
@@ -51,7 +52,7 @@ export default function Navbar() {
             <Github className="w-4 h-4" />
           </a>
           <a
-            href="https://www.linkedin.com/in/nikhil-alakri/"
+            href={SITE_URLS.socials.linkedin}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn Profile"
@@ -60,7 +61,7 @@ export default function Navbar() {
             <Linkedin className="w-4 h-4" />
           </a>
           <a
-            href="#contact"
+            href={SITE_URLS.nav.contact}
             className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 sm:px-3.5 py-2 rounded-xl bg-primary text-background hover:bg-accent transition-all min-h-[38px]"
           >
             Connect

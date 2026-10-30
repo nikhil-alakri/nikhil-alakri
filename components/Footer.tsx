@@ -1,6 +1,7 @@
 "use client";
 
 import { Github, Linkedin, Mail, ArrowUp } from "lucide-react";
+import { SITE_URLS } from "@/config/urls";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -20,11 +21,11 @@ export default function Footer() {
 
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <a
-              href="mailto:nikhilalakri@gmail.com"
+              href={SITE_URLS.contact.mailto}
               className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-primary text-background font-semibold hover:bg-accent transition-all text-sm flex-1 sm:flex-initial"
             >
               <Mail className="w-4 h-4" />
-              <span>nikhilalakri@gmail.com</span>
+              <span>{SITE_URLS.contact.email}</span>
             </a>
             <button
               onClick={scrollToTop}
@@ -41,7 +42,7 @@ export default function Footer() {
 
           <div className="flex items-center gap-5 sm:gap-6">
             <a
-              href="https://github.com/nikhil-alakri"
+              href={SITE_URLS.socials.github}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-headline flex items-center gap-1.5 transition-colors py-1"
@@ -50,7 +51,7 @@ export default function Footer() {
               GitHub
             </a>
             <a
-              href="https://www.linkedin.com/in/nikhil-alakri/"
+              href={SITE_URLS.socials.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-headline flex items-center gap-1.5 transition-colors py-1"
