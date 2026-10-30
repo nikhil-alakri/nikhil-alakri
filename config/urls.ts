@@ -60,3 +60,4 @@ export const SITE_URLS = {
 } as const;
 
 export default SITE_URLS;
+

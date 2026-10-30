@@ -68,9 +68,9 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/og-image.png",
-        width: 1024,
-        height: 1024,
-        alt: "Nikhil Alakri Logo - Full-Stack & AI Engineer",
+        width: 1200,
+        height: 630,
+        alt: "Nikhil Alakri - Full-Stack & AI Engineer Portfolio",
       },
     ],
   },
