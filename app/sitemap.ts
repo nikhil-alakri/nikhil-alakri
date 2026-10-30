@@ -12,6 +12,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     {
+      url: `${baseUrl}/itpo`,
+      lastModified: currentDate,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/odin-eye`,
       lastModified: currentDate,
       changeFrequency: "monthly",
@@ -25,3 +31,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 }
+

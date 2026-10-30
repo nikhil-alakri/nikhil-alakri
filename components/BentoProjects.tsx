@@ -34,7 +34,7 @@ const projects = [
     description:
       "TypeScript-powered full-stack application designed for tracking, analyzing, and visualizing Initial Public Offerings (IPOs), market listings, and structured financial data workflows. Deployed to edge production.",
     path: "/itpo",
-    isExternal: true,
+    isExternal: false,
     githubUrl: "https://github.com/nikhil-alakri/ipo",
     icon: TrendingUp,
     tags: ["TypeScript", "Financial Data", "Full-Stack", "Web App"],
@@ -123,11 +123,11 @@ export default function BentoProjects() {
                     {project.isExternal ? (
                       <a
                         href={project.path}
-                        target={project.path.startsWith("http") ? "_blank" : undefined}
-                        rel={project.path.startsWith("http") ? "noopener noreferrer" : undefined}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:text-headline transition-colors py-1"
                       >
-                        <span>{project.path.startsWith("/itpo") ? "Launch Live App (/itpo)" : "Explore Project"}</span>
+                        <span>Explore Project</span>
                         <ArrowUpRight className="w-4 h-4" />
                       </a>
                     ) : (
@@ -135,7 +135,11 @@ export default function BentoProjects() {
                         href={project.path}
                         className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:text-headline transition-colors py-1"
                       >
-                        <span>Read Case Study ({project.path})</span>
+                        <span>
+                          {project.path === "/itpo"
+                            ? "Launch Live App (/itpo)"
+                            : `Read Case Study (${project.path})`}
+                        </span>
                         <ArrowUpRight className="w-4 h-4" />
                       </Link>
                     )}
