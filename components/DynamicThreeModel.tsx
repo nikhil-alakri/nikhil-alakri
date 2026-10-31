@@ -25,3 +25,4 @@ const ThreeHeroModel = dynamic(() => import("./ThreeHeroModel"), {
 export default function DynamicThreeModel() {
   return <ThreeHeroModel />;
 }
+

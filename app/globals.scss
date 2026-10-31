@@ -111,8 +111,30 @@ code, kbd, samp, pre {
   color: var(--color-text-primary) !important;
 }
 
-.project-card, .repo-card {
+.project-card, .repo-card, .spotlight-card {
   opacity: 1;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      380px circle at var(--mouse-x, -999px) var(--mouse-y, -999px),
+      rgba(203, 181, 148, 0.14),
+      transparent 65%
+    );
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
 }
 
 // Lenis smooth scroll classes (Desktop)

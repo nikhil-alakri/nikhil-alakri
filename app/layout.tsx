@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.scss";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
+import InteractiveSpotlight from "@/components/InteractiveSpotlight";
 import { SITE_URLS } from "@/config/urls";
 
 export const viewport: Viewport = {
@@ -181,6 +182,7 @@ export default function RootLayout({
       <body className="bg-background text-bodytext font-sans antialiased selection:bg-accent/30 selection:text-headline">
         {/* Living Ambient Aurora Background (Zero blur compositing cost) */}
         <div className="bg-canvas" aria-hidden="true" />
+        <InteractiveSpotlight />
 
         <SmoothScroll>
           <div className="relative z-10 flex flex-col min-h-screen">
