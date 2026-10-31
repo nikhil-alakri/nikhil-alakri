@@ -103,3 +103,4 @@ classDiagram
 ### Phase 4: Polish, Accessibility & Lighthouse Audit
 - [ ] Verify `prefers-reduced-motion` provides a clean fallback.
 - [ ] Audit contrast ratios, keyboard navigation, and ensure 100/100 Lighthouse score is maintained.
+

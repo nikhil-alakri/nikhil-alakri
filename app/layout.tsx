@@ -4,6 +4,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
 import InteractiveSpotlight from "@/components/InteractiveSpotlight";
 import CustomCursor from "@/components/CustomCursor";
+import DynamicOrganicWorld from "@/components/three/DynamicOrganicWorld";
 import { SITE_URLS } from "@/config/urls";
 
 export const viewport: Viewport = {
@@ -183,6 +184,7 @@ export default function RootLayout({
       <body className="bg-background text-bodytext font-sans antialiased selection:bg-accent/30 selection:text-headline">
         {/* Living Ambient Aurora Background (Zero blur compositing cost) */}
         <div className="bg-canvas" aria-hidden="true" />
+        <DynamicOrganicWorld />
         <InteractiveSpotlight />
         <CustomCursor />
 
