@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown, Building2, MapPin, Calendar, Award } from "lucide-react";
+import ScrollReveal from "@/components/ScrollReveal";
 
 interface ExperienceItem {
   id: string;
@@ -107,7 +108,7 @@ export default function ExperienceTimeline() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-14">
+        <ScrollReveal animation="fadeUp" className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-14">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium bg-surface border border-accent/30 text-accent mb-3">
               <Calendar className="w-3.5 h-3.5" />
@@ -120,10 +121,10 @@ export default function ExperienceTimeline() {
           <p className="text-bodytext text-sm sm:text-base max-w-md mt-3 md:mt-0 leading-relaxed">
             7+ years architecting enterprise design systems, healthtech platforms, and performance-critical web applications.
           </p>
-        </div>
+        </ScrollReveal>
 
         {/* Interactive Timeline List inspired by Reference 2 */}
-        <div className="space-y-4">
+        <ScrollReveal animation="fadeUp" stagger={0.08} className="space-y-4">
           {timeline.map((item, index) => {
             const isExpanded = expandedId === item.id;
             return (
@@ -228,7 +229,7 @@ export default function ExperienceTimeline() {
               </div>
             );
           })}
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );

@@ -3,6 +3,7 @@ import "./globals.scss";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
 import InteractiveSpotlight from "@/components/InteractiveSpotlight";
+import CustomCursor from "@/components/CustomCursor";
 import { SITE_URLS } from "@/config/urls";
 
 export const viewport: Viewport = {
@@ -183,6 +184,7 @@ export default function RootLayout({
         {/* Living Ambient Aurora Background (Zero blur compositing cost) */}
         <div className="bg-canvas" aria-hidden="true" />
         <InteractiveSpotlight />
+        <CustomCursor />
 
         <SmoothScroll>
           <div className="relative z-10 flex flex-col min-h-screen">

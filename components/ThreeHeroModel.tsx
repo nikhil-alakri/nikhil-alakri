@@ -484,6 +484,13 @@ export default function ThreeHeroModel() {
     };
     window.addEventListener("resize", handleResize);
 
+    // Scroll Parallax Handler (Passive 60fps)
+    let currentScrollY = 0;
+    const handleScroll = () => {
+      currentScrollY = window.scrollY;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
     // Animation Loop
     const clock = new THREE.Clock();
     const animate = () => {
@@ -492,11 +499,11 @@ export default function ThreeHeroModel() {
 
       const elapsed = clock.getElapsedTime();
 
-      // Organic subtle vertical bobbing
-      floatingGroup.position.y = Math.sin(elapsed * 1.5) * 0.06;
+      // Organic subtle vertical bobbing with slight scroll influence
+      floatingGroup.position.y = Math.sin(elapsed * 1.5) * 0.06 - Math.min(currentScrollY * 0.0006, 0.3);
 
       // Particle Constellation slow organic drift
-      particleSystem.rotation.y = elapsed * 0.03;
+      particleSystem.rotation.y = elapsed * 0.03 + currentScrollY * 0.0003;
       particleSystem.rotation.x = Math.sin(elapsed * 0.02) * 0.04;
 
       // Dynamic Specular Keylight tracking cursor
@@ -524,6 +531,7 @@ export default function ThreeHeroModel() {
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
       container.removeEventListener("mousemove", handleMouseMove);
       container.removeEventListener("dblclick", handlePerformSpin);
       observer.disconnect();

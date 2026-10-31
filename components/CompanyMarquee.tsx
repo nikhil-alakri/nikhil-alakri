@@ -42,7 +42,7 @@ export default function CompanyMarquee() {
             return (
               <div
                 key={`m1-${idx}`}
-                className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-surface/80 border border-surface-border hover:border-accent hover:bg-surface-elevated transition-all shrink-0"
+                className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-surface/80 border border-surface-border hover:border-accent hover:bg-surface-elevated hover:scale-105 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200 shrink-0 cursor-default will-change-transform"
               >
                 <div className="p-1 rounded-md bg-surface-elevated text-accent">
                   <Icon className="w-3.5 h-3.5" />
@@ -66,7 +66,7 @@ export default function CompanyMarquee() {
             return (
               <div
                 key={`m2-${idx}`}
-                className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-surface/80 border border-surface-border hover:border-accent hover:bg-surface-elevated transition-all shrink-0"
+                className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-surface/80 border border-surface-border hover:border-accent hover:bg-surface-elevated hover:scale-105 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200 shrink-0 cursor-default will-change-transform"
               >
                 <div className="p-1 rounded-md bg-surface-elevated text-accent">
                   <Icon className="w-3.5 h-3.5" />

@@ -49,7 +49,7 @@ export default function Navbar() {
             href={SITE_URLS.resume}
             download="Nikhil_Alakri_Resume_CitiusTech.pdf"
             aria-label="Download Official Resume PDF"
-            className="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-xl bg-surface border border-accent/40 text-headline hover:bg-surface-elevated hover:border-accent transition-all min-h-[38px]"
+            className="magnetic hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-xl bg-surface border border-accent/40 text-headline hover:bg-surface-elevated hover:border-accent transition-colors min-h-[38px] will-change-transform"
           >
             <FileDown className="w-3.5 h-3.5 text-accent" />
             <span>CV</span>
@@ -60,7 +60,7 @@ export default function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub Profile"
-            className="p-2 sm:p-2.5 rounded-xl bg-surface border border-surface-border text-bodytext hover:text-headline hover:border-accent transition-colors min-w-[38px] min-h-[38px] flex items-center justify-center"
+            className="magnetic p-2 sm:p-2.5 rounded-xl bg-surface border border-surface-border text-bodytext hover:text-headline hover:border-accent transition-colors min-w-[38px] min-h-[38px] flex items-center justify-center will-change-transform"
           >
             <Github className="w-4 h-4" />
           </a>
@@ -69,13 +69,13 @@ export default function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn Profile"
-            className="p-2 sm:p-2.5 rounded-xl bg-surface border border-surface-border text-bodytext hover:text-headline hover:border-accent transition-colors min-w-[38px] min-h-[38px] flex items-center justify-center"
+            className="magnetic p-2 sm:p-2.5 rounded-xl bg-surface border border-surface-border text-bodytext hover:text-headline hover:border-accent transition-colors min-w-[38px] min-h-[38px] flex items-center justify-center will-change-transform"
           >
             <Linkedin className="w-4 h-4" />
           </a>
           <a
             href={SITE_URLS.nav.contact}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 sm:px-3.5 py-2 rounded-xl bg-primary text-background hover:bg-accent transition-all min-h-[38px]"
+            className="magnetic inline-flex items-center gap-1.5 text-xs font-semibold px-3 sm:px-3.5 py-2 rounded-xl bg-primary text-background hover:bg-accent transition-colors min-h-[38px] will-change-transform"
           >
             Connect
             <ArrowUpRight className="w-3.5 h-3.5" />

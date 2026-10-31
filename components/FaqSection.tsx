@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Plus, Minus, HelpCircle } from "lucide-react";
 import { SITE_URLS } from "@/config/urls";
+import ScrollReveal from "@/components/ScrollReveal";
 
 interface FaqItem {
   question: string;
@@ -49,7 +50,7 @@ export default function FaqSection() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         
         {/* Header */}
-        <div className="text-center mb-10 sm:mb-14">
+        <ScrollReveal animation="fadeUp" className="text-center mb-10 sm:mb-14">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium bg-surface border border-accent/30 text-accent mb-3">
             <HelpCircle className="w-3.5 h-3.5" />
             <span>Questions &amp; Answers</span>
@@ -60,10 +61,10 @@ export default function FaqSection() {
           <p className="text-bodytext text-sm sm:text-base max-w-lg mx-auto">
             Insights into my architectural philosophy, performance standards, and availability.
           </p>
-        </div>
+        </ScrollReveal>
 
         {/* Accordion List inspired by Reference 3 */}
-        <div className="space-y-3">
+        <ScrollReveal animation="fadeUp" stagger={0.06} className="space-y-3">
           {faqs.map((faq, idx) => {
             const isOpen = openIdx === idx;
             return (
@@ -100,7 +101,7 @@ export default function FaqSection() {
               </div>
             );
           })}
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );

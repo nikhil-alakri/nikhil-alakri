@@ -2,10 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { ArrowDown, Copy, Check, FileDown, Terminal, Sparkles, ExternalLink } from "lucide-react";
+import { ArrowDown, Copy, Check, FileDown, Terminal } from "lucide-react";
 import { SITE_URLS } from "@/config/urls";
 import DynamicThreeModel from "@/components/DynamicThreeModel";
 import InteractiveTerminal from "@/components/InteractiveTerminal";
+import AnimatedCounter from "@/components/AnimatedCounter";
+import TextScramble from "@/components/TextScramble";
+import ScrollReveal from "@/components/ScrollReveal";
 
 const stats = [
   { value: "+7 Yrs", label: "Enterprise Experience", sub: "Clinical & FinTech UI" },
@@ -66,7 +69,12 @@ export default function Hero() {
 
             <p className="hero-role text-lg sm:text-2xl font-medium text-accent mb-4 flex items-center gap-2.5">
               <Terminal className="w-5 h-5 sm:w-6 sm:h-6 text-bodytext shrink-0" />
-              <span>Senior Software Engineer @ CitiusTech</span>
+              <TextScramble
+                text="Senior Software Engineer @ CitiusTech"
+                trigger="inView"
+                duration={1200}
+                className="font-medium"
+              />
             </p>
 
             <p className="hero-bio text-base sm:text-lg text-bodytext max-w-xl leading-relaxed mb-6 sm:mb-8">
@@ -76,11 +84,11 @@ export default function Hero() {
               Core Web Vitals in regulated environments.
             </p>
 
-            {/* Action Buttons */}
+            {/* Action Buttons with magnetic physics */}
             <div className="hero-actions flex flex-wrap items-center gap-3">
               <a
                 href={SITE_URLS.nav.projects}
-                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary text-background font-semibold hover:bg-accent transition-all shadow-md shadow-black/20 text-center text-sm"
+                className="magnetic inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary text-background font-semibold hover:bg-accent transition-colors shadow-md shadow-black/20 text-center text-sm will-change-transform"
               >
                 Explore Projects
                 <ArrowDown className="w-4 h-4" />
@@ -89,7 +97,7 @@ export default function Hero() {
               <a
                 href={SITE_URLS.resume}
                 download="Nikhil_Alakri_Resume_CitiusTech.pdf"
-                className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-surface border border-accent/40 text-headline font-semibold hover:bg-surface-elevated hover:border-accent transition-all text-center text-sm"
+                className="magnetic inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-surface border border-accent/40 text-headline font-semibold hover:bg-surface-elevated hover:border-accent transition-colors text-center text-sm will-change-transform"
                 title="Download Official Resume PDF"
               >
                 <FileDown className="w-4 h-4 text-accent" />
@@ -98,7 +106,7 @@ export default function Hero() {
 
               <button
                 onClick={handleCopyEmail}
-                className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-surface border border-surface-border text-headline font-medium hover:bg-surface-elevated hover:border-accent transition-all text-center text-sm"
+                className="magnetic inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-surface border border-surface-border text-headline font-medium hover:bg-surface-elevated hover:border-accent transition-colors text-center text-sm will-change-transform"
                 title="Click to copy email"
               >
                 {copied ? (
@@ -117,20 +125,20 @@ export default function Hero() {
           </div>
 
           {/* Right Column (Three.js 3D Interactive Stage) */}
-          <div className="lg:col-span-5 relative">
+          <div className="lg:col-span-5 relative" data-3d-stage="true">
             <DynamicThreeModel />
           </div>
         </div>
 
-        {/* Impact Numbers Grid inspired by Reference 1 & 2 */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-12 sm:mb-16">
+        {/* Impact Numbers Grid with Animated Counters and Scroll Stagger */}
+        <ScrollReveal animation="fadeUp" stagger={0.08} className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-12 sm:mb-16">
           {stats.map((s, idx) => (
             <div
               key={idx}
-              className="p-4 sm:p-5 rounded-2xl bg-surface border border-surface-border hover:border-accent transition-all group"
+              className="p-4 sm:p-5 rounded-2xl bg-surface border border-surface-border hover:border-accent transition-all group spotlight-card"
             >
               <span className="font-primary text-2xl sm:text-3xl md:text-4xl font-bold text-headline group-hover:text-accent transition-colors block mb-1">
-                {s.value}
+                <AnimatedCounter value={s.value} duration={1600} delay={idx * 120} />
               </span>
               <span className="text-xs sm:text-sm font-semibold text-headline block">
                 {s.label}
@@ -140,10 +148,12 @@ export default function Hero() {
               </span>
             </div>
           ))}
-        </div>
+        </ScrollReveal>
 
         {/* Interactive CLI Terminal (whoami.ts) */}
-        <InteractiveTerminal />
+        <ScrollReveal animation="scaleUp" delay={0.1}>
+          <InteractiveTerminal />
+        </ScrollReveal>
       </div>
     </section>
   );
