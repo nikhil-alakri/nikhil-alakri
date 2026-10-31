@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ArrowDown, Copy, Check, FileDown, Terminal, Sparkles, ExternalLink } from "lucide-react";
 import { SITE_URLS } from "@/config/urls";
 import DynamicThreeModel from "@/components/DynamicThreeModel";
+import InteractiveTerminal from "@/components/InteractiveTerminal";
 
 const stats = [
   { value: "+7 Yrs", label: "Enterprise Experience", sub: "Clinical & FinTech UI" },
@@ -141,30 +142,8 @@ export default function Hero() {
           ))}
         </div>
 
-        {/* whoami Terminal Card directly from README */}
-        <div className="rounded-2xl bg-surface/90 border border-surface-border p-4 sm:p-6 shadow-xl backdrop-blur-md overflow-hidden">
-          <div className="flex items-center justify-between pb-3 mb-4 border-b border-surface-border/60">
-            <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-[#ff5f56]/80 inline-block" />
-              <span className="w-3 h-3 rounded-full bg-[#ffbd2e]/80 inline-block" />
-              <span className="w-3 h-3 rounded-full bg-[#27c93f]/80 inline-block" />
-              <span className="ml-2 text-xs font-mono text-bodytext">whoami.ts</span>
-            </div>
-            <span className="text-xs font-mono text-accent">Senior Engineer Object</span>
-          </div>
-          <pre className="text-xs sm:text-sm font-mono text-bodytext overflow-x-auto leading-relaxed">
-            <code>
-              <span className="text-accent">const</span> <span className="text-primary font-semibold">nikhil_alakri</span>: <span className="text-status">SeniorSoftwareEngineer</span> = &#123;{'\n'}
-              {'  '}name:         <span className="text-primary">&quot;Nikhil Alakri&quot;</span>,{'\n'}
-              {'  '}title:        <span className="text-primary">&quot;Senior Software Engineer @ CitiusTech&quot;</span>,{'\n'}
-              {'  '}experience:   <span className="text-accent">&quot;7+ Years Enterprise &amp; HealthTech UI&quot;</span>,{'\n'}
-              {'  '}specialties:  [<span className="text-secondary">&quot;Healthcare Design Systems (Lit/React)&quot;</span>, <span className="text-secondary">&quot;WCAG AA &amp; i18n&quot;</span>, <span className="text-secondary">&quot;Core Web Vitals&quot;</span>, <span className="text-secondary">&quot;Multimodal AI &amp; RAG&quot;</span>],{'\n'}
-              {'  '}certifications: [<span className="text-secondary">&quot;100/100 Lighthouse&quot;</span>, <span className="text-secondary">&quot;WCAG AA Compliant&quot;</span>],{'\n'}
-              {'  '}mantra:       <span className="text-status font-medium">&quot;Architect with rigor, build for performance, delight at scale 🚀&quot;</span>{'\n'}
-              &#125;;
-            </code>
-          </pre>
-        </div>
+        {/* Interactive CLI Terminal (whoami.ts) */}
+        <InteractiveTerminal />
       </div>
     </section>
   );

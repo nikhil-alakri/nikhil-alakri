@@ -33,13 +33,13 @@ const AVAILABLE_MODELS: ModelOption[] = [
     id: "pbr",
     name: "PBR Master",
     url: SITE_URLS.models.hero3d,
-    scaleFactor: 2.45,
+    scaleFactor: 2.12, // Adjusted for perfect framing without wingtip clipping
   },
   {
     id: "rigged",
     name: "Rigged Character",
     url: SITE_URLS.models.heroRigged,
-    scaleFactor: 2.35,
+    scaleFactor: 2.05,
   },
 ];
 
@@ -353,7 +353,7 @@ export default function ThreeHeroModel() {
     const width = container.clientWidth || 400;
     const height = container.clientHeight || 480;
     const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
-    camera.position.set(0, 0.8, 4.2);
+    camera.position.set(0, 0.5, 4.45);
     cameraRef.current = camera;
 
     // Renderer
@@ -405,6 +405,47 @@ export default function ThreeHeroModel() {
     scene.add(floatingGroup);
     floatingGroupRef.current = floatingGroup;
 
+    // 3D Stardust Particle Constellation (Inspired by FLORIA)
+    const particleCount = 240;
+    const particleGeometry = new THREE.BufferGeometry();
+    const particlePositions = new Float32Array(particleCount * 3);
+    const particleColors = new Float32Array(particleCount * 3);
+
+    const colorIvory = new THREE.Color(0xfff2d8);
+    const colorSeafoam = new THREE.Color(0x5eead4);
+    const colorBrass = new THREE.Color(0xcbb594);
+
+    for (let i = 0; i < particleCount; i++) {
+      const i3 = i * 3;
+      const radius = 2.0 + Math.random() * 3.5;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(Math.random() * 2 - 1);
+
+      particlePositions[i3] = radius * Math.sin(phi) * Math.cos(theta);
+      particlePositions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+      particlePositions[i3 + 2] = radius * Math.cos(phi);
+
+      const mixedColor = Math.random() > 0.65 ? colorSeafoam : Math.random() > 0.35 ? colorBrass : colorIvory;
+      particleColors[i3] = mixedColor.r;
+      particleColors[i3 + 1] = mixedColor.g;
+      particleColors[i3 + 2] = mixedColor.b;
+    }
+
+    particleGeometry.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
+    particleGeometry.setAttribute("color", new THREE.BufferAttribute(particleColors, 3));
+
+    const particleMaterial = new THREE.PointsMaterial({
+      size: 0.038,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.8,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+
+    const particleSystem = new THREE.Points(particleGeometry, particleMaterial);
+    scene.add(particleSystem);
+
     // Initial Model Load
     loadModel(currentModelIndex);
 
@@ -454,6 +495,16 @@ export default function ThreeHeroModel() {
       // Organic subtle vertical bobbing
       floatingGroup.position.y = Math.sin(elapsed * 1.5) * 0.06;
 
+      // Particle Constellation slow organic drift
+      particleSystem.rotation.y = elapsed * 0.03;
+      particleSystem.rotation.x = Math.sin(elapsed * 0.02) * 0.04;
+
+      // Dynamic Specular Keylight tracking cursor
+      if (lightsRef.current) {
+        lightsRef.current.key.position.x = 4 + mousePos.current.x * 2.2;
+        lightsRef.current.key.position.y = 5 + mousePos.current.y * 1.8;
+      }
+
       // Gentle cursor-following lerp when not orbiting manually
       if (!isInteracting && floatingGroup) {
         floatingGroup.rotation.y += (targetRotation.current.y - floatingGroup.rotation.y) * 0.04;
@@ -476,6 +527,9 @@ export default function ThreeHeroModel() {
       container.removeEventListener("mousemove", handleMouseMove);
       container.removeEventListener("dblclick", handlePerformSpin);
       observer.disconnect();
+
+      particleGeometry.dispose();
+      particleMaterial.dispose();
 
       if (controls) controls.dispose();
       renderer.dispose();
