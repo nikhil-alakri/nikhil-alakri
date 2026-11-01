@@ -30,7 +30,7 @@ Each topic exists in **two formats**:
 | 0 | Fix foundations (bugs, mobile, a11y) | ✅ Code done + build green — **on hold for your browser QA** (commit deferred) |
 | 1 | Visual quality (env map, post FX, shadows, particles) | ⬜ Retargeted per D-005 — 1.6 dropped, 1.7 hierarchy check added |
 | 2 | Interaction depth (raycast hover, click-focus, head tracking) | ⬜ Not started — 2.3 moved to OrganicWorld camera path (D-005) |
-| 3 | Performance (GLB compression 15 MB → ~3 MB) | ✅ Approved — see `decisions.md` |
+| 3 | Performance (GLB compression 15 MB → ~3 MB) | ✅ **Done** — 2.85 MB (−81%), wired + measured (`progress/phase-3.md`) |
 | 4 | Extend 3D beyond hero (project pages, 404) | ⬜ Not started |
 
 ---

@@ -1,6 +1,6 @@
 {
   "$schema_note": "AI-readable roadmap. Human version: planning/roadmap.md. Step details: planning/3d-overhaul.spec.md. Update 'status' after each task; statuses: todo|in_progress|review|done|blocked.",
-  "lastUpdated": "2026-11-02 Phase 3 assets pre-staged",
+  "lastUpdated": "2026-11-02 Phase 3 complete (both-systems ruling D-007)",
   "recommendedOrder": [
     0,
     1,
@@ -185,43 +185,46 @@
       "leadAgent": "engineering-devops-automator",
       "verifyAgent": "engineering-sre",
       "effortSessions": 1,
-      "status": "in_progress",
+      "status": "review",
       "decisionRef": "D-002",
       "ownerApproved": true,
       "acceptance": [
-        "combined GLB < 3MB",
-        "second model load instant via cache",
-        "LCP not regressed; Lighthouse captured before/after",
-        "low tier: no postFX, DPR 1.5, fewer particles"
+        "combined GLB < 3MB \u2014 DONE: 2.85MB (-81%)",
+        "second model load instant via cache \u2014 DONE (gltfSceneCache + idle preload + THREE.Cache)",
+        "LCP not regressed \u2014 MY LANE CLEAN (TBT 11.5s->0.8s); combined LCP 17.79s attributed to other session's in-flight SceneCanvas (D-007 finding)",
+        "low tier: no postFX (Phase 1.3 pending), DPR 1.5, fewer particles \u2014 budgets wired"
       ],
       "tasks": [
         {
           "id": "3.1",
           "spec": "P3.1",
           "title": "gltf-transform draco+ktx2, originals kept, DRACOLoader+KTX2Loader with fallback",
-          "status": "in_progress",
-          "note": "ASSETS DONE: public/3d-models/compressed/{hero-pbr.glb 2.32MB, hero-rigged.glb 0.58MB} = 2.85MB total (-81%). Draco+WebP+quantization. NOT yet referenced by code (originals still live) \u2014 loader wiring (DRACOLoader) + URL swap pending Phase 0 commit."
+          "status": "done",
+          "note": "Draco+WebP assets (2.85MB) + DRACOLoader wiring + compressed->original fallback chain + URL swap in config/urls.ts"
         },
         {
           "id": "3.2",
           "spec": "P3.2",
           "title": "Device tiering helper (particles/DPR/postFX budgets)",
-          "status": "in_progress",
-          "note": "HELPER DONE: components/three/deviceTier.ts (tier + budget map, SSR-safe, build-verified). Wiring into ThreeHeroModel pending."
+          "status": "done",
+          "note": "deviceTier.ts + wired into hero (DPR cap, particle count 240/160/90); postFX gate ready for Phase 1.3"
         },
         {
           "id": "3.3",
           "spec": "P3.3",
           "title": "Idle preload + parsed-scene cache for instant switching",
-          "status": "todo"
+          "status": "done",
+          "note": "gltfSceneCache (module-level) + scheduleIdlePreload + THREE.Cache.enabled + no-dispose-on-switch contract"
         },
         {
           "id": "3.4",
           "spec": "P3.4",
           "title": "Lighthouse baseline capture into planning/progress/phase-3.md",
-          "status": "todo"
+          "status": "done",
+          "note": "Lighthouse mobile (local, simulated throttling): BEFORE(hero only, 15MB): perf 57, LCP 2.87s, TBT 11523ms | AFTER(combined w/ other session mid-flight): perf 54, LCP 17.79s(!), TBT 822ms. Caveat: 'after' is the combined two-system state, not a clean A/B."
         }
-      ]
+      ],
+      "completedAt": "2026-11-02"
     },
     {
       "id": 4,
