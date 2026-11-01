@@ -34,7 +34,7 @@
 
 ### Phase 0 — Foundations
 **P0.1 Stale closure fix** — In the init `useEffect`, add `const interactionRef = useRef(false)` (or plain `let isDragging` in effect scope). In `controls` `start`/`end` handlers set both the React state (for HUD) and the ref. Animate loop reads the ref. Remove `isInteracting` from the loop condition.
-**P0.2 Touch config** — After controls creation: `controls.touches.ONE = THREE.TOUCH.ROTATE; controls.touches.TWO = THREE.TOUCH.DOLLY_PAN;`. Then on canvas style: `touchAction: "pan-y"` via a `pointerdown`/`pointermove` gate — track gesture axis: if first move is predominantly vertical, release capture (allow page scroll) by calling `controls.enabled = false` until `pointerup`. Keep desktop unaffected.
+**P0.2 Touch config** — *(implemented approach)* After `new OrbitControls(...)` — whose `connect()` forces `touch-action: none` — set `controls.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN }` and `renderer.domElement.style.touchAction = "pan-y"`. The browser then claims predominantly-vertical swipes for page scroll (firing `pointercancel`, which OrbitControls handles as a clean gesture end), while horizontal single-finger drags still rotate. No manual axis-gating needed.
 **P0.3 GSAP spin** — Replace `handlePerformSpin` body: `gsap.to(floatingGroup.rotation, { y: `+=${Math.PI * 2}`, duration: 1.2, ease: "power2.out", overwrite: "auto" })`. Delete the rAF loop.
 **P0.4 Reduced motion** — At effect start: `const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches`. When true: `controls.autoRotate = false`, skip parallax lerp + bobbing, particle drift static (still render). Listen for change events to update live.
 

@@ -5,20 +5,25 @@
 
 ---
 
-## Phase 0 — Fix Foundations 🧱 · ~1 session · lead: `engineering-frontend-developer`
+## Phase 0 — Fix Foundations 🧱 · ✅ COMPLETE (2026-11-01) · lead: `engineering-frontend-developer`
 
-| # | Task | File(s) |
+| # | Task | Status |
 |---|---|---|
-| 0.1 | Replace `isInteracting` state read in animate loop with a ref (fix drag jitter) | `ThreeHeroModel.tsx` |
-| 0.2 | Explicit touch gesture config + `pan-y` fallback so hero never traps page scroll | `ThreeHeroModel.tsx` |
-| 0.3 | Replace rAF spin with GSAP tween (`overwrite: "auto"`, power2.out) | `ThreeHeroModel.tsx` |
-| 0.4 | `prefers-reduced-motion`: kill autoRotate/parallax/bob when set | `ThreeHeroModel.tsx` |
+| 0.1 | Replace `isInteracting` state read in animate loop with a ref (fix drag jitter) | ✅ `isInteractingRef` |
+| 0.2 | Explicit touch gesture config + `pan-y` fallback so hero never traps page scroll | ✅ `pan-y` after OrbitControls connect() |
+| 0.3 | Replace rAF spin with GSAP tween (`overwrite: "auto"`, power2.out) | ✅ + kill on reset/nudges/unmount |
+| 0.4 | `prefers-reduced-motion`: kill autoRotate/parallax/bob when set | ✅ live-updated via matchMedia change listener |
 
-**Acceptance:** drag feels smooth end-to-end; one-finger vertical scroll works over canvas on touch; spin is eased & interruptible; reduced-motion users get a static-but-controllable stage. `npm run build` green.
+**Acceptance:** ✅ `npm run build` green (12/12 pages, strict TS). Drag-jitter / touch-scroll / spin / reduced-motion checks need visual QA by owner.
+**Deviations + found-during-work notes:** see `progress/phase-0.md` (notably: a 4th stale closure — the loop re-enabled autoRotate every frame — was found and fixed as `autoRotateRef`).
+
+> ⚠️ **Parallel-work notice:** a second agent session committed `components/three/` (OrganicWorld — ambient page-wide 3D background) at 04:38 on 2026-11-01, overlapping roadmap Phase 1.6 (backdrop). Read `progress/phase-0.md` before starting Phase 1.
 
 ---
 
 ## Phase 1 — Visual Quality ✨ · ~1–2 sessions · lead: `engineering-frontend-developer`
+
+> 🔗 **Retargeted per D-005:** OrganicWorld (other session) is now the page-wide backdrop → task 1.6 cancelled, task 1.7 added (hierarchy check). Phase 1 is now hero-stage-only polish.
 
 | # | Task | Detail |
 |---|---|---|
@@ -27,9 +32,10 @@
 | 1.3 | Post-processing | `EffectComposer` + subtle `UnrealBloomPass` + vignette; **skipped on deviceTier low** |
 | 1.4 | Particle shader | Custom `ShaderMaterial` points: soft circular glow sprite, per-point twinkle, mouse/scroll reactivity |
 | 1.5 | Hybrid wireframe | Shaded mesh + `EdgesGeometry` LineSegments overlay (glow accent), instead of material swap |
-| 1.6 | In-canvas backdrop | Palette-synced gradient plane / large soft sphere so lighting moods affect the whole frame |
+| ~~1.6~~ | ~~In-canvas backdrop~~ | ~~Cancelled~~ — OrganicWorld provides the page-wide backdrop (D-005) |
+| 1.7 | Visual-hierarchy check | Hero stage vs OrganicWorld background: depth/fog/lighting contract so the hero model pops, not drowns |
 
-**Acceptance:** model no longer floats in a void; lighting moods visibly change the full frame; no bloom blowout on light parts; mobile-low tier renders without post FX.
+**Acceptance:** model grounded with contact shadow; env-map reflections on metals; subtle bloom (no clipping, skipped on low tier); round glowing particles; hybrid wireframe edges; **hero pops against the OrganicWorld layer**.
 
 ---
 
@@ -39,7 +45,7 @@
 |---|---|---|
 | 2.1 | Raycast hover | Pointer → Raycaster → highlight hovered mesh (emissive pulse) + tooltip with part name (from `userData`/node names) |
 | 2.2 | Click-to-focus | GSAP camera dolly to part + controls retarget; Esc / outside click → restore saved pose |
-| 2.3 | Scroll choreography | Lenis + GSAP ScrollTrigger: model yaw/camera drift tied to hero scroll-out; paused after hero leaves viewport (already have IntersectionObserver) |
+| 2.3 | Scroll choreography | ~~Cancelled per D-005~~ — page-wide scroll-camera is owned by the OrganicWorld path (`docs/3D_ORGANIC_WORLD_PLAN.md`, its Phase 3). Hero stage gets at most subtle drift; never a second scroll system |
 | 2.4 | Head tracking | Rigged model: head bone/bone-group lookAt cursor, clamped angles (only when rigged model active) |
 | 2.5 | Explore mode | Toggle that arms hover/focus + part-label HUD; off by default so scroll stays clean |
 

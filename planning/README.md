@@ -27,9 +27,9 @@ Each topic exists in **two formats**:
 
 | Phase | Name | Status |
 |---|---|---|
-| 0 | Fix foundations (bugs, mobile, a11y) | ⬜ Not started |
-| 1 | Visual quality (env map, post FX, shadows, particles) | ⬜ Not started |
-| 2 | Interaction depth (raycast hover, click-focus, scroll choreography) | ⬜ Not started |
+| 0 | Fix foundations (bugs, mobile, a11y) | ✅ Code done + build green — **on hold for your browser QA** (commit deferred) |
+| 1 | Visual quality (env map, post FX, shadows, particles) | ⬜ Retargeted per D-005 — 1.6 dropped, 1.7 hierarchy check added |
+| 2 | Interaction depth (raycast hover, click-focus, head tracking) | ⬜ Not started — 2.3 moved to OrganicWorld camera path (D-005) |
 | 3 | Performance (GLB compression 15 MB → ~3 MB) | ✅ Approved — see `decisions.md` |
 | 4 | Extend 3D beyond hero (project pages, 404) | ⬜ Not started |
 
