@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { MeshoptDecoder } from "meshoptimizer";
+import gsap from "gsap";
 import { SITE_URLS } from "@/config/urls";
 import { 
   Play, 
@@ -74,6 +75,12 @@ export default function ThreeHeroModel() {
 
   const mousePos = useRef({ x: 0, y: 0 });
   const targetRotation = useRef({ x: 0, y: 0 });
+
+  // Mutable mirrors the rAF loop can read safely (stale-closure fixes P0.1/P0.3/P0.4)
+  const isInteractingRef = useRef(false); // P0.1: controls drag state (React state kept for HUD)
+  const isSpinActiveRef = useRef(false); // P0.3: true while a GSAP spin tween owns floatingGroup.rotation.y
+  const reducedMotionRef = useRef(false); // P0.4: prefers-reduced-motion, live-updated in the init effect
+  const autoRotateRef = useRef(autoRotate); // the render loop must not read stale autoRotate state
 
   // 1. Lighting Mood Applicator
   const applyLightingMood = useCallback((selectedMood: LightingMood) => {
@@ -239,6 +246,9 @@ export default function ThreeHeroModel() {
   // 4. Reset Camera & Position
   const handleResetCamera = useCallback(() => {
     if (!cameraRef.current || !controlsRef.current || !floatingGroupRef.current) return;
+    // P0.3: an active spin tween must not fight the reset (same rule as the arrow nudges)
+    gsap.killTweensOf(floatingGroupRef.current.rotation);
+    isSpinActiveRef.current = false;
     cameraRef.current.position.set(0, 0.8, 4.2);
     controlsRef.current.target.set(0, 0, 0);
     controlsRef.current.reset();
@@ -246,23 +256,42 @@ export default function ThreeHeroModel() {
     targetRotation.current = { x: 0, y: 0 };
   }, []);
 
-  // 5. Spin Trick (Key F or Double Click)
+  // 5. Spin Trick (Key F or Double Click) — P0.3: eased GSAP tween with interruption handling
   const handlePerformSpin = useCallback(() => {
-    if (!floatingGroupRef.current) return;
     const group = floatingGroupRef.current;
-    let spinProgress = 0;
-    const spinStep = () => {
-      spinProgress += 0.12;
-      group.rotation.y += 0.22;
-      if (spinProgress < Math.PI * 2) {
-        requestAnimationFrame(spinStep);
-      }
-    };
-    spinStep();
+    // P0.4: the spin is ambient motion — no-op under reduced motion
+    if (!group || reducedMotionRef.current) return;
+
+    isSpinActiveRef.current = true; // claim rotation.y before the tween's first tick
+
+    gsap.to(group.rotation, {
+      y: `+=${Math.PI * 2}`,
+      duration: 1.2,
+      ease: "power2.out",
+      overwrite: "auto",
+      onStart: () => {
+        isSpinActiveRef.current = true;
+      },
+      onComplete: () => {
+        isSpinActiveRef.current = false;
+        // A full turn is visually identical, so fold the +2π back out: the parallax
+        // lerp resumes from the exact pre-spin angle instead of dragging backwards.
+        group.rotation.y -= Math.PI * 2;
+      },
+    });
   }, []);
 
   // 6. Keyboard Shortcut Listeners
   useEffect(() => {
+    // P0.3: arrow nudges write rotation directly, so any active spin tween must be
+    // killed first or the tween and the nudge would fight over the same property.
+    const stopSpinTween = () => {
+      if (floatingGroupRef.current) {
+        gsap.killTweensOf(floatingGroupRef.current.rotation);
+      }
+      isSpinActiveRef.current = false;
+    };
+
     const handleKeyDown = (e: KeyboardEvent) => {
       // Don't trigger if user is typing in an input
       if (["INPUT", "TEXTAREA"].includes((e.target as HTMLElement)?.tagName)) {
@@ -315,18 +344,22 @@ export default function ThreeHeroModel() {
           break;
 
         case "arrowleft": // Left: Rotate left
+          stopSpinTween();
           if (floatingGroupRef.current) floatingGroupRef.current.rotation.y -= 0.15;
           break;
 
         case "arrowright": // Right: Rotate right
+          stopSpinTween();
           if (floatingGroupRef.current) floatingGroupRef.current.rotation.y += 0.15;
           break;
 
         case "arrowup": // Up: Pitch up
+          stopSpinTween();
           if (floatingGroupRef.current) floatingGroupRef.current.rotation.x -= 0.1;
           break;
 
         case "arrowdown": // Down: Pitch down
+          stopSpinTween();
           if (floatingGroupRef.current) floatingGroupRef.current.rotation.x += 0.1;
           break;
       }
@@ -344,6 +377,14 @@ export default function ThreeHeroModel() {
 
     let animationFrameId: number;
     let isVisible = true;
+
+    // P0.4: read prefers-reduced-motion at effect start and keep it live
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    reducedMotionRef.current = reducedMotionQuery.matches;
+    const handleMotionPreferenceChange = (event: MediaQueryListEvent) => {
+      reducedMotionRef.current = event.matches;
+    };
+    reducedMotionQuery.addEventListener("change", handleMotionPreferenceChange);
 
     // Scene
     const scene = new THREE.Scene();
@@ -391,13 +432,33 @@ export default function ThreeHeroModel() {
     controls.minDistance = 2.8;
     controls.maxDistance = 6.5;
     controls.enablePan = false;
-    controls.autoRotate = autoRotate;
+    // P0.4: auto-rotate stays off under reduced motion
+    controls.autoRotate = autoRotate && !reducedMotionRef.current;
     controls.autoRotateSpeed = 1.4;
     controls.maxPolarAngle = Math.PI / 1.7;
     controls.minPolarAngle = Math.PI / 3.2;
 
-    controls.addEventListener("start", () => setIsInteracting(true));
-    controls.addEventListener("end", () => setIsInteracting(false));
+    // P0.2: explicit touch gesture mapping, and let vertical swipes scroll the page.
+    // OrbitControls' connect() forces `touch-action: none` on the canvas, which would
+    // trap page scroll on phones — `pan-y` returns vertical scrolling to the browser
+    // (it fires pointercancel, which OrbitControls handles as a clean gesture end),
+    // while horizontal single-finger drags still rotate.
+    controls.touches = {
+      ONE: THREE.TOUCH.ROTATE,
+      TWO: THREE.TOUCH.DOLLY_PAN,
+    };
+    renderer.domElement.style.touchAction = "pan-y";
+
+    // P0.1: mirror interaction into a ref — the rAF loop reads the ref, not stale state.
+    // The React state remains solely for the HUD interaction indicator.
+    controls.addEventListener("start", () => {
+      isInteractingRef.current = true;
+      setIsInteracting(true);
+    });
+    controls.addEventListener("end", () => {
+      isInteractingRef.current = false;
+      setIsInteracting(false);
+    });
     controlsRef.current = controls;
 
     // Floating Group
@@ -500,11 +561,16 @@ export default function ThreeHeroModel() {
       const elapsed = clock.getElapsedTime();
 
       // Organic subtle vertical bobbing with slight scroll influence
-      floatingGroup.position.y = Math.sin(elapsed * 1.5) * 0.06 - Math.min(currentScrollY * 0.0006, 0.3);
+      // P0.4: under reduced motion only the scroll offset is applied (position stays correct)
+      floatingGroup.position.y = reducedMotionRef.current
+        ? -Math.min(currentScrollY * 0.0006, 0.3)
+        : Math.sin(elapsed * 1.5) * 0.06 - Math.min(currentScrollY * 0.0006, 0.3);
 
-      // Particle Constellation slow organic drift
-      particleSystem.rotation.y = elapsed * 0.03 + currentScrollY * 0.0003;
-      particleSystem.rotation.x = Math.sin(elapsed * 0.02) * 0.04;
+      // Particle Constellation slow organic drift — P0.4: static under reduced motion
+      if (!reducedMotionRef.current) {
+        particleSystem.rotation.y = elapsed * 0.03 + currentScrollY * 0.0003;
+        particleSystem.rotation.x = Math.sin(elapsed * 0.02) * 0.04;
+      }
 
       // Dynamic Specular Keylight tracking cursor
       if (lightsRef.current) {
@@ -512,14 +578,15 @@ export default function ThreeHeroModel() {
         lightsRef.current.key.position.y = 5 + mousePos.current.y * 1.8;
       }
 
-      // Gentle cursor-following lerp when not orbiting manually
-      if (!isInteracting && floatingGroup) {
+      // Gentle cursor-following lerp — paused while orbiting manually (P0.1: ref, not
+      // stale state), while a GSAP spin owns rotation (P0.3), and under reduced motion (P0.4)
+      if (!isInteractingRef.current && !isSpinActiveRef.current && !reducedMotionRef.current) {
         floatingGroup.rotation.y += (targetRotation.current.y - floatingGroup.rotation.y) * 0.04;
         floatingGroup.rotation.x += (targetRotation.current.x - floatingGroup.rotation.x) * 0.04;
       }
 
       if (controls) {
-        controls.autoRotate = autoRotate;
+        controls.autoRotate = autoRotateRef.current && !reducedMotionRef.current;
         controls.update();
       }
 
@@ -529,6 +596,13 @@ export default function ThreeHeroModel() {
 
     // Cleanup
     return () => {
+      // P0.3: kill any in-flight spin tween before tearing down the scene
+      gsap.killTweensOf(floatingGroup.rotation);
+      isSpinActiveRef.current = false;
+
+      // P0.4: stop listening for reduced-motion changes
+      reducedMotionQuery.removeEventListener("change", handleMotionPreferenceChange);
+
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("scroll", handleScroll);
@@ -545,9 +619,12 @@ export default function ThreeHeroModel() {
   }, []);
 
   // Update auto-rotate on state change
+  // P0.4: reduced motion keeps auto-rotate off regardless of the toggle state;
+  // autoRotateRef keeps the render loop's per-frame write free of stale closures.
   useEffect(() => {
+    autoRotateRef.current = autoRotate;
     if (controlsRef.current) {
-      controlsRef.current.autoRotate = autoRotate;
+      controlsRef.current.autoRotate = autoRotate && !reducedMotionRef.current;
     }
   }, [autoRotate]);
 
