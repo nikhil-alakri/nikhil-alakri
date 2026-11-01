@@ -12,8 +12,12 @@ export const SITE_URLS = {
   // 2. Documents & Assets
   resume: "/resume/Nikhil_Alakri_Resume_CitiusTech.pdf",
   models: {
-    hero3d: "/3d-models/tripo_pbr_model_f45a11fd-bba9-4ec5-9179-8b2af812de0a_meshopt.glb",
-    heroRigged: "/3d-models/tripo_rigging_aa8a4ad8-f9cd-45eb-b1e3-940e82a8caba_meshopt.glb",
+    // P3.1 / D-006: compressed (Draco + WebP) are primary — 15.28 MB → 2.85 MB.
+    // Originals remain as the fallback chain (see ThreeHeroModel loadModel).
+    hero3d: "/3d-models/compressed/hero-pbr.glb",
+    heroRigged: "/3d-models/compressed/hero-rigged.glb",
+    hero3dOriginal: "/3d-models/tripo_pbr_model_f45a11fd-bba9-4ec5-9179-8b2af812de0a_meshopt.glb",
+    heroRiggedOriginal: "/3d-models/tripo_rigging_aa8a4ad8-f9cd-45eb-b1e3-940e82a8caba_meshopt.glb",
   },
 
   // 3. Contact & Email (Set to safe domain placeholder)

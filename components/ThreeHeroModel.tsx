@@ -3,8 +3,10 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { MeshoptDecoder } from "meshoptimizer";
+import { getDeviceBudget } from "@/components/three/deviceTier";
 import gsap from "gsap";
 import { SITE_URLS } from "@/config/urls";
 import { 
@@ -26,6 +28,7 @@ interface ModelOption {
   id: string;
   name: string;
   url: string;
+  originalUrl: string;
   scaleFactor: number;
 }
 
@@ -34,15 +37,80 @@ const AVAILABLE_MODELS: ModelOption[] = [
     id: "pbr",
     name: "PBR Master",
     url: SITE_URLS.models.hero3d,
+    originalUrl: SITE_URLS.models.hero3dOriginal,
     scaleFactor: 2.12, // Adjusted for perfect framing without wingtip clipping
   },
   {
     id: "rigged",
     name: "Rigged Character",
     url: SITE_URLS.models.heroRigged,
+    originalUrl: SITE_URLS.models.heroRiggedOriginal,
     scaleFactor: 2.05,
   },
 ];
+
+// P3.3: parsed GLTF scenes keyed by URL — switching to a previously loaded
+// model is instant (no re-fetch, no re-decode, no loading flash). Module-level
+// so it survives remounts (React StrictMode double-mount re-adds the cached
+// scene instead of refetching).
+const gltfSceneCache = new Map<string, THREE.Group>();
+
+// P3.3: dedupe in-flight/completed fetches across StrictMode double-mounts.
+THREE.Cache.enabled = true;
+
+// P3.1 (D-006): shared Draco decoder for the compressed GLBs. The originals
+// (meshopt-encoded) remain the fallback if CDN decode fails.
+const DRACO_DECODER_PATH = "https://www.gstatic.com/draco/versioned/decoders/1.5.7/";
+
+let sharedDracoLoader: DRACOLoader | null = null;
+function getDracoLoader(): DRACOLoader {
+  if (!sharedDracoLoader) {
+    sharedDracoLoader = new DRACOLoader();
+    sharedDracoLoader.setDecoderPath(DRACO_DECODER_PATH);
+  }
+  return sharedDracoLoader;
+}
+
+function createConfiguredLoader(): GLTFLoader {
+  const loader = new GLTFLoader();
+  loader.setDRACOLoader(getDracoLoader());
+  return loader;
+}
+
+// P3.3: warm the other model's cache during browser idle time so the first
+// switch never shows a loading state.
+function scheduleIdlePreload(loadedIndex: number): void {
+  if (typeof window === "undefined") return;
+  const other = AVAILABLE_MODELS[(loadedIndex + 1) % AVAILABLE_MODELS.length];
+  if (!other || gltfSceneCache.has(other.url)) return;
+
+  const idle =
+    typeof window.requestIdleCallback === "function"
+      ? window.requestIdleCallback.bind(window)
+      : (cb: () => void) => window.setTimeout(cb, 1500);
+
+  idle(() => {
+    if (gltfSceneCache.has(other.url)) return;
+    MeshoptDecoder.ready
+      .then(() => {
+        const loader = createConfiguredLoader();
+        loader.setMeshoptDecoder(MeshoptDecoder);
+        loader.load(
+          other.url,
+          (gltf) => {
+            gltfSceneCache.set(other.url, gltf.scene);
+          },
+          undefined,
+          () => {
+            /* silent: preload is best-effort */
+          }
+        );
+      })
+      .catch(() => {
+        /* silent: preload is best-effort */
+      });
+  });
+}
 
 export default function ThreeHeroModel() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -163,79 +231,106 @@ export default function ThreeHeroModel() {
     });
   }, []);
 
-  // 3. Model Loader Function
+  // 3. Model Loader Function — P3.1 draco+webp with fallback chain, P3.3 cache + idle preload
   const loadModel = useCallback((modelIndex: number) => {
     const floatingGroup = floatingGroupRef.current;
     if (!floatingGroup) return;
 
+    const targetModel = AVAILABLE_MODELS[modelIndex];
     setLoading(true);
     setProgress(0);
 
-    // Clean existing model
+    // Swap without disposing: every successfully loaded scene lives in
+    // gltfSceneCache, so geometry disposal happens only on renderer teardown,
+    // never on switch (disposing a cached scene would corrupt it for reuse).
     if (modelGroupRef.current) {
       floatingGroup.remove(modelGroupRef.current);
-      modelGroupRef.current.traverse((child) => {
-        if ((child as THREE.Mesh).isMesh) {
-          const mesh = child as THREE.Mesh;
-          if (mesh.geometry) mesh.geometry.dispose();
-        }
-      });
       modelGroupRef.current = null;
     }
 
-    const loader = new GLTFLoader();
+    const enhanceMaterials = (model: THREE.Group) => {
+      model.traverse((child) => {
+        if ((child as THREE.Mesh).isMesh) {
+          const mesh = child as THREE.Mesh;
+          mesh.castShadow = true;
+          mesh.receiveShadow = true;
+          if (mesh.material) {
+            const mat = mesh.material as THREE.MeshStandardMaterial;
+            mat.roughness = Math.max(mat.roughness || 0.4, 0.35);
+            mat.metalness = Math.min(mat.metalness || 0.1, 0.45);
+            mat.wireframe = wireframe;
+            mat.needsUpdate = true;
+          }
+        }
+      });
+    };
+
+    const attach = (model: THREE.Group) => {
+      // Transform (center + scale) is applied exactly once per scene — a cached
+      // scene already carries its transform, and re-applying would double it.
+      if (!model.userData.heroStagePrepared) {
+        const box = new THREE.Box3().setFromObject(model);
+        const center = box.getCenter(new THREE.Vector3());
+        const size = box.getSize(new THREE.Vector3());
+        model.position.sub(center);
+
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = targetModel.scaleFactor / (maxDim || 1);
+        model.scale.setScalar(scale);
+        model.userData.heroStagePrepared = true;
+      }
+      // Materials are idempotent to re-apply (keeps wireframe state in sync)
+      enhanceMaterials(model);
+
+      floatingGroup.add(model);
+      modelGroupRef.current = model;
+      setLoading(false);
+    };
+
+    // P3.3 instant path — cached scene: no fetch, no decode, no loading UI
+    const cached = gltfSceneCache.get(targetModel.url);
+    if (cached) {
+      attach(cached);
+      return;
+    }
+
     MeshoptDecoder.ready
       .then(() => {
+        const loader = createConfiguredLoader();
         loader.setMeshoptDecoder(MeshoptDecoder);
-        const targetModel = AVAILABLE_MODELS[modelIndex];
 
-        loader.load(
-          targetModel.url,
-          (gltf) => {
-            const model = gltf.scene;
-            modelGroupRef.current = model;
-
-            // Compute bounding box & center model
-            const box = new THREE.Box3().setFromObject(model);
-            const center = box.getCenter(new THREE.Vector3());
-            const size = box.getSize(new THREE.Vector3());
-
-            model.position.sub(center);
-
-            // Scale accurately
-            const maxDim = Math.max(size.x, size.y, size.z);
-            const scale = targetModel.scaleFactor / (maxDim || 1);
-            model.scale.setScalar(scale);
-
-            // Enhance materials
-            model.traverse((child) => {
-              if ((child as THREE.Mesh).isMesh) {
-                const mesh = child as THREE.Mesh;
-                mesh.castShadow = true;
-                mesh.receiveShadow = true;
-                if (mesh.material) {
-                  const mat = mesh.material as THREE.MeshStandardMaterial;
-                  mat.roughness = Math.max(mat.roughness || 0.4, 0.35);
-                  mat.metalness = Math.min(mat.metalness || 0.1, 0.45);
-                  mat.wireframe = wireframe;
-                  mat.needsUpdate = true;
-                }
+        const loadFrom = (url: string, isFallback: boolean) => {
+          loader.load(
+            url,
+            (gltf) => {
+              gltfSceneCache.set(targetModel.url, gltf.scene);
+              attach(gltf.scene);
+              scheduleIdlePreload(modelIndex);
+            },
+            (xhr) => {
+              if (xhr.total > 0) {
+                setProgress(Math.round((xhr.loaded / xhr.total) * 100));
               }
-            });
-
-            floatingGroup.add(model);
-            setLoading(false);
-          },
-          (xhr) => {
-            if (xhr.total > 0) {
-              setProgress(Math.round((xhr.loaded / xhr.total) * 100));
+            },
+            (err) => {
+              // P3.1 fallback chain: compressed → original (meshopt) if the
+              // Draco CDN decoder or WebP path fails.
+              const fallbackUrl = isFallback ? null : targetModel.originalUrl;
+              if (fallbackUrl) {
+                console.warn(
+                  "Compressed GLB failed — falling back to original model:",
+                  err
+                );
+                loadFrom(fallbackUrl, true);
+              } else {
+                console.error("ThreeJS load error:", err);
+                setLoading(false);
+              }
             }
-          },
-          (err) => {
-            console.error("ThreeJS load error:", err);
-            setLoading(false);
-          }
-        );
+          );
+        };
+
+        loadFrom(targetModel.url, false);
       })
       .catch((err) => {
         console.error("Meshopt ready error:", err);
@@ -405,7 +500,10 @@ export default function ThreeHeroModel() {
       powerPreference: "high-performance",
     });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    // P3.2: device-tier budget — DPR cap 2 (high) / 1.75 (mid) / 1.5 (low).
+    // The same budget gates post-FX in Phase 1.3 and ambient-world density.
+    const deviceBudget = getDeviceBudget();
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, deviceBudget.dprCap));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.25;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -467,7 +565,8 @@ export default function ThreeHeroModel() {
     floatingGroupRef.current = floatingGroup;
 
     // 3D Stardust Particle Constellation (Inspired by FLORIA)
-    const particleCount = 240;
+    // P3.2: particle count scales with device tier (240/160/90)
+    const particleCount = deviceBudget.particles;
     const particleGeometry = new THREE.BufferGeometry();
     const particlePositions = new Float32Array(particleCount * 3);
     const particleColors = new Float32Array(particleCount * 3);
