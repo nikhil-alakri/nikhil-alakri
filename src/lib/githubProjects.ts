@@ -1,12 +1,13 @@
 import { CASE_STUDIES } from "@/data/caseStudies";
-import profile from "@/assets/nikhil-alakri-repository.png.asset.json";
-import odin from "@/assets/odin-eye-repository.png.asset.json";
-import ui from "@/assets/UI-store-repository.png.asset.json";
-import ipo from "@/assets/ipo-repository.png.asset.json";
-import flights from "@/assets/flight-search-repository.png.asset.json";
 
 export type Repo = { name: string; description: string; language: string | null; topics: string[]; url: string; homepage: string | null; updated: string; fork: boolean; archived: boolean };
-const previews: Record<string, string> = { "nikhil-alakri": profile.url, "odin-eye": odin.url, "ui-store": ui.url, ipo: ipo.url, "flight-search": flights.url };
+const previews: Record<string, string> = {
+  "nikhil-alakri": "https://opengraph.githubassets.com/1/nikhil-alakri/nikhil-alakri",
+  "odin-eye": "https://opengraph.githubassets.com/1/nikhil-alakri/odin-eye",
+  "ui-store": "https://opengraph.githubassets.com/1/nikhil-alakri/UI-store",
+  ipo: "https://opengraph.githubassets.com/1/nikhil-alakri/ipo",
+  "flight-search": "https://opengraph.githubassets.com/1/nikhil-alakri/flight-search",
+};
 
 export function safeWebUrl(value: unknown): string | null {
   if (typeof value !== "string" || !value.trim()) return null;

@@ -1,4 +1,4 @@
-import profile from "@/assets/nikhil-alakri-profile.png.asset.json";
+import ProfileAvatar from "@/components/ProfileAvatar";
 export function About() {
   return (
     <section id="about" aria-labelledby="about-title" className="bg-sage">
@@ -6,7 +6,7 @@ export function About() {
         <div>
           <p className="mono-label">04 / Beyond the work</p>
           <div className="mt-6 flex items-center gap-4">
-            <img src={profile.url} alt="Nikhil Alakri" width={64} height={64} loading="lazy" className="size-16 rounded-full object-cover" />
+            <ProfileAvatar alt="Nikhil Alakri" size={64} loading="lazy" className="size-16 rounded-full object-cover" />
             <div><p className="font-medium text-headline">Nikhil Alakri</p><p className="text-sm text-bodytext">Engineer. Builder. Curious by nature.</p></div>
           </div>
           <h2 id="about-title" className="mt-8 font-display text-3xl font-normal text-headline md:text-4xl">"Make useful things, then make them delightful."</h2>

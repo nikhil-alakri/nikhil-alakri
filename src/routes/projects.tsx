@@ -30,6 +30,7 @@ function ProjectsPage() {
   const { data, refetch, isFetching } = useSuspenseQuery(projectsQuery);
   const [search, setSearch] = useState("");
   const [mode, setMode] = useState<"all" | "demo">("all");
+  const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
   const visible = useMemo(() => data.repos.filter(r => (mode === "all" || r.homepage) && `${r.name} ${r.description} ${r.skills.join(" ")}`.toLowerCase().includes(search.toLowerCase())), [data.repos, search, mode]);
   return <>
     <main id="main-content">
@@ -57,7 +58,7 @@ function ProjectsPage() {
         <ul className="mt-5 grid gap-6 md:grid-cols-2">
           {visible.map(r => <li key={r.url} className="flex min-w-0 flex-col overflow-hidden rounded-lg border border-surface-border bg-background">
             <div className="aspect-[2/1] overflow-hidden border-b border-surface-border bg-sage">
-              {r.image ? <img src={r.image} alt={`${r.name} GitHub repository preview`} loading="lazy" width={1200} height={600} className="h-full w-full object-contain" /> : <div className="flex h-full items-center justify-center"><Github className="size-16 text-bodytext" aria-hidden="true" /></div>}
+              {r.image && !failedImages[r.url] ? <img src={r.image} alt={`${r.name} GitHub repository preview`} loading="lazy" width={1200} height={600} className="h-full w-full object-contain" onError={() => setFailedImages(prev => ({ ...prev, [r.url]: true }))} /> : <div className="flex h-full items-center justify-center"><Github className="size-16 text-bodytext" aria-hidden="true" /></div>}
             </div>
             <div className="flex flex-1 flex-col p-5 md:p-6">
               <p className="mono-label">{r.language ?? "Public repository"}{r.fork ? " / Fork" : ""}{r.archived ? " / Archived" : ""}</p>

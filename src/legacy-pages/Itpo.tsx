@@ -24,7 +24,7 @@ export default function ItpoLivePage() {
           This live platform preview is temporarily private while architecture updates and security audits are being completed.
         </p>
         <Link
-          href="/#projects"
+          href="/#work"
           className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-primary text-background font-semibold hover:bg-accent transition-all text-sm"
         >
           <ArrowLeft className="w-4 h-4" />

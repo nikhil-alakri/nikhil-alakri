@@ -1,5 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
-import heroWorkspace from "@/assets/nikhil-frontend-cover.jpg.asset.json";
+import heroWorkspace from "@/assets/hero-workspace.jpg";
 
 export default function HomeHero() {
   return (
@@ -8,7 +8,7 @@ export default function HomeHero() {
       <div className="absolute inset-0" aria-hidden>
         <img
           data-parallax="120"
-          src={heroWorkspace.url}
+          src={heroWorkspace}
           alt=""
           width={1920}
           height={1088}
