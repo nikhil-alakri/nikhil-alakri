@@ -1,67 +1,106 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./styles/**/*.{scss,css}",
-  ],
-  darkMode: "class",
+    darkMode: "class",
   theme: {
     extend: {
       colors: {
-        background: "var(--color-bg)",
+        background: "var(--site-bg)",
         surface: {
-          DEFAULT: "var(--color-surface)",
-          elevated: "var(--color-surface-elevated)",
-          hover: "var(--color-surface-elevated)",
-          border: "var(--color-border)",
-          "border-hover": "var(--color-border-hover)",
+          DEFAULT: "var(--site-surface)",
+          elevated: "var(--site-surface-elevated)",
+          hover: "var(--site-surface-elevated)",
+          border: "var(--site-border)",
+          "border-hover": "var(--site-border-hover)",
         },
         primary: {
-          DEFAULT: "var(--color-text-primary)",
-          hover: "var(--color-accent)",
+          DEFAULT: "var(--site-text-primary)",
+          hover: "var(--site-accent)",
         },
         accent: {
-          DEFAULT: "var(--color-accent)",
-          hover: "var(--color-text-primary)",
+          DEFAULT: "var(--site-accent)",
+          hover: "var(--site-accent-hover)",
         },
-        headline: "var(--color-text-primary)",
-        bodytext: "var(--color-text-secondary)",
-        secondary: "var(--color-text-secondary)",
-        mutedtext: "var(--color-text-muted)",
-        status: "var(--color-status)",
+        mint: {
+          DEFAULT: "var(--site-mint)",
+          light: "#D5F578",
+          dark: "#18221C",
+        },
+        amber: {
+          DEFAULT: "#3F5F1C",
+          light: "#D5F578",
+          dark: "#18221C",
+        },
+        ink: { DEFAULT: "var(--site-ink)", soft: "var(--site-ink-soft)" },
+        paper: "var(--site-paper)",
+        sage: "var(--site-sage)",
+        lime: "var(--site-lime)",
+        olive: "var(--site-olive)",
+        headline: "var(--site-text-primary)",
+        bodytext: "var(--site-text-secondary)",
+        secondary: "var(--site-text-secondary)",
+        mutedtext: "var(--site-text-muted)",
+        status: "var(--site-status)",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        "fade-in": {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.28s ease-out",
+        "accordion-up": "accordion-up 0.22s ease-out",
+        "fade-in": "fade-in 0.2s ease-out",
       },
       fontFamily: {
-        primary: [
-          "var(--font-primary)",
-          "'DynaPuff'",
-          "cursive",
+        display: [
+          "var(--font-display)",
+          "'Space Grotesk'",
+          "'Inter'",
+          "-apple-system",
           "sans-serif",
         ],
-        secondary: [
-          "var(--font-secondary)",
-          "'Plus Jakarta Sans'",
+        primary: [
+          "var(--font-primary)",
+          "'Space Grotesk'",
+          "'Inter'",
+          "-apple-system",
+          "sans-serif",
+        ],
+        serif: [
+          "var(--font-serif)",
+          "'Instrument Serif'",
+          "'Playfair Display'",
+          "Georgia",
+          "serif",
+        ],
+        sans: [
+          "var(--font-sans)",
+          "'Inter'",
           "-apple-system",
           "BlinkMacSystemFont",
           "sans-serif",
         ],
-        display: [
-          "var(--font-primary)",
-          "'DynaPuff'",
-          "cursive",
-          "sans-serif",
-        ],
-        sans: [
+        secondary: [
           "var(--font-secondary)",
-          "'Plus Jakarta Sans'",
+          "'Inter'",
           "-apple-system",
           "BlinkMacSystemFont",
           "sans-serif",
         ],
         mono: [
           "var(--font-mono)",
+          "'JetBrains Mono'",
+          "ui-monospace",
           "monospace",
         ],
       },

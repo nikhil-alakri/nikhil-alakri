@@ -1,0 +1,9 @@
+[
+ {"capability":"code","source":"Next.js 15 app router portfolio","outcome":"port to TanStack Start","status":"verified","next_action":""},
+ {"capability":"schema","source":"none detected","outcome":"none","status":"verified","next_action":""},
+ {"capability":"records","source":"none detected","outcome":"none","status":"verified","next_action":""},
+ {"capability":"auth","source":"none detected","outcome":"none","status":"verified","next_action":""},
+ {"capability":"assets","source":"public/ (3D models, draco, resume, icons)","outcome":"copy to public/","status":"verified","next_action":""},
+ {"capability":"seo","source":"metadata, JSON-LD, sitemap.ts, robots.ts","outcome":"route head() + static robots/sitemap","status":"verified","next_action":""},
+ {"capability":"secrets","source":"none","outcome":"none","status":"verified","next_action":""}
+]

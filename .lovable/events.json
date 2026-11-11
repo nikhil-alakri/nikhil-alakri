@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "events": {
+    "project.linkedin_opened": {
+      "event_schema_version": 1,
+      "description": "A visitor clicks Follow on LinkedIn in the recruiter section.",
+      "privacy": {
+        "contains_pii": false,
+        "purpose": "product_analytics"
+      },
+      "properties_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      }
+    },
+    "project.project_match_completed": {
+      "event_schema_version": 1,
+      "description": "The existing AI project matcher successfully returns recommendations; no visitor prompt or response content is collected.",
+      "privacy": {
+        "contains_pii": false,
+        "purpose": "product_analytics"
+      },
+      "properties_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      }
+    },
+    "project.timeline_opened": {
+      "event_schema_version": 1,
+      "description": "A visitor follows Full career timeline from the recruiter section.",
+      "privacy": {
+        "contains_pii": false,
+        "purpose": "product_analytics"
+      },
+      "properties_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      }
+    }
+  }
+}
