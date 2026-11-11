@@ -1,0 +1,14 @@
+# Portfolio refresh
+- [x] Adopt the Figma design (paper/ink/lime) across home and case studies.
+- [x] Replace the scrolling marquee with a static proof strip.
+- [x] Carousel keyboard controls (arrows, Home/End) and reduced-motion jumps.
+- [x] Detailed case study pages for every project.
+- [x] AI project & skills recommender for visitors.
+- [x] Mobile layout pass.
+- [x] Real career timeline, links, email and case study facts from resume/GitHub.
+- [x] Skill picker + AI project finder.
+- [ ] Real profile photo (using GitHub avatar until the user uploads one).
+- [x] LinkedIn access and shared career timeline in Hire me.
+- [x] Maharashtra-focused metadata and a share image.
+- [x] Live GitHub projects page linked from the matcher, with images and available demos.
+- [x] Track recruiter LinkedIn clicks, timeline opens and successful AI matches; validate before publishing.

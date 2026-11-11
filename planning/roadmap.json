@@ -1,0 +1,258 @@
+{
+  "$schema_note": "AI-readable roadmap. Human version: planning/roadmap.md. Step details: planning/3d-overhaul.spec.md. Update 'status' after each task; statuses: todo|in_progress|review|done|blocked.",
+  "lastUpdated": "2026-11-02 Phase 3 complete (both-systems ruling D-007)",
+  "recommendedOrder": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "dependencies": {
+    "1": [
+      0
+    ],
+    "2": [
+      1
+    ],
+    "4": [
+      2
+    ]
+  },
+  "phases": [
+    {
+      "id": 0,
+      "name": "Fix Foundations",
+      "leadAgent": "engineering-frontend-developer",
+      "effortSessions": 1,
+      "status": "review",
+      "acceptance": [
+        "drag smooth end-to-end, no parallax jitter",
+        "vertical swipe over hero canvas scrolls page on touch",
+        "spin eased and interruptible",
+        "reduced-motion users get static-but-controllable stage",
+        "npm run build green"
+      ],
+      "tasks": [
+        {
+          "id": "0.1",
+          "spec": "P0.1",
+          "title": "Replace isInteracting state read in animate loop with ref",
+          "status": "done"
+        },
+        {
+          "id": "0.2",
+          "spec": "P0.2",
+          "title": "Touch gesture config + pan-y gating (no scroll hijack)",
+          "status": "done"
+        },
+        {
+          "id": "0.3",
+          "spec": "P0.3",
+          "title": "GSAP tween spin replacing raw rAF loop",
+          "status": "done"
+        },
+        {
+          "id": "0.4",
+          "spec": "P0.4",
+          "title": "prefers-reduced-motion support",
+          "status": "done"
+        }
+      ],
+      "completedAt": "2026-11-01",
+      "implementedBy": "subagent engineering-frontend-developer (ses_e6bc2007fffeEqWDYkViu7TTX7), reviewed by main session",
+      "deviations": [
+        "autoRotateRef added \u2014 loop's per-frame 'controls.autoRotate = autoRotate' was itself a stale closure that force-reeenabled auto-rotate after Space toggle; gating setup+effect alone could not satisfy P0.4",
+        "P0.2 via touch-action pan-y (after OrbitControls connect(), which forces touch-action:none) + explicit touches map; pointer-axis gating approach dropped as unnecessary",
+        "onComplete folds rotation.y back by 2*pi so parallax lerp resumes from pre-spin angle",
+        "spin tween killed in handleResetCamera + arrow nudges + unmount cleanup"
+      ],
+      "verification": "npm run build PASS (12/12 static pages, strict TS). npm run lint N/A \u2014 ESLint not installed in repo (next build type-check covers types). Visual QA pending owner.",
+      "holdNote": "Owner QA in progress (2026-11-02). Commit deferred until QA passes."
+    },
+    {
+      "id": 1,
+      "name": "Visual Quality",
+      "leadAgent": "engineering-frontend-developer",
+      "effortSessions": 2,
+      "status": "todo",
+      "acceptance": [
+        "model grounded with contact shadow",
+        "env-map reflections visible on metals",
+        "subtle bloom, no clipping; skipped on low tier",
+        "round glowing twinkling particles",
+        "hybrid wireframe edges overlay",
+        "hero model still pops against the OrganicWorld background layer (visual-hierarchy check)",
+        "low tier renders without post FX"
+      ],
+      "tasks": [
+        {
+          "id": "1.1",
+          "spec": "P1.1",
+          "title": "RoomEnvironment PMREM env map + per-mood intensity",
+          "status": "todo"
+        },
+        {
+          "id": "1.2",
+          "spec": "P1.2",
+          "title": "Contact shadow: shadowMap + ShadowMaterial ground disc",
+          "status": "todo"
+        },
+        {
+          "id": "1.3",
+          "spec": "P1.3",
+          "title": "EffectComposer + UnrealBloom + vignette (tier-gated)",
+          "status": "todo"
+        },
+        {
+          "id": "1.4",
+          "spec": "P1.4",
+          "title": "Custom particle ShaderMaterial: soft glow sprites, twinkle, mouse/scroll uniforms",
+          "status": "todo"
+        },
+        {
+          "id": "1.5",
+          "spec": "P1.5",
+          "title": "Hybrid wireframe: EdgesGeometry overlay, opacity animated",
+          "status": "todo"
+        },
+        {
+          "id": "1.6",
+          "spec": "P1.6",
+          "title": "Palette-synced gradient backdrop sphere/plane with mood uniforms \u2014 CANCELLED: OrganicWorld (other session) is the page-wide backdrop (D-005)",
+          "status": "cancelled"
+        },
+        {
+          "id": "1.7",
+          "spec": "P1.7",
+          "status": "todo",
+          "title": "Visual-hierarchy check: hero stage vs OrganicWorld background \u2014 depth/fog contract so the hero model pops"
+        }
+      ],
+      "reconciliationRef": "D-005"
+    },
+    {
+      "id": 2,
+      "name": "Interaction Depth",
+      "leadAgent": "engineering-frontend-developer",
+      "effortSessions": 2,
+      "status": "todo",
+      "acceptance": [
+        "hover highlights part + tooltip name",
+        "click focuses camera, Esc/outside restores exact pose",
+        "hero stage receives at most subtle scroll drift \u2014 exactly ONE page-wide scroll system (OrganicWorld camera)",
+        "rigged head tracks cursor, clamped",
+        "explore mode toggle persisted",
+        "raycast suppressed while dragging"
+      ],
+      "tasks": [
+        {
+          "id": "2.1",
+          "spec": "P2.1",
+          "title": "Raycaster hover: emissive pulse + part tooltip",
+          "status": "todo"
+        },
+        {
+          "id": "2.2",
+          "spec": "P2.2",
+          "title": "Click-to-focus: GSAP dolly + retarget, restore pose",
+          "status": "todo"
+        },
+        {
+          "id": "2.3",
+          "spec": "P2.3",
+          "title": "Scroll choreography via ScrollTrigger/Lenis + touch fallback \u2014 ownership moved to OrganicWorld scroll-camera path (docs/3D_ORGANIC_WORLD_PLAN.md, its Phase 3)",
+          "status": "cancelled"
+        },
+        {
+          "id": "2.4",
+          "spec": "P2.4",
+          "title": "Head bone cursor tracking on rigged model",
+          "status": "todo"
+        },
+        {
+          "id": "2.5",
+          "spec": "P2.5",
+          "title": "Explore mode toggle + part-label legend + localStorage",
+          "status": "todo"
+        }
+      ],
+      "reconciliationRef": "D-005"
+    },
+    {
+      "id": 3,
+      "name": "Performance",
+      "leadAgent": "engineering-devops-automator",
+      "verifyAgent": "engineering-sre",
+      "effortSessions": 1,
+      "status": "review",
+      "decisionRef": "D-002",
+      "ownerApproved": true,
+      "acceptance": [
+        "combined GLB < 3MB \u2014 DONE: 2.85MB (-81%)",
+        "second model load instant via cache \u2014 DONE (gltfSceneCache + idle preload + THREE.Cache)",
+        "LCP not regressed \u2014 MY LANE CLEAN (TBT 11.5s->0.8s); combined LCP 17.79s attributed to other session's in-flight SceneCanvas (D-007 finding)",
+        "low tier: no postFX (Phase 1.3 pending), DPR 1.5, fewer particles \u2014 budgets wired"
+      ],
+      "tasks": [
+        {
+          "id": "3.1",
+          "spec": "P3.1",
+          "title": "gltf-transform draco+ktx2, originals kept, DRACOLoader+KTX2Loader with fallback",
+          "status": "done",
+          "note": "Draco+WebP assets (2.85MB) + DRACOLoader wiring + compressed->original fallback chain + URL swap in config/urls.ts"
+        },
+        {
+          "id": "3.2",
+          "spec": "P3.2",
+          "title": "Device tiering helper (particles/DPR/postFX budgets)",
+          "status": "done",
+          "note": "deviceTier.ts + wired into hero (DPR cap, particle count 240/160/90); postFX gate ready for Phase 1.3"
+        },
+        {
+          "id": "3.3",
+          "spec": "P3.3",
+          "title": "Idle preload + parsed-scene cache for instant switching",
+          "status": "done",
+          "note": "gltfSceneCache (module-level) + scheduleIdlePreload + THREE.Cache.enabled + no-dispose-on-switch contract"
+        },
+        {
+          "id": "3.4",
+          "spec": "P3.4",
+          "title": "Lighthouse baseline capture into planning/progress/phase-3.md",
+          "status": "done",
+          "note": "Lighthouse mobile (local, simulated throttling): BEFORE(hero only, 15MB): perf 57, LCP 2.87s, TBT 11523ms | AFTER(combined w/ other session mid-flight): perf 54, LCP 17.79s(!), TBT 822ms. Caveat: 'after' is the combined two-system state, not a clean A/B."
+        }
+      ],
+      "completedAt": "2026-11-02"
+    },
+    {
+      "id": 4,
+      "name": "Extend Beyond Hero",
+      "leadAgent": "engineering-frontend-developer",
+      "effortSessions": 1,
+      "status": "todo",
+      "optional": true,
+      "tasks": [
+        {
+          "id": "4.1",
+          "spec": "Phase4",
+          "title": "Extract reusable MiniShowcase component",
+          "status": "todo"
+        },
+        {
+          "id": "4.2",
+          "spec": "Phase4",
+          "title": "Integrate on odin-eye + itpo pages",
+          "status": "todo"
+        },
+        {
+          "id": "4.3",
+          "spec": "Phase4",
+          "title": "Optional 404 floating-model easter egg",
+          "status": "todo"
+        }
+      ]
+    }
+  ]
+}

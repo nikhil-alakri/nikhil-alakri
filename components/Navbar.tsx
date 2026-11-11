@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Github, Linkedin, ArrowUpRight } from "lucide-react";
+import { Github, Linkedin, FileDown, ArrowUpRight } from "lucide-react";
 import { SITE_URLS } from "@/config/urls";
 
 export default function Navbar() {
@@ -34,21 +34,33 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-bodytext">
+        <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-bodytext">
+          <a href={SITE_URLS.nav.experience} className="hover:text-headline transition-colors">Experience</a>
+          <a href={SITE_URLS.nav.pillars} className="hover:text-headline transition-colors">Specializations</a>
           <a href={SITE_URLS.nav.projects} className="hover:text-headline transition-colors">Projects</a>
-          <a href={SITE_URLS.nav.openSource} className="hover:text-headline transition-colors">Open Source</a>
           <a href={SITE_URLS.nav.skills} className="hover:text-headline transition-colors">Stack</a>
+          <a href={SITE_URLS.nav.faq} className="hover:text-headline transition-colors">FAQ</a>
           <a href={SITE_URLS.nav.contact} className="hover:text-headline transition-colors">Contact</a>
         </nav>
 
         {/* Action icons & Mobile connect */}
         <div className="flex items-center gap-2 sm:gap-3">
           <a
+            href={SITE_URLS.resume}
+            download="Nikhil_Alakri_Resume_CitiusTech.pdf"
+            aria-label="Download Official Resume PDF"
+            className="magnetic hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-xl bg-surface border border-accent/40 text-headline hover:bg-surface-elevated hover:border-accent transition-colors min-h-[38px] will-change-transform"
+          >
+            <FileDown className="w-3.5 h-3.5 text-accent" />
+            <span>CV</span>
+          </a>
+
+          <a
             href={SITE_URLS.socials.github}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub Profile"
-            className="p-2 sm:p-2.5 rounded-xl bg-surface border border-surface-border text-bodytext hover:text-headline hover:border-accent transition-colors min-w-[38px] min-h-[38px] flex items-center justify-center"
+            className="magnetic p-2 sm:p-2.5 rounded-xl bg-surface border border-surface-border text-bodytext hover:text-headline hover:border-accent transition-colors min-w-[38px] min-h-[38px] flex items-center justify-center will-change-transform"
           >
             <Github className="w-4 h-4" />
           </a>
@@ -57,13 +69,13 @@ export default function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn Profile"
-            className="p-2 sm:p-2.5 rounded-xl bg-surface border border-surface-border text-bodytext hover:text-headline hover:border-accent transition-colors min-w-[38px] min-h-[38px] flex items-center justify-center"
+            className="magnetic p-2 sm:p-2.5 rounded-xl bg-surface border border-surface-border text-bodytext hover:text-headline hover:border-accent transition-colors min-w-[38px] min-h-[38px] flex items-center justify-center will-change-transform"
           >
             <Linkedin className="w-4 h-4" />
           </a>
           <a
             href={SITE_URLS.nav.contact}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 sm:px-3.5 py-2 rounded-xl bg-primary text-background hover:bg-accent transition-all min-h-[38px]"
+            className="magnetic inline-flex items-center gap-1.5 text-xs font-semibold px-3 sm:px-3.5 py-2 rounded-xl bg-primary text-background hover:bg-accent transition-colors min-h-[38px] will-change-transform"
           >
             Connect
             <ArrowUpRight className="w-3.5 h-3.5" />

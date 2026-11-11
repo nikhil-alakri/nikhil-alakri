@@ -1,0 +1,46 @@
+{
+  "$schema_note": "AI-readable audit. Human version: planning/audit.md. Generated 2026-11-01.",
+  "project": {
+    "name": "nikhilalakri.tech",
+    "stack": ["next@15 app-router", "react@19", "typescript-strict", "three@0.187", "gsap@3.12", "lenis@1.1", "tailwind@3", "sass", "meshoptimizer"],
+    "purpose": "Personal portfolio - Full-Stack & AI Engineer",
+    "claimedQualityBar": "100/100 Lighthouse, WCAG AA"
+  },
+  "threeDArchitecture": {
+    "approach": "raw-three-js-no-r3f",
+    "decisionRef": "D-001",
+    "entrypoints": ["components/Hero.tsx -> components/DynamicThreeModel.tsx (next/dynamic ssr:false) -> components/ThreeHeroModel.tsx"],
+    "heroStageFeatures": [
+      "OrbitControls damped, min/max polar+distance, pan disabled",
+      "4 lighting moods: studio|cyber|neon|clean",
+      "wireframe toggle via material swap",
+      "keyboard: space,w,l,r,f,1,2,arrows + key feedback pill + help HUD",
+      "240 untextured square point particles, additive blending",
+      "mouse parallax rotation lerp + keylight cursor tracking",
+      "scroll influence via passive window scroll listener",
+      "IntersectionObserver pauses render loop offscreen",
+      "devicePixelRatio cap 2, ACESFilmic, sRGB"
+    ],
+    "paletteHex": { "ivory": "0xfff2d8", "seafoam": "0x5eead4", "brass": "0xcbb594" },
+    "smoothScroll": "Lenis desktop-only; native scroll on touch or width<768 (components/SmoothScroll.tsx)"
+  },
+  "assets": {
+    "models": [
+      { "url": "public/3d-models/tripo_pbr_model_f45a11fd-bba9-4ec5-9179-8b2af812de0a_meshopt.glb", "bytes": 10551528, "compression": "meshopt-only" },
+      { "url": "public/3d-models/tripo_rigging_aa8a4ad8-f9cd-45eb-b1e3-940e82a8caba_meshopt.glb", "bytes": 4731872, "compression": "meshopt-only", "note": "rigged - usable for head tracking" }
+    ],
+    "totalBytes": 15283400,
+    "targetBytesAfterPhase3": 3145728
+  },
+  "issues": [
+    { "id": "P0-1", "severity": "bug", "file": "components/ThreeHeroModel.tsx", "lineHint": 516, "title": "Stale closure: parallax fights OrbitControls while dragging", "cause": "animate loop closes over isInteracting state captured at mount; controls start/end setState never seen by running loop", "fix": "mirror interaction into useRef read by loop" },
+    { "id": "P0-2", "severity": "bug", "file": "components/ThreeHeroModel.tsx", "title": "Mobile scroll hijack: OrbitControls sets touch-action none on large canvas", "fix": "explicit touches config + pan-y gesture-axis gating" },
+    { "id": "P0-3", "severity": "bug", "file": "components/ThreeHeroModel.tsx", "lineHint": 250, "title": "Spin trick linear rAF loop, no easing, races autoRotate+parallax", "fix": "gsap.to(floatingGroup.rotation, overwrite:auto)" },
+    { "id": "P0-4", "severity": "a11y", "title": "No prefers-reduced-motion support (conflicts with WCAG claim)", "fix": "matchMedia gate for autoRotate/parallax/bob/particle drift" },
+    { "id": "P3-1", "severity": "perf", "title": "15.2MB GLBs - largest site asset, no draco/ktx2", "fix": "gltf-transform draco+ktx2, originals kept as *.original.glb", "decisionRef": "D-002", "ownerApproved": true },
+    { "id": "GAP-VISUAL", "severity": "quality", "title": "No env map, no post FX, no contact shadow, square particles, void backdrop", "phase": 1 },
+    { "id": "GAP-INTERACTION", "severity": "quality", "title": "No raycast hover/focus, no scroll choreography, redundant competing rotation systems", "phase": 2 },
+    { "id": "GAP-COVERAGE", "severity": "note", "title": "Project pages odin-eye/itpo/project-one have zero 3D", "phase": 4 }
+  ],
+  "baselineMetrics": { "glbTotalMB": 15.2, "particleCount": "240 desktop == mobile", "dprCap": 2, "postFX": "none", "lighthouse": "not captured - do at Phase 3 start" }
+}

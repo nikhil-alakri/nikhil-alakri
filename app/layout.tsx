@@ -2,6 +2,9 @@ import type { Metadata, Viewport } from "next";
 import "./globals.scss";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
+import InteractiveSpotlight from "@/components/InteractiveSpotlight";
+import CustomCursor from "@/components/CustomCursor";
+import DynamicOrganicWorld from "@/components/three/DynamicOrganicWorld";
 import { SITE_URLS } from "@/config/urls";
 
 export const viewport: Viewport = {
@@ -14,30 +17,33 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URLS.baseUrl),
   title: {
-    default: "Nikhil Alakri | Full-Stack & AI Engineer",
+    default: "Nikhil Alakri | Senior Software Engineer · UI Platforms & Design Systems",
     template: "%s | Nikhil Alakri",
   },
   description:
-    "Official portfolio of Nikhil Alakri. Full-Stack & AI Engineer based in Maharashtra, India. Specializing in multimodal AI, local ChromaDB RAG, TypeScript, Python, and high-performance cloud architectures.",
+    "Official portfolio of Nikhil Alakri. Senior Software Engineer with 7+ years of experience specializing in healthcare design systems, Lit & React component libraries, WCAG AA accessibility, and multimodal AI accelerators.",
   keywords: [
     "Nikhil Alakri",
     "nikhil alakri",
     "nikhilalakri",
     "nikhilalakri.tech",
     "Nikhil Alakri portfolio",
-    "Full-Stack & AI Engineer",
-    "AI Engineer India",
-    "Software Engineer Maharashtra",
-    "Multimodal AI",
-    "RAG Pipelines",
-    "ChromaDB RAG",
-    "odin-eye",
-    "UI-store",
+    "Senior Software Engineer",
+    "CitiusTech",
+    "Adventum Student Living",
+    "Design Systems Architect",
+    "Lit Web Components",
+    "React",
     "TypeScript",
-    "Python",
     "Next.js 15",
-    "PostgreSQL",
-    "Supabase",
+    "WCAG Accessibility",
+    "Healthcare UI",
+    "Core Web Vitals",
+    "odin-eye",
+    "Tryy.in",
+    "UI-store",
+    "Multimodal AI",
+    "ChromaDB RAG",
   ],
   authors: [{ name: "Nikhil Alakri", url: SITE_URLS.baseUrl }],
   creator: "Nikhil Alakri",
@@ -58,9 +64,9 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.json",
   openGraph: {
-    title: "Nikhil Alakri | Full-Stack & AI Engineer",
+    title: "Nikhil Alakri | Senior Software Engineer",
     description:
-      "Building in public & shipping end-to-end applications — from high-craft frontend interfaces to vector-backed AI engines.",
+      "7+ years architecting enterprise design systems, regulated healthtech platforms, and multimodal AI accelerators.",
     url: SITE_URLS.baseUrl,
     siteName: "Nikhil Alakri",
     locale: "en_US",
@@ -70,15 +76,15 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Nikhil Alakri - Full-Stack & AI Engineer Portfolio",
+        alt: "Nikhil Alakri - Senior Software Engineer Portfolio",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nikhil Alakri | Full-Stack & AI Engineer",
+    title: "Nikhil Alakri | Senior Software Engineer",
     description:
-      "Building in public & shipping end-to-end applications — from high-craft frontend interfaces to vector-backed AI engines.",
+      "7+ years architecting enterprise design systems, regulated healthtech platforms, and multimodal AI accelerators.",
     images: ["/og-image.png"],
   },
   robots: {
@@ -101,10 +107,14 @@ const jsonLdPerson = {
   alternateName: ["nikhil alakri", "nikhilalakri"],
   url: SITE_URLS.baseUrl,
   image: `${SITE_URLS.baseUrl}/icon-512.png`,
-  jobTitle: "Full-Stack & AI Engineer",
+  jobTitle: "Senior Software Engineer",
   worksFor: {
     "@type": "Organization",
-    name: "Independent / Open Source Builder",
+    name: "CitiusTech Healthcare Technology Private Limited",
+  },
+  alumniOf: {
+    "@type": "Organization",
+    name: "Adventum Student Living",
   },
   address: {
     "@type": "PostalAddress",
@@ -116,17 +126,18 @@ const jsonLdPerson = {
     SITE_URLS.socials.linkedin,
   ],
   description:
-    "Full-Stack & AI Engineer specializing in multimodal AI & RAG pipelines, high-craft web applications, and scalable backend APIs.",
+    "Senior Software Engineer with 7+ years of experience specializing in healthcare design systems, Lit & React component platforms, WCAG AA accessibility, and multimodal AI accelerators.",
   knowsAbout: [
-    "Artificial Intelligence",
-    "Multimodal AI",
-    "Retrieval-Augmented Generation (RAG)",
-    "ChromaDB",
+    "Healthcare Design Systems",
+    "Lit Web Components",
+    "React (TSX)",
     "TypeScript",
-    "Python",
     "Next.js",
+    "WCAG AA Accessibility",
+    "Core Web Vitals & Lighthouse Optimization",
+    "Multimodal AI & Vector RAG",
+    "Python",
     "PostgreSQL",
-    "Full-Stack Web Development",
   ],
 };
 
@@ -173,6 +184,9 @@ export default function RootLayout({
       <body className="bg-background text-bodytext font-sans antialiased selection:bg-accent/30 selection:text-headline">
         {/* Living Ambient Aurora Background (Zero blur compositing cost) */}
         <div className="bg-canvas" aria-hidden="true" />
+        <DynamicOrganicWorld />
+        <InteractiveSpotlight />
+        <CustomCursor />
 
         <SmoothScroll>
           <div className="relative z-10 flex flex-col min-h-screen">
