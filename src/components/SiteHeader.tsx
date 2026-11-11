@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ArrowUpRight, Menu } from "lucide-react";
 import { useRouterState } from "@tanstack/react-router";
-import profile from "@/assets/nikhil-alakri-profile.png.asset.json";
+import ProfileAvatar from "@/components/ProfileAvatar";
 import SoundToggle from "@/components/SoundToggle";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
@@ -22,7 +22,7 @@ export default function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-surface-border bg-background/90 backdrop-blur">
       <div className="site-wrap flex h-16 items-center justify-between gap-4">
-        <a href="/" className="hit inline-flex items-center gap-2.5 font-display text-base font-medium text-headline"><img src={profile.url} alt="" width={32} height={32} className="size-8 rounded-full object-cover" /><span>nikhil alakri<span className="text-mint">.</span></span></a>
+        <a href="/" className="hit inline-flex items-center gap-2.5 font-display text-base font-medium text-headline"><ProfileAvatar alt="" size={32} className="size-8 rounded-full object-cover" /><span>nikhil alakri<span className="text-mint">.</span></span></a>
         <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
           {LINKS.map(l => <a key={l.href} href={l.href} className="hit inline-flex items-center rounded px-3 text-sm text-bodytext transition-colors hover:text-headline">{l.name}</a>)}
         </nav>

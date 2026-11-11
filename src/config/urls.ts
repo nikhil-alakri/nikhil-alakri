@@ -11,12 +11,14 @@ export const SITE_URLS = {
 
   // 2. Documents & Assets
   resume: "/resume/Nikhil_Alakri_Resume_CitiusTech.pdf",
+  profileImage: "https://github.com/nikhil-alakri.png?size=128",
+  profileFallbackImage: "/icon-512.png",
   models: {
     // P3.1 / D-006: compressed (Draco + WebP) are primary — 15.28 MB → 2.85 MB.
     // Originals remain as the fallback chain (see ThreeHeroModel loadModel).
     hero3d: "/3d-models/compressed/hero-pbr.glb",
     heroRigged: "/3d-models/compressed/hero-rigged.glb",
-    hero3dOriginal: "/__l5e/assets-v1/648ff537-008f-46cd-a4be-85a9f5a3feba/hero-pbr-original.glb",
+    hero3dOriginal: "/3d-models/compressed/hero-pbr.glb",
     heroRiggedOriginal: "/3d-models/tripo_rigging_aa8a4ad8-f9cd-45eb-b1e3-940e82a8caba_meshopt.glb",
   },
 
@@ -76,11 +78,11 @@ export const SITE_URLS = {
   // 6. In-Page Navigation Links
   nav: {
     home: "/",
-    projects: "#projects",
+    projects: "#work",
     experience: "#experience",
-    pillars: "#pillars",
-    skills: "#skills",
-    faq: "#faq",
+    pillars: "#expertise",
+    skills: "#expertise",
+    faq: "#hire",
     contact: "#contact",
   },
 } as const;
