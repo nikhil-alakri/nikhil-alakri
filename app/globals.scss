@@ -6,16 +6,16 @@
 @tailwind components;
 @tailwind utilities;
 
-// Note: Fonts are loaded with preconnect in app/layout.tsx for zero-delay LCP & CWV optimization
-
 :root {
   --color-bg: #{$color-bg};
   --color-surface: #{$color-bg-surface};
   --color-surface-elevated: #{$color-bg-elevated};
-  --color-border: #{rgba(188, 163, 127, 0.16)};
-  --color-border-hover: #{rgba(188, 163, 127, 0.45)};
+  --color-border: #{$color-border};
+  --color-border-hover: #{rgba(94, 234, 212, 0.45)};
   
   --color-accent: #{$color-accent};
+  --color-accent-hover: #{$color-mint-hover};
+  --color-mint: #{$color-mint};
   --color-text-primary: #{$color-text-primary};
   --color-text-secondary: #{$color-text-secondary};
   --color-text-muted: #{$color-text-muted};
@@ -24,6 +24,7 @@
   --font-primary: #{$font-primary};
   --font-secondary: #{$font-secondary};
   --font-display: #{$font-display};
+  --font-serif: #{$font-serif};
   --font-sans: #{$font-sans};
   --font-mono: #{$font-mono};
 }
@@ -34,21 +35,32 @@ html {
   font-family: var(--font-secondary);
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  max-width: 100vw;
+  overflow-x: clip;
 }
 
 body {
   font-family: var(--font-secondary);
   background-color: var(--color-bg);
-  color: var(--color-text-primary);
+  color: var(--color-text-secondary);
+  font-size: 1rem; // 16px minimum body
+  line-height: 1.6;
   min-height: 100vh;
   position: relative;
-  overflow-x: hidden;
+  max-width: 100vw;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+// Minimum label size standard (≥ 12px)
+.text-label, .meta-label, label {
+  font-size: 0.75rem; // 12px
+  letter-spacing: 0.05em;
+}
+
 // ==============================================================================
-// 🌌 HIGH-PERFORMANCE CINEMATIC CANVAS (100% Hardware Accelerated, Zero Filter Lag)
+// 🌌 EDITORIAL AURORA & PROCEDURAL GRAIN (Fallback & Underlying Depth)
 // ==============================================================================
 .bg-canvas {
   position: fixed;
@@ -56,48 +68,50 @@ body {
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
-  background-color: #113946;
+  background-color: #04201f;
 
-  // Layer 1: Ambient Top Aurora Gradient Cones (Warm Ivory & Seafoam Glow)
+  // Layer 1: Ambient Editorial Aurora Fallback
   &::before {
     content: '';
     position: absolute;
     inset: 0;
     background: 
-      radial-gradient(ellipse 70% 45% at 50% 0%, rgba(188, 163, 127, 0.28) 0%, rgba(94, 234, 212, 0.1) 40%, transparent 75%),
-      radial-gradient(circle 500px at 85% 35%, rgba(94, 234, 212, 0.08) 0%, transparent 70%),
-      radial-gradient(circle 450px at 15% 65%, rgba(188, 163, 127, 0.09) 0%, transparent 70%);
+      radial-gradient(ellipse 80% 55% at 50% -10%, rgba(92, 242, 214, 0.16) 0%, rgba(13, 74, 62, 0.35) 45%, transparent 80%),
+      radial-gradient(circle 650px at 85% 25%, rgba(92, 242, 214, 0.08) 0%, transparent 65%),
+      radial-gradient(circle 550px at 15% 75%, rgba(45, 31, 66, 0.18) 0%, transparent 65%),
+      linear-gradient(180deg, rgba(4, 32, 31, 0.4) 0%, rgba(2, 20, 19, 0.85) 100%);
     opacity: 0.95;
   }
 
-  // Layer 2: Precision Micro Dot Matrix Mesh
+  // Layer 2: Tactile Film Grain Overlay (SVG noise filter)
   &::after {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(circle, rgba(188, 163, 127, 0.14) 1px, transparent 1px);
-    background-size: 28px 28px;
-    mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, black 25%, transparent 85%);
-    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, black 25%, transparent 85%);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.045'/%3E%3C/svg%3E");
+    opacity: 0.8;
   }
 }
 
-// 2 Universal Site Fonts: Primary (DynaPuff) & Secondary (Plus Jakarta Sans)
-.font-primary, .font-display, .font-dynapuff {
+// Primary Headings use Space Grotesk
+.font-primary, .font-display {
   font-family: var(--font-primary);
 }
 
+// Body uses Inter
 .font-secondary, .font-sans {
   font-family: var(--font-secondary);
 }
 
-// Global headings use DynaPuff Primary
-h1, h2, h3 {
-  font-family: var(--font-primary);
+// Monospace uses JetBrains Mono
+code, kbd, samp, pre, .font-mono {
+  font-family: var(--font-mono);
 }
 
-code, kbd, samp, pre {
-  font-family: var(--font-mono);
+// Global headings use Space Grotesk Primary
+h1, h2, h3 {
+  font-family: var(--font-primary);
+  color: var(--color-text-primary);
 }
 
 // Guaranteed base visibility for text & cards (Never hidden, 100% LCP guaranteed)
@@ -123,7 +137,7 @@ code, kbd, samp, pre {
     border-radius: inherit;
     background: radial-gradient(
       380px circle at var(--mouse-x, -999px) var(--mouse-y, -999px),
-      rgba(203, 181, 148, 0.14),
+      rgba(94, 234, 212, 0.12),
       transparent 65%
     );
     opacity: 0;
@@ -159,7 +173,7 @@ html.lenis, html.lenis body {
   overflow: hidden;
 }
 
-// Custom modern scrollbar
+// Custom modern scrollbar with mint accent
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -169,11 +183,19 @@ html.lenis, html.lenis body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(188, 163, 127, 0.25);
+  background: rgba(94, 234, 212, 0.25);
   border-radius: 9999px;
 
   &:hover {
-    background: rgba(188, 163, 127, 0.45);
+    background: rgba(94, 234, 212, 0.5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-accordion-down,
+  .animate-accordion-up,
+  .animate-fade-in {
+    animation: none !important;
   }
 }
 

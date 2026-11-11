@@ -440,3 +440,4 @@ export function createIlluminatedMonolith(): THREE.Group {
 
   return monolithGroup;
 }
+

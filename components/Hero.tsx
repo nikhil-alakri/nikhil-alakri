@@ -2,20 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { ArrowDown, Copy, Check, FileDown, Terminal } from "lucide-react";
-import { SITE_URLS } from "@/config/urls";
-import DynamicThreeModel from "@/components/DynamicThreeModel";
-import InteractiveTerminal from "@/components/InteractiveTerminal";
-import AnimatedCounter from "@/components/AnimatedCounter";
-import TextScramble from "@/components/TextScramble";
-import ScrollReveal from "@/components/ScrollReveal";
-
-const stats = [
-  { value: "+7 Yrs", label: "Enterprise Experience", sub: "Clinical & FinTech UI" },
-  { value: "100/100", label: "Lighthouse Certified", sub: "WCAG AA Compliant" },
-  { value: "+20%", label: "Speed Improvement", sub: "Core Web Vitals Boost" },
-  { value: "80%", label: "Roadmap Shipped", sub: "High-Velocity Delivery" },
-];
+import { ArrowDown, Copy, Check, FileDown, Eye, ArrowUpRight } from "lucide-react";
+import PORTFOLIO_DATA from "@/src/data/portfolio";
+import { soundManager } from "@/lib/audio";
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -23,11 +12,10 @@ export default function Hero() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Gentle entrance for action buttons without opacity suppression (zero LCP delay)
       gsap.fromTo(
-        ".hero-actions",
-        { y: 8 },
-        { y: 0, duration: 0.4, ease: "power2.out", clearProps: "all" }
+        ".hero-fade",
+        { y: 10, opacity: 0.85 },
+        { y: 0, opacity: 1, duration: 0.4, stagger: 0.05, ease: "power2.out", clearProps: "all" }
       );
     }, containerRef);
 
@@ -35,125 +23,132 @@ export default function Hero() {
   }, []);
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText(SITE_URLS.contact.email);
+    soundManager.playClickSound();
+    navigator.clipboard.writeText(PORTFOLIO_DATA.contact.email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  return (
-    <section ref={containerRef} className="relative pt-8 sm:pt-14 pb-16 sm:pb-24 overflow-hidden">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
-        
-        {/* Availability Badge Row */}
-        <div className="mb-6 sm:mb-8 flex flex-wrap items-center gap-2.5">
-          <div className="hero-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium bg-surface/90 border border-accent/30 text-accent backdrop-blur-md">
-            <span className="w-1.5 h-1.5 rounded-full bg-status animate-status-pulse shrink-0" />
-            <span>Available for Roles &amp; High-Impact Collaborations</span>
-          </div>
-          <span className="inline-flex items-center text-xs text-bodytext font-medium px-3 py-1 rounded-full bg-surface/70 border border-surface-border">
-            📍 Maharashtra, India · Senior Software Engineer
-          </span>
-        </div>
+  const handleCtaHover = () => {
+    soundManager.playHoverSound();
+    window.dispatchEvent(
+      new CustomEvent("portfolio:robot-react", { detail: { type: "nod" } })
+    );
+  };
 
-        {/* 2-Column Hero Grid (Text Left, Three.js 3D Viewport Right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center mb-12 sm:mb-16">
-          
-          {/* Left Column (Editorial Identity & Typography) */}
-          <div className="lg:col-span-7 flex flex-col justify-center">
-            <h1
-              className="hero-title font-primary text-4xl sm:text-6xl md:text-7xl font-bold leading-none tracking-normal text-headline mb-4"
-              style={{ opacity: 1, visibility: "visible" }}
-            >
-              Nikhil Alakri
+  return (
+    <section
+      id="hero"
+      ref={containerRef}
+      className="relative min-h-[calc(100vh-4rem)] flex flex-col justify-between pt-8 sm:pt-14 pb-12 sm:pb-16 overflow-hidden select-none"
+    >
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 w-full flex-1 flex flex-col justify-between">
+        
+        {/* Top / Main Hero Row: Left Typography Statement, Right 3D Spatial Void */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center flex-1 my-auto">
+          {/* Left Column: Big Statement Sentence (Editorial Light Grotesk + Italic Serif Accent) */}
+          <div className="lg:col-span-7 flex flex-col justify-center z-10">
+            {/* Tiny Monospace Availability Coordinate */}
+            <div className="hero-fade mb-5 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-mint animate-pulse" />
+              <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-mint/90">
+                {PORTFOLIO_DATA.personal.availability}
+              </span>
+            </div>
+
+            {/* Big Statement Sentence */}
+            <h1 className="hero-fade font-display font-light text-4xl sm:text-6xl lg:text-7xl xl:text-[4.75rem] tracking-[-0.04em] leading-[1.04] text-headline mb-6">
+              I build <span className="font-serif italic text-mint">high-performance</span> interfaces and AI systems for healthcare and the web.
             </h1>
 
-            <p className="hero-role text-lg sm:text-2xl font-medium text-accent mb-4 flex items-center gap-2.5">
-              <Terminal className="w-5 h-5 sm:w-6 sm:h-6 text-bodytext shrink-0" />
-              <TextScramble
-                text="Senior Software Engineer @ CitiusTech"
-                trigger="inView"
-                duration={1200}
-                className="font-medium"
-              />
+            {/* Tiny Uppercase Tags Line */}
+            <p className="hero-fade text-[11px] sm:text-xs font-mono uppercase tracking-[0.22em] text-mutedtext mb-8 flex flex-wrap items-center gap-x-3 gap-y-1.5">
+              <span className="text-headline/90 font-medium">Healthcare UI</span>
+              <span className="text-white/20">/</span>
+              <span className="text-headline/90 font-medium">AI Accelerators</span>
+              <span className="text-white/20">/</span>
+              <span className="text-headline/90 font-medium">Performance</span>
+              <span className="text-white/20">/</span>
+              <span className="text-headline/90 font-medium">Full-Stack</span>
             </p>
 
-            <p className="hero-bio text-base sm:text-lg text-bodytext max-w-xl leading-relaxed mb-6 sm:mb-8">
-              7+ years architecting enterprise design systems, high-performance UI platforms, and multimodal AI accelerators. 
-              Specializing in <span className="text-headline font-semibold">Lit &amp; React component libraries</span>, 
-              strict <span className="text-headline font-semibold">WCAG AA accessibility</span>, and sub-second 
-              Core Web Vitals in regulated environments.
-            </p>
-
-            {/* Action Buttons with magnetic physics */}
-            <div className="hero-actions flex flex-wrap items-center gap-3">
+            {/* Minimal Essential Actions */}
+            <div className="hero-fade flex flex-wrap items-center gap-3 sm:gap-4 mb-10">
               <a
-                href={SITE_URLS.nav.projects}
-                className="magnetic inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary text-background font-semibold hover:bg-accent transition-colors shadow-md shadow-black/20 text-center text-sm will-change-transform"
+                href="#pillars"
+                onMouseEnter={handleCtaHover}
+                className="magnetic inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-mint text-background font-medium hover:bg-mint-dark transition-all text-sm tracking-tight will-change-transform shadow-md shadow-mint/10"
               >
-                Explore Projects
+                <span>Explore Playbook</span>
                 <ArrowDown className="w-4 h-4" />
               </a>
 
               <a
-                href={SITE_URLS.resume}
-                download="Nikhil_Alakri_Resume_CitiusTech.pdf"
-                className="magnetic inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-surface border border-accent/40 text-headline font-semibold hover:bg-surface-elevated hover:border-accent transition-colors text-center text-sm will-change-transform"
+                href={PORTFOLIO_DATA.personal.resumeUrl}
+                download="Nikhil-Alakri-Resume.pdf"
+                onMouseEnter={handleCtaHover}
+                className="magnetic inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-surface/40 border border-white/[0.08] hover:border-mint/50 text-headline font-normal transition-colors text-sm tracking-tight will-change-transform"
                 title="Download Official Resume PDF"
               >
-                <FileDown className="w-4 h-4 text-accent" />
+                <FileDown className="w-4 h-4 text-mint" />
                 <span>Download CV</span>
               </a>
 
               <button
+                type="button"
                 onClick={handleCopyEmail}
-                className="magnetic inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-surface border border-surface-border text-headline font-medium hover:bg-surface-elevated hover:border-accent transition-colors text-center text-sm will-change-transform"
-                title="Click to copy email"
+                className="magnetic inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full border border-white/[0.08] text-mutedtext hover:text-headline hover:border-mint/40 transition-colors text-xs font-mono will-change-transform"
+                title="Click to copy email address"
               >
                 {copied ? (
                   <>
-                    <Check className="w-4 h-4 text-status" />
-                    <span className="text-status text-xs sm:text-sm">Copied!</span>
+                    <Check className="w-3.5 h-3.5 text-mint" />
+                    <span className="text-mint font-medium">Copied!</span>
                   </>
                 ) : (
                   <>
-                    <Copy className="w-4 h-4 text-accent" />
-                    <span className="text-xs sm:text-sm truncate">{SITE_URLS.contact.email}</span>
+                    <Copy className="w-3.5 h-3.5 text-mint" />
+                    <span>{PORTFOLIO_DATA.contact.email}</span>
                   </>
                 )}
               </button>
             </div>
           </div>
 
-          {/* Right Column (Three.js 3D Interactive Stage) */}
-          <div className="lg:col-span-5 relative" data-3d-stage="true">
-            <DynamicThreeModel />
+          {/* Right Column: 3D Spatial Framing (Transparent stage, robot sits here cleanly) */}
+          <div className="lg:col-span-5 relative w-full h-[320px] sm:h-[420px] lg:h-[500px] flex items-center justify-center pointer-events-none">
+            {/* Zero DOM clutter, robot renders natively in background canvas */}
           </div>
         </div>
 
-        {/* Impact Numbers Grid with Animated Counters and Scroll Stagger */}
-        <ScrollReveal animation="fadeUp" stagger={0.08} className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-12 sm:mb-16">
-          {stats.map((s, idx) => (
-            <div
-              key={idx}
-              className="p-4 sm:p-5 rounded-2xl bg-surface border border-surface-border hover:border-accent transition-all group spotlight-card"
-            >
-              <span className="font-primary text-2xl sm:text-3xl md:text-4xl font-bold text-headline group-hover:text-accent transition-colors block mb-1">
-                <AnimatedCounter value={s.value} duration={1600} delay={idx * 120} />
-              </span>
-              <span className="text-xs sm:text-sm font-semibold text-headline block">
-                {s.label}
-              </span>
-              <span className="text-[11px] font-mono text-bodytext block">
-                {s.sub}
-              </span>
-            </div>
-          ))}
-        </ScrollReveal>
+        {/* Bottom Bar: Quiet Metric Numbers (No bulky boxes) + Thin Scroll Indicator */}
+        <div className="hero-fade pt-8 border-t border-white/[0.08] flex flex-col md:flex-row md:items-end justify-between gap-6">
+          {/* Quiet Metrics Numbers Row */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-10 max-w-2xl">
+            {PORTFOLIO_DATA.stats.map((s, idx) => (
+              <div key={idx} className="flex flex-col">
+                <span className="font-display font-light text-2xl sm:text-3xl lg:text-4xl text-headline tracking-[-0.03em]">
+                  {s.value}
+                </span>
+                <span className="text-[11px] font-mono text-mutedtext uppercase tracking-wider mt-1">
+                  {s.label}
+                </span>
+              </div>
+            ))}
+          </div>
 
-        {/* Interactive CLI Terminal (whoami.ts) */}
-        <ScrollReveal animation="scaleUp" delay={0.1}>
-          <InteractiveTerminal />
-        </ScrollReveal>
+          {/* Thin Scroll Indicator Bottom-Right/Left */}
+          <a
+            href="#pillars"
+            className="group inline-flex items-center gap-3 text-xs font-mono text-mutedtext hover:text-mint transition-colors tracking-widest uppercase cursor-pointer py-1"
+            aria-label="Scroll to Architectural Pillars"
+          >
+            <span>Scroll</span>
+            <div className="w-[1px] h-6 bg-gradient-to-b from-mint/20 via-mint to-mint rounded-full group-hover:h-8 transition-all" />
+            <ArrowDown className="w-3.5 h-3.5 text-mint group-hover:translate-y-0.5 transition-transform" />
+          </a>
+        </div>
+
       </div>
     </section>
   );

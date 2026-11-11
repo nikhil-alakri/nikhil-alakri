@@ -164,3 +164,42 @@ I build useful software and enjoy turning ambitious ideas into working products.
 ***⭐ From [Nikhil Alakri](https://github.com/nikhil-alakri) · built with code, AI & a little chaos 😈***
 
 </div>
+
+---
+
+## 🛠️ Developer Maintenance Guide
+
+### 1. How to Add or Update a Project
+All portfolio copy and project metadata is centralized in a single typed file: [`src/data/portfolio.ts`](file:///Users/nikhilalakri/Developer/nikhilalakri.tech/src/data/portfolio.ts).
+To add a new project:
+1. Open `src/data/portfolio.ts` and add an entry to the `projects` array:
+   ```ts
+   {
+     id: "my-project",
+     title: "Project Name",
+     category: "Domain / Category",
+     description: "One-line high-impact outcome.",
+     path: "/project-route",
+     isExternal: false,
+     githubUrl: "https://github.com/nikhil-alakri/repo",
+     liveUrl: "https://project.com",
+     tags: ["Next.js", "TypeScript", "Tailwind"],
+     featured: true,
+   }
+   ```
+2. The project will automatically populate the **3D Project Coverflow**, case study modal, and project filters with zero additional code.
+
+### 2. How to Swap or Compress a 3D GLB Model
+The 3D world uses a persistent, client-side Three.js / React Three Fiber layer:
+1. Place your raw `.glb` model into `public/3d-models/`.
+2. Optimize with `gltf-transform` meshopt compression for fast 60fps mobile loading:
+   ```bash
+   npx @gltf-transform/cli optimize public/3d-models/my-model.glb public/3d-models/compressed/hero-pbr.glb --compress meshopt
+   ```
+3. Update the path in [`config/urls.ts`](file:///Users/nikhilalakri/Developer/nikhilalakri.tech/config/urls.ts) (`SITE_URLS.models.hero3d`) or [`components/three/SceneCanvas.tsx`](file:///Users/nikhilalakri/Developer/nikhilalakri.tech/components/three/SceneCanvas.tsx).
+
+### 3. How to Update the Official Resume
+1. Place your updated PDF in `public/resume/Nikhil_Alakri_Resume_CitiusTech.pdf`.
+2. All download triggers (Hero, Navbar, Terminal, FAQ, and Footer) will automatically serve the updated file with the clean download filename `Nikhil-Alakri-Resume.pdf`.
+3. The in-page `<ResumeModal />` PDF viewer will immediately reflect your updated resume.
+

@@ -2,49 +2,56 @@
 
 import { useEffect, ReactNode } from "react";
 import Lenis from "lenis";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { setGlobalLenis } from "@/lib/scrollStation";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export default function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // On touch devices (smartphones/tablets), native 120Hz momentum scrolling
-    // provides the best performance, battery efficiency, and zero touch latency.
-    const isTouchDevice =
-      "ontouchstart" in window ||
-      navigator.maxTouchPoints > 0 ||
-      window.innerWidth < 768;
-
-    if (isTouchDevice) {
-      // Native smooth scroll for mobile
+    // Check prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) {
       return;
     }
 
     let lenis: Lenis | null = null;
-    let rafId: number;
 
     try {
       lenis = new Lenis({
-        duration: 1.0,
+        duration: 1.1,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         orientation: "vertical",
         gestureOrientation: "vertical",
         smoothWheel: true,
+        touchMultiplier: 1.5,
       });
 
-      function raf(time: number) {
-        lenis?.raf(time);
-        rafId = requestAnimationFrame(raf);
-      }
+      setGlobalLenis(lenis);
 
-      rafId = requestAnimationFrame(raf);
+      // Connect Lenis to GSAP ScrollTrigger
+      lenis.on("scroll", ScrollTrigger.update);
+
+      const tickerCallback = (time: number) => {
+        lenis?.raf(time * 1000);
+      };
+
+      gsap.ticker.add(tickerCallback);
+      gsap.ticker.lagSmoothing(0);
+
+      return () => {
+        gsap.ticker.remove(tickerCallback);
+        lenis?.destroy();
+        setGlobalLenis(null);
+      };
     } catch (e) {
       console.warn("Smooth scroll fallback:", e);
     }
-
-    return () => {
-      if (rafId) cancelAnimationFrame(rafId);
-      lenis?.destroy();
-    };
   }, []);
 
   return <>{children}</>;

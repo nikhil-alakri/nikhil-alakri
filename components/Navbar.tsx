@@ -1,87 +1,219 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Github, Linkedin, FileDown, ArrowUpRight } from "lucide-react";
-import { SITE_URLS } from "@/config/urls";
+import { FileDown, Menu } from "lucide-react";
+import PORTFOLIO_DATA from "@/src/data/portfolio";
+import SoundToggle from "@/components/SoundToggle";
+import { soundManager } from "@/lib/audio";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+
+const NAV_LINKS = [
+  { name: "Playbook", href: "#pillars", sectionId: "pillars" },
+  { name: "Work", href: "#projects", sectionId: "projects" },
+  { name: "Journey", href: "#experience", sectionId: "experience" },
+  { name: "Contact", href: "#contact", sectionId: "contact" },
+];
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [activeSection, setActiveSection] = useState("hero");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Hide navbar completely on clean embedded routes like /itpo
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalScroll > 0) {
+        setScrollProgress((window.scrollY / totalScroll) * 100);
+      }
+
+      const sections = ["hero", "pillars", "experience", "projects", "skills", "faq", "contact"];
+      const scrollY = window.scrollY + 200;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i]);
+        if (el && el.offsetTop <= scrollY) {
+          setActiveSection(sections[i]);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 768px)");
+    const closeOnDesktop = () => {
+      if (desktop.matches) setMobileMenuOpen(false);
+    };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
+
+  // Hide on clean routes like /itpo
   if (pathname === "/itpo" || pathname?.startsWith("/itpo/")) {
     return null;
   }
 
+  const handleLinkClick = () => {
+    soundManager.playClickSound();
+    setMobileMenuOpen(false);
+  };
+
   return (
-    <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-background/85 border-b border-surface-border">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-        <Link href={SITE_URLS.nav.home} className="flex items-center gap-2.5 group py-1">
-          <div className="relative shrink-0">
-            <img
-              src="/favicon.png"
-              alt=""
-              aria-hidden="true"
-              width={26}
-              height={26}
-              className="w-6 h-6 rounded-lg object-contain border border-surface-border group-hover:border-accent transition-colors"
-            />
-            <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-status border border-background animate-status-pulse" />
+    <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+      <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-background/40 border-b border-surface-border/25 transition-all">
+        {/* Subtle hairline scroll progress indicator */}
+        <div
+          className="absolute top-0 left-0 h-[1.5px] bg-mint transition-all duration-75 pointer-events-none opacity-80"
+          style={{ width: `${scrollProgress}%` }}
+          role="progressbar"
+          aria-valuenow={Math.round(scrollProgress)}
+          aria-valuemin={0}
+          aria-valuemax={100}
+        />
+
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
+          {/* Name Left (Editorial Light Sans) */}
+          <Link
+            href="/"
+            onClick={handleLinkClick}
+            className="group flex items-center gap-2 py-1"
+          >
+            <span className="font-display font-light text-base sm:text-lg tracking-tight text-headline group-hover:text-mint transition-colors">
+              {PORTFOLIO_DATA.personal.name}
+            </span>
+            <span className="text-mint font-serif italic text-sm opacity-80 group-hover:opacity-100 transition-opacity">
+              · architect
+            </span>
+          </Link>
+
+          {/* Desktop Minimal Links (Spread Across, Underline on Active, No Heavy Boxes) */}
+          <nav className="hidden md:flex items-center gap-8 text-sm font-light">
+            {NAV_LINKS.map((item) => {
+              const isActive =
+                activeSection === item.sectionId ||
+                (item.sectionId === "pillars" && activeSection === "hero");
+
+              return (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => soundManager.playClickSound()}
+                  className={`relative py-1 tracking-tight transition-colors ${
+                    isActive
+                      ? "text-mint font-normal"
+                      : "text-mutedtext hover:text-headline"
+                  }`}
+                >
+                  <span>{item.name}</span>
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 right-0 h-[1px] bg-mint rounded-full" />
+                  )}
+                </a>
+              );
+            })}
+          </nav>
+
+          {/* Right Action: Sound Toggle + Tiny 'Download CV' text link */}
+          <div className="hidden sm:flex items-center gap-5">
+            <SoundToggle />
+
+            <a
+              href={PORTFOLIO_DATA.personal.resumeUrl}
+              download="Nikhil-Alakri-Resume.pdf"
+              onClick={() => soundManager.playClickSound()}
+              className="text-xs font-mono text-mutedtext hover:text-mint transition-colors flex items-center gap-1.5 hover:underline py-1"
+              title="Download Official Resume PDF"
+            >
+              <FileDown className="w-3.5 h-3.5 text-mint" />
+              <span>Download CV</span>
+            </a>
           </div>
-          <span className="font-primary font-bold text-headline tracking-wide group-hover:text-accent transition-colors text-base sm:text-lg">
-            Nikhil Alakri
-          </span>
-        </Link>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-bodytext">
-          <a href={SITE_URLS.nav.experience} className="hover:text-headline transition-colors">Experience</a>
-          <a href={SITE_URLS.nav.pillars} className="hover:text-headline transition-colors">Specializations</a>
-          <a href={SITE_URLS.nav.projects} className="hover:text-headline transition-colors">Projects</a>
-          <a href={SITE_URLS.nav.skills} className="hover:text-headline transition-colors">Stack</a>
-          <a href={SITE_URLS.nav.faq} className="hover:text-headline transition-colors">FAQ</a>
-          <a href={SITE_URLS.nav.contact} className="hover:text-headline transition-colors">Contact</a>
-        </nav>
-
-        {/* Action icons & Mobile connect */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          <a
-            href={SITE_URLS.resume}
-            download="Nikhil_Alakri_Resume_CitiusTech.pdf"
-            aria-label="Download Official Resume PDF"
-            className="magnetic hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-xl bg-surface border border-accent/40 text-headline hover:bg-surface-elevated hover:border-accent transition-colors min-h-[38px] will-change-transform"
-          >
-            <FileDown className="w-3.5 h-3.5 text-accent" />
-            <span>CV</span>
-          </a>
-
-          <a
-            href={SITE_URLS.socials.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub Profile"
-            className="magnetic p-2 sm:p-2.5 rounded-xl bg-surface border border-surface-border text-bodytext hover:text-headline hover:border-accent transition-colors min-w-[38px] min-h-[38px] flex items-center justify-center will-change-transform"
-          >
-            <Github className="w-4 h-4" />
-          </a>
-          <a
-            href={SITE_URLS.socials.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn Profile"
-            className="magnetic p-2 sm:p-2.5 rounded-xl bg-surface border border-surface-border text-bodytext hover:text-headline hover:border-accent transition-colors min-w-[38px] min-h-[38px] flex items-center justify-center will-change-transform"
-          >
-            <Linkedin className="w-4 h-4" />
-          </a>
-          <a
-            href={SITE_URLS.nav.contact}
-            className="magnetic inline-flex items-center gap-1.5 text-xs font-semibold px-3 sm:px-3.5 py-2 rounded-xl bg-primary text-background hover:bg-accent transition-colors min-h-[38px] will-change-transform"
-          >
-            Connect
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </a>
+          <div className="flex md:hidden items-center gap-3">
+            <SoundToggle />
+            <SheetTrigger
+              aria-label="Open navigation menu"
+              className="cursor-pointer rounded-xl p-2 text-headline transition-colors hover:text-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint"
+            >
+              <Menu className="size-5" />
+            </SheetTrigger>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+
+      <SheetContent className="justify-between px-6 py-16 md:hidden">
+        <div className="space-y-6 pt-4 pr-10">
+          <div>
+            <SheetTitle>{PORTFOLIO_DATA.personal.name}</SheetTitle>
+            <SheetDescription className="mt-2 font-mono text-xs uppercase tracking-widest text-mint">
+              Navigational Coordinates
+            </SheetDescription>
+          </div>
+          {NAV_LINKS.map((item, idx) => (
+            <SheetClose asChild key={item.name}>
+              <a
+                href={item.href}
+                onClick={() => soundManager.playClickSound()}
+                className="block rounded-lg py-2 font-display text-4xl font-light text-headline transition-colors hover:text-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint"
+              >
+                <span className="mr-4 font-mono text-xs text-mutedtext">0{idx + 1}</span>
+                <span>{item.name}</span>
+              </a>
+            </SheetClose>
+          ))}
+        </div>
+
+        <div className="space-y-4 border-t border-surface-border/40 pt-8">
+          <SheetClose asChild>
+            <a
+              href={PORTFOLIO_DATA.personal.resumeUrl}
+              download="Nikhil-Alakri-Resume.pdf"
+              onClick={() => soundManager.playClickSound()}
+              className="inline-flex items-center gap-2 py-2 font-mono text-sm font-semibold text-mint"
+            >
+              <FileDown className="size-4" />
+              <span>Download CV (Nikhil-Alakri-Resume.pdf)</span>
+            </a>
+          </SheetClose>
+
+          <div className="flex items-center gap-5 pt-2 text-xs text-mutedtext">
+            <a
+              href={PORTFOLIO_DATA.socials.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-headline"
+            >
+              GitHub
+            </a>
+            <a
+              href={PORTFOLIO_DATA.socials.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-headline"
+            >
+              LinkedIn
+            </a>
+            <a href={PORTFOLIO_DATA.contact.mailto} className="transition-colors hover:text-headline">
+              {PORTFOLIO_DATA.contact.email}
+            </a>
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 }

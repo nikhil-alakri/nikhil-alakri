@@ -1,38 +1,37 @@
 // ==============================================================================
-// 🎨 SINGLE SOURCE OF TRUTH: THEME & COLOR PALETTE
-// ------------------------------------------------------------------------------
-// To change your colors or display font, simply edit these values here:
+// 🎨 DESIGN SYSTEM TOKENS: EDITORIAL AURORA & MINT (Phase 7A)
 // ==============================================================================
 
-// 1. Base Canvas / Background
-$color-bg:             #113946;  // Deep Oceanic Teal (Main canvas)
-$color-bg-surface:     #0c2a34;  // Card surfaces & navigation
-$color-bg-elevated:    #164655;  // Hover surface state
+// 1. Base Canvas / Background (Deep Aurora Teal #04201F)
+$color-bg:             #04201f;  // Deep editorial teal canvas
+$color-bg-deep:        #021413;  // Vignette boundary
+$color-bg-surface:     rgba(5, 34, 33, 0.6);   // Minimal card surfaces
+$color-bg-elevated:    rgba(8, 48, 46, 0.8);   // Hover surface state
+$color-border:         rgba(92, 242, 214, 0.12); // Subtle hairline border
 
-// 2. Accents & Highlighting
-$color-accent:         #cbb594;  // Calibrated Warm Brass / Sand (WCAG AA compliant > 5.2:1 contrast)
-$color-accent-subtle:  rgba(203, 181, 148, 0.2); // Subtle glow & border opacity
+// 2. Mint & Aurora Accents (High Contrast WCAG AA > 4.5:1)
+$color-mint:           #5cf2d6;  // Vibrant Editorial Mint
+$color-mint-hover:     #34d399;  // Emerald Hover
+$color-accent:         #5cf2d6;  // Default Accent -> Mint
+$color-brass:          #cbb594;  // Warm Brass secondary accent
 
-// 3. Typography & Body Text
-$color-text-primary:   #FFF2D8;  // Linen / Warm Ivory (Headings & primary CTAs)
-$color-text-secondary: #EAD7BB;  // Warm Parchment (Descriptions & body text)
-$color-text-muted:     #a8c1cb;  // Calibrated Soft Teal (WCAG AA compliant > 5.5:1 contrast)
+// 3. High-Contrast Typography
+$color-text-primary:   #f8fafc;  // Crisp Linen / White (Headings & major CTAs > 14:1)
+$color-text-secondary: #cbd5e1;  // High-legibility Body Text (> 10:1)
+$color-text-muted:     #94a3b8;  // Muted Meta Text (> 5.5:1)
+$color-status:         #5cf2d6;  // Active Pulse Indicator
 
-// 4. Status
-$color-status:         #5eead4;  // Availability indicator dot
+// 4. Typography Hierarchy
+$font-display:   'Inter Tight', 'Inter', -apple-system, sans-serif;
+$font-primary:   'Inter Tight', 'Inter', -apple-system, sans-serif;
+$font-serif:     'Instrument Serif', 'Playfair Display', Georgia, serif;
+$font-sans:      'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-secondary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-mono:      'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-// ------------------------------------------------------------------------------
-// 🔤 TYPOGRAPHY (2 Site-wide Fonts: DynaPuff Primary + Plus Jakarta Sans Secondary)
-// ------------------------------------------------------------------------------
-// Primary: Headings, Brand, Hero Title, and Major Section Titles
-$font-primary:   'DynaPuff', cursive, sans-serif;
-
-// Secondary: Body copy, Descriptions, Cards, Navigation, and Buttons
-$font-secondary: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-
-$font-display:   $font-primary;
-$font-sans:      $font-secondary;
-$font-mono:      ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+// Font sizes (Minimum label: 12px, body: 16px)
+$font-size-label: 0.75rem; // 12px
+$font-size-body:  1.0rem;  // 16px
 
 $ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
 $duration-normal: 0.3s;

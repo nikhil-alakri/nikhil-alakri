@@ -13,9 +13,9 @@ const RING_SIZE_LINK = 54;
 const RING_SIZE_CARD = 76;
 const RING_SIZE_DRAG = 72;
 
-const ACCENT = "#cbb594";
-const RING_BORDER = "rgba(203, 181, 148, 0.4)";
-const ACCENT_FILL = "rgba(203, 181, 148, 0.14)";
+const ACCENT = "var(--color-accent, #5eead4)";
+const RING_BORDER = "rgba(94, 234, 212, 0.45)";
+const ACCENT_FILL = "rgba(94, 234, 212, 0.12)";
 
 const MAGNETIC_OFFSET = 7;
 
@@ -56,15 +56,19 @@ export default function CustomCursor() {
 
   // --- Determine cursor state from target ---
   const getState = useCallback((target: HTMLElement): CursorState => {
-    if (target.closest("canvas") || target.closest("[data-3d-stage]")) {
-      return "drag";
-    }
     if (
       target.closest("a") ||
       target.closest("button") ||
       target.closest('[role="button"]')
     ) {
       return "link";
+    }
+    if (
+      target.closest("[data-cursor='drag']") ||
+      target.closest(".pillar-carousel-container") ||
+      target.closest("[data-3d-stage]")
+    ) {
+      return "drag";
     }
     if (
       target.closest(".project-card") ||
@@ -95,11 +99,11 @@ export default function CustomCursor() {
         ring.style.width = `${RING_SIZE_DRAG}px`;
         ring.style.height = `${RING_SIZE_DRAG}px`;
         ring.style.borderColor = ACCENT;
-        ring.style.backgroundColor = "rgba(94, 234, 212, 0.12)";
+        ring.style.backgroundColor = "rgba(92, 242, 214, 0.16)";
         ring.style.borderRadius = "50%";
         ring.style.borderWidth = "1.5px";
         dot.style.opacity = "0";
-        label.textContent = "Orbit";
+        label.textContent = "Drag";
         label.style.opacity = "1";
         break;
       case "link":
@@ -146,8 +150,12 @@ export default function CustomCursor() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     const isCoarse = window.matchMedia("(pointer: coarse)").matches;
-    setIsTouchDevice(isCoarse);
-    if (isCoarse) return;
+    const isReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (isCoarse || isReducedMotion) {
+      setIsTouchDevice(true);
+      return;
+    }
+    setIsTouchDevice(false);
 
     document.body.classList.add(CURSOR_HIDE_CLASS);
 

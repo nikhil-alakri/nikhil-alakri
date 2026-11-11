@@ -1,162 +1,134 @@
 "use client";
 
-import { Palette, Sparkles, Gauge, Layers, ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ArrowRight,
+  CheckCircle2,
+  Sparkles,
+  Layers,
+} from "lucide-react";
+import PORTFOLIO_DATA, { PillarItem } from "@/src/data/portfolio";
 import ScrollReveal from "@/components/ScrollReveal";
-import use3DTilt from "@/hooks/use3DTilt";
+import PillarDetailModal from "@/components/PillarDetailModal";
+import { getPillarMotif } from "@/components/PillarMotifs";
+import { soundManager } from "@/lib/audio";
 
-interface PillarItem {
-  num: string;
-  title: string;
-  icon: React.ComponentType<{ className?: string }>;
-  summary: string;
-  deliverables: string[];
-}
-
-const pillars: PillarItem[] = [
-  {
-    num: "01",
-    title: "Healthcare & Enterprise Design Systems",
-    icon: Palette,
-    summary:
-      "Architecting reusable Lit and React component libraries delivering core interface elements across regulated clinical and enterprise applications.",
-    deliverables: [
-      "Lit & React (TSX) Component Libraries",
-      "Rigorous Definition of Done (DoD) & WCAG AA Standards",
-      "Multi-theme Design Tokens & i18n (LTR/RTL) Support",
-      "End-to-end versioning, Storybook & Vitest audits",
-    ],
-  },
-  {
-    num: "02",
-    title: "Multimodal AI & Agentic Accelerators",
-    icon: Sparkles,
-    summary:
-      "Designing specialized technical accelerators and AI pipelines to validate feasibility, automate complex data extraction, and drive presales velocity.",
-    deliverables: [
-      "Autonomous Reverse-Engineering Engine (odin-eye)",
-      "Agentic SQL Parsers & Dynamic Query Synthesis",
-      "Medical Imaging Chat POCs with drag-and-drop validation",
-      "Local ChromaDB Vector RAG & Contextual Patient 360",
-    ],
-  },
-  {
-    num: "03",
-    title: "Web Performance & Lighthouse 100/100",
-    icon: Gauge,
-    summary:
-      "Relentless Core Web Vitals optimization, asset compression pipelines, and zero-CLS architecture delivering measurable speedups in production.",
-    deliverables: [
-      "Automated image optimization pipelines with Sharp & Jimp",
-      "20% improvement in page load speed on high-traffic portals",
-      "100/100 Lighthouse Performance & Accessibility compliance",
-      "Sub-1.5s Largest Contentful Paint (LCP) engineering",
-    ],
-  },
-  {
-    num: "04",
-    title: "Full-Stack Architecture & Cloud APIs",
-    icon: Layers,
-    summary:
-      "Building resilient web applications, distributed backend services, and scalable database schemas from initial RFC to edge deployment.",
-    deliverables: [
-      "Next.js 15 App Router & Server Component Architecture",
-      "PostgreSQL, Supabase, MongoDB, and Redis caching",
-      "Typed OpenAPI / REST contracts with zero schema drift",
-      "Dockerized microservices & automated CI/CD pipelines",
-    ],
-  },
-];
-
-function TiltPillarCard({ pillar }: { pillar: PillarItem }) {
-  const { ref, style, glareStyle } = use3DTilt<HTMLDivElement>({
-    maxTilt: 6,
-    perspective: 1000,
-    scale: 1.015,
-    speed: 350,
-    glare: true,
-    maxGlare: 0.15,
-  });
-
-  const Icon = pillar.icon;
-
-  return (
-    <div
-      ref={ref}
-      style={style}
-      className="bento-card group relative flex flex-col justify-between p-6 sm:p-8 rounded-3xl bg-surface border border-surface-border hover:border-accent hover:bg-surface-elevated transition-colors duration-300 shadow-lg hover:shadow-2xl overflow-hidden"
-    >
-      {/* Glare specular reflection */}
-      <div style={glareStyle} />
-
-      <div className="relative z-10">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <div className="p-3 rounded-2xl bg-surface-elevated border border-surface-border text-accent group-hover:border-accent group-hover:scale-105 transition-all">
-              <Icon className="w-6 h-6" />
-            </div>
-            <span className="font-mono text-sm font-bold text-accent">
-              {pillar.num}
-            </span>
-          </div>
-
-          <div className="p-2 rounded-xl bg-surface border border-surface-border text-bodytext group-hover:text-headline group-hover:border-accent transition-all">
-            <ArrowUpRight className="w-4 h-4" />
-          </div>
-        </div>
-
-        <h3 className="font-primary text-xl sm:text-2xl font-bold text-headline mb-3 group-hover:text-accent transition-colors">
-          {pillar.title}
-        </h3>
-
-        <p className="text-sm sm:text-base text-bodytext leading-relaxed mb-6">
-          {pillar.summary}
-        </p>
-      </div>
-
-      <div className="relative z-10 pt-4 border-t border-surface-border/60">
-        <span className="text-[11px] font-mono uppercase tracking-wider text-accent font-semibold block mb-3">
-          Core Engineering Highlights:
-        </span>
-        <ul className="space-y-2">
-          {pillar.deliverables.map((item, i) => (
-            <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-bodytext">
-              <CheckCircle2 className="w-4 h-4 text-status shrink-0 mt-0.5" />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-}
+// Dynamic import for R3F 3D Carousel (ssr: false, zero hydration lag)
+const PillarCarousel3D = dynamic(
+  () => import("@/components/three/PillarCarousel3D"),
+  { ssr: false }
+);
 
 export default function ServicesPillars() {
+  const [selectedPillar, setSelectedPillar] = useState<string | null>(null);
+  const [isMobileOrReduced, setIsMobileOrReduced] = useState(false);
+
+  useEffect(() => {
+    const checkPrefs = () => {
+      const isMobile = window.innerWidth < 768;
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      setIsMobileOrReduced(isMobile || reducedMotion);
+    };
+    checkPrefs();
+    window.addEventListener("resize", checkPrefs);
+    return () => window.removeEventListener("resize", checkPrefs);
+  }, []);
+
   return (
-    <section id="pillars" className="py-16 sm:py-24 border-t border-surface-border">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
-        
+    <section
+      id="pillars"
+      className="py-16 sm:py-24 border-t border-surface-border relative z-10 overflow-hidden"
+    >
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <ScrollReveal animation="fadeUp" className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-14">
+        <ScrollReveal
+          animation="fadeUp"
+          className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-14"
+        >
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium bg-surface border border-accent/30 text-accent mb-3">
-              <span>Engineering Capabilities</span>
+            <div className="text-xs font-mono tracking-widest uppercase text-mint/90 mb-3 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-mint" />
+              <span>01 · Engineering Philosophy</span>
             </div>
-            <h2 className="font-primary text-2xl sm:text-4xl md:text-5xl font-bold text-headline tracking-tight">
-              Architectural Pillars &amp; Specializations
+            <h2 className="font-display font-light text-4xl sm:text-6xl md:text-7xl tracking-[-0.04em] text-headline leading-[1.05]">
+              Architectural <span className="font-serif italic text-mint">Pillars</span>
             </h2>
           </div>
-          <p className="text-bodytext text-sm sm:text-base max-w-md mt-3 md:mt-0 leading-relaxed">
-            Delivering high-craft UI platforms, HIPAA/clinical design systems, and AI accelerators engineered for performance.
+          <p className="text-bodytext/80 text-sm sm:text-base max-w-md mt-4 md:mt-0 leading-relaxed font-light">
+            Specialized UI platforms, HIPAA clinical design systems, and multimodal AI accelerators engineered for measurable scale.
           </p>
         </ScrollReveal>
 
-        {/* 4-Card Bento Grid with 3D Tilt */}
-        <ScrollReveal animation="fadeUp" stagger={0.12} className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
-          {pillars.map((pillar) => (
-            <TiltPillarCard key={pillar.num} pillar={pillar} />
-          ))}
-        </ScrollReveal>
+        {/* =========================================================================
+            1. DESKTOP / HIGH-END: 3D Tilted Card Carousel in R3F
+        ========================================================================= */}
+        {!isMobileOrReduced ? (
+          <ScrollReveal animation="scaleUp" delay={0.05}>
+            <PillarCarousel3D onSelectPillar={(num) => setSelectedPillar(num)} />
+          </ScrollReveal>
+        ) : (
+          /* =========================================================================
+              2. ACCESSIBILITY FALLBACK: Mobile / Reduced Motion Horizontal Snap List
+          ========================================================================= */
+          <div
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Architectural Pillars Cards"
+            className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-6 pt-2 px-1 -mx-4 px-4 scrollbar-none [mask-image:linear-gradient(to_right,black_85%,transparent)]"
+          >
+            {PORTFOLIO_DATA.pillars.map((pillar) => (
+              <div
+                key={pillar.num}
+                className="snap-center shrink-0 w-[84vw] max-w-[340px] p-6 rounded-2xl bg-surface/40 border border-white/[0.08] backdrop-blur-md flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="font-mono text-xs font-semibold text-mint px-2.5 py-0.5 rounded-full bg-surface border border-mint/20">
+                      Pillar {pillar.num}
+                    </span>
+                    <div className="p-1.5 rounded-xl bg-surface border border-white/[0.06] text-mint">
+                      {getPillarMotif(pillar.num)}
+                    </div>
+                  </div>
+
+                  <h3 className="font-display font-light text-xl text-headline mb-2 leading-snug">
+                    {pillar.title}
+                  </h3>
+                  <p className="text-xs text-bodytext leading-relaxed font-light mb-6">
+                    {pillar.summary}
+                  </p>
+                </div>
+
+                <div className="pt-4 border-t border-white/[0.08] flex items-center justify-between">
+                  <span className="text-[11px] font-mono text-mutedtext">
+                    {pillar.deliverables.length} Deliverables
+                  </span>
+
+                  <button
+                    onClick={() => {
+                      soundManager.playClickSound();
+                      setSelectedPillar(pillar.num);
+                    }}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-mint text-background text-xs font-mono font-medium hover:bg-mint-dark transition-colors"
+                  >
+                    <span>Explore</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
+
+      {/* Pillar Detail Modal (Opens when Explore is clicked) */}
+      <PillarDetailModal
+        pillarNum={selectedPillar}
+        onClose={() => setSelectedPillar(null)}
+      />
     </section>
   );
 }

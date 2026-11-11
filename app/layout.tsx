@@ -4,7 +4,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
 import InteractiveSpotlight from "@/components/InteractiveSpotlight";
 import CustomCursor from "@/components/CustomCursor";
-import DynamicOrganicWorld from "@/components/three/DynamicOrganicWorld";
+import DynamicSceneCanvas from "@/components/three/DynamicSceneCanvas";
 import { SITE_URLS } from "@/config/urls";
 
 export const viewport: Viewport = {
@@ -121,6 +121,7 @@ const jsonLdPerson = {
     addressRegion: "Maharashtra",
     addressCountry: "India",
   },
+  email: SITE_URLS.contact.email,
   sameAs: [
     SITE_URLS.socials.github,
     SITE_URLS.socials.linkedin,
@@ -164,7 +165,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
           rel="stylesheet"
         />
         {/* Schema.org Structured Data for Top Google Search Ranking & Knowledge Graph */}
@@ -182,9 +183,17 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-background text-bodytext font-sans antialiased selection:bg-accent/30 selection:text-headline">
-        {/* Living Ambient Aurora Background (Zero blur compositing cost) */}
+        {/* Accessible Skip to Content Link */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2.5 focus:bg-mint focus:text-background focus:rounded-xl focus:font-semibold focus:shadow-2xl"
+        >
+          Skip to content
+        </a>
+
+        {/* Living Ambient Canvas Background (Zero blur compositing cost) */}
         <div className="bg-canvas" aria-hidden="true" />
-        <DynamicOrganicWorld />
+        <DynamicSceneCanvas />
         <InteractiveSpotlight />
         <CustomCursor />
 

@@ -6,6 +6,7 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./styles/**/*.{scss,css}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   darkMode: "class",
   theme: {
@@ -25,7 +26,12 @@ const config: Config = {
         },
         accent: {
           DEFAULT: "var(--color-accent)",
-          hover: "var(--color-text-primary)",
+          hover: "var(--color-accent-hover)",
+        },
+        mint: {
+          DEFAULT: "#5eead4",
+          light: "#99f6e4",
+          dark: "#2dd4bf",
         },
         headline: "var(--color-text-primary)",
         bodytext: "var(--color-text-secondary)",
@@ -33,35 +39,65 @@ const config: Config = {
         mutedtext: "var(--color-text-muted)",
         status: "var(--color-status)",
       },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        "fade-in": {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.28s ease-out",
+        "accordion-up": "accordion-up 0.22s ease-out",
+        "fade-in": "fade-in 0.2s ease-out",
+      },
       fontFamily: {
-        primary: [
-          "var(--font-primary)",
-          "'DynaPuff'",
-          "cursive",
+        display: [
+          "var(--font-display)",
+          "'Inter Tight'",
+          "'Inter'",
+          "-apple-system",
           "sans-serif",
         ],
-        secondary: [
-          "var(--font-secondary)",
-          "'Plus Jakarta Sans'",
+        primary: [
+          "var(--font-primary)",
+          "'Inter Tight'",
+          "'Inter'",
+          "-apple-system",
+          "sans-serif",
+        ],
+        serif: [
+          "var(--font-serif)",
+          "'Instrument Serif'",
+          "'Playfair Display'",
+          "Georgia",
+          "serif",
+        ],
+        sans: [
+          "var(--font-sans)",
+          "'Inter'",
           "-apple-system",
           "BlinkMacSystemFont",
           "sans-serif",
         ],
-        display: [
-          "var(--font-primary)",
-          "'DynaPuff'",
-          "cursive",
-          "sans-serif",
-        ],
-        sans: [
+        secondary: [
           "var(--font-secondary)",
-          "'Plus Jakarta Sans'",
+          "'Inter'",
           "-apple-system",
           "BlinkMacSystemFont",
           "sans-serif",
         ],
         mono: [
           "var(--font-mono)",
+          "'JetBrains Mono'",
+          "ui-monospace",
           "monospace",
         ],
       },

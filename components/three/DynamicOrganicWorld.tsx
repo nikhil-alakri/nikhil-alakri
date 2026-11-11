@@ -11,3 +11,4 @@ const DynamicOrganicWorld = dynamic(
 );
 
 export default DynamicOrganicWorld;
+
